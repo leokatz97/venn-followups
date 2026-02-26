@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Venn Summary - Stalwart Electric</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sea-green: #099250;
+      --eggshell: #F4F1DE;
+      --dark-green: #002400;
+      --muted: #5E7A5E;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      background: var(--eggshell);
+      color: var(--dark-green);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    a { color: var(--sea-green); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ---- LAYOUT ---- */
+    .container {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ---- HEADER ---- */
+    header {
+      padding: 48px 0 40px;
+      border-bottom: 1px solid rgba(0,36,0,0.12);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--sea-green);
+      background: rgba(9,146,80,0.1);
+      padding: 4px 10px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+
+    header h1 {
+      font-size: 34px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    header .meta {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    /* ---- SECTIONS ---- */
+    section {
+      padding: 52px 0;
+      border-bottom: 1px solid rgba(0,36,0,0.1);
+    }
+
+    .section-number {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--sea-green);
+      margin-bottom: 6px;
+    }
+
+    section h2 {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      margin-bottom: 16px;
+    }
+
+    section p {
+      color: #1a3a1a;
+      margin-bottom: 16px;
+      max-width: 640px;
+    }
+
+    /* ---- PAIN POINT CARDS ---- */
+    .pain-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .pain-card {
+      background: #fff;
+      border: 1px solid rgba(0,36,0,0.1);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .pain-card .icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(9,146,80,0.1);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .pain-card h3 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .pain-card p {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    /* ---- SOLUTION LIST ---- */
+    .solution-list {
+      margin: 28px 0 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .solution-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .solution-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--sea-green);
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+
+    .solution-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--sea-green);
+      margin-bottom: 2px;
+    }
+
+    .solution-item h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    .solution-item p {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    /* ---- CARD MOCKUP ---- */
+    .card-wrap {
+      margin: 36px 0;
+    }
+
+    .venn-card {
+      width: 320px;
+      height: 196px;
+      background: var(--dark-green);
+      border-radius: 16px;
+      padding: 20px 22px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,36,0,0.22);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .venn-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 28px,
+          rgba(9,146,80,0.07) 28px,
+          rgba(9,146,80,0.07) 29px
+        ),
+        repeating-linear-gradient(
+          -45deg,
+          transparent,
+          transparent 28px,
+          rgba(9,146,80,0.05) 28px,
+          rgba(9,146,80,0.05) 29px
+        );
+      pointer-events: none;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      position: relative;
+    }
+
+    .card-business {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(244,241,222,0.5);
+    }
+
+    .card-logo {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .card-logo span {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--eggshell);
+      letter-spacing: -0.3px;
+    }
+
+    .card-middle {
+      position: relative;
+    }
+
+    .chip {
+      width: 36px;
+      height: 28px;
+      background: linear-gradient(135deg, #d4a843 0%, #f0c96e 40%, #b8860b 100%);
+      border-radius: 5px;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .card-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      position: relative;
+    }
+
+    .card-company {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--eggshell);
+      letter-spacing: 0.02em;
+    }
+
+    .mastercard {
+      display: flex;
+    }
+
+    .mc-circle {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+    }
+
+    .mc-red { background: rgba(235, 0, 27, 0.85); }
+    .mc-orange { background: rgba(247, 158, 27, 0.85); margin-left: -8px; }
+
+    /* ---- TESTIMONIAL ---- */
+    .testimonial {
+      background: var(--dark-green);
+      border-radius: 14px;
+      padding: 28px 30px;
+      margin: 36px 0;
+    }
+
+    .testimonial blockquote {
+      font-size: 15px;
+      font-style: italic;
+      color: rgba(244,241,222,0.9);
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    .testimonial cite {
+      font-size: 13px;
+      font-style: normal;
+      font-weight: 600;
+      color: var(--sea-green);
+    }
+
+    /* ---- STATS ---- */
+    .stats-row {
+      display: flex;
+      gap: 0;
+      border: 1px solid rgba(0,36,0,0.12);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 28px;
+    }
+
+    .stat {
+      flex: 1;
+      padding: 20px 18px;
+      border-right: 1px solid rgba(0,36,0,0.1);
+      text-align: center;
+    }
+
+    .stat:last-child { border-right: none; }
+
+    .stat-value {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--dark-green);
+      letter-spacing: -0.5px;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* ---- PLAN CARD ---- */
+    .plan-card {
+      background: var(--dark-green);
+      border-radius: 14px;
+      padding: 28px 30px;
+      margin: 28px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .plan-name {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--sea-green);
+      margin-bottom: 6px;
+    }
+
+    .plan-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--eggshell);
+      margin-bottom: 6px;
+    }
+
+    .plan-desc {
+      font-size: 13px;
+      color: rgba(244,241,222,0.6);
+    }
+
+    .plan-price {
+      text-align: right;
+    }
+
+    .plan-price .amount {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--eggshell);
+      letter-spacing: -1px;
+    }
+
+    .plan-price .period {
+      font-size: 13px;
+      color: rgba(244,241,222,0.5);
+    }
+
+    /* ---- STEPS ---- */
+    .steps {
+      margin: 24px 0 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .step {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--sea-green);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .step h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    .step p {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    /* ---- CTA ---- */
+    .cta-btn {
+      display: inline-block;
+      background: var(--sea-green);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      letter-spacing: -0.1px;
+    }
+
+    .cta-btn:hover {
+      background: #077a40;
+      text-decoration: none;
+    }
+
+    /* ---- FOOTER ---- */
+    footer {
+      padding: 36px 0 48px;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 560px) {
+      header h1 { font-size: 26px; }
+      .pain-grid { grid-template-columns: 1fr; }
+      .plan-card { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .plan-price { text-align: left; }
+      .stats-row { flex-direction: column; }
+      .stat { border-right: none; border-bottom: 1px solid rgba(0,36,0,0.1); }
+      .stat:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header>
+  <div class="container">
+    <div class="logo">
+      <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
+        <line x1="14" y1="2" x2="14" y2="26" stroke="#099250" stroke-width="3" stroke-linecap="round"/>
+        <line x1="2" y1="14" x2="26" y2="14" stroke="#099250" stroke-width="3" stroke-linecap="round"/>
+        <line x1="5.51" y1="5.51" x2="22.49" y2="22.49" stroke="#099250" stroke-width="3" stroke-linecap="round"/>
+        <line x1="22.49" y1="5.51" x2="5.51" y2="22.49" stroke="#099250" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <span style="font-size:22px;font-weight:700;color:#002400;letter-spacing:-0.5px;">venn</span>
+    </div>
+    <div class="section-label">Personalized for Stalwart Electric</div>
+    <h1>Hi Reuben, here's your Venn summary.</h1>
+    <p class="meta">Call on February 24, 2026 &nbsp;|&nbsp; Prepared by Leo at Venn.</p>
+  </div>
+</header>
+
+<!-- ==================== SECTION 1: YOUR SITUATION ==================== -->
+<section>
+  <div class="container">
+    <div class="section-number">01 / Your Situation</div>
+    <h2>What we heard from you</h2>
+    <p>At $5M-$10M in revenue with $50K-$100K in monthly card spend, Stalwart Electric has outgrown the limits TD was built for. A $10K e-transfer cap means an $80K supplier invoice requires eight separate transfers. An EFT setup that took three months and still was not finished. $50 wire fees in each direction, plus a branch visit every time you need to move a large payment. That is friction your team absorbs every single week.</p>
+    <p>Beyond payments, there are three people managing company spend with no unified visibility, no per-project card limits, and no automated way to get receipts into QuickBooks. Month-end becomes a reconciliation exercise instead of a 10-minute sync.</p>
+
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#099250" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="4" width="22" height="16" rx="2"/>
+            <line x1="1" y1="10" x2="23" y2="10"/>
+          </svg>
+        </div>
+        <h3>$10K Transfer Cap</h3>
+        <p>Paying an $80K invoice means eight separate e-transfers, every time.</p>
+      </div>
+      <div class="pain-card">
+        <div class="icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#099250" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <h3>$100 Per Wire, Branch Required</h3>
+        <p>$50 each direction plus a physical signature to send a single wire.</p>
+      </div>
+      <div class="pain-card">
+        <div class="icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#099250" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="1" x2="12" y2="23"/>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+        </div>
+        <h3>Expensive USD Wires</h3>
+        <p>Paying US vendors via wire at 2.5-3% FX when ACH would cost a fraction of that.</p>
+      </div>
+      <div class="pain-card">
+        <div class="icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#099250" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+        </div>
+        <h3>Manual Expense Reconciliation</h3>
+        <p>No per-employee card limits or automatic receipt capture flowing into QuickBooks.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SECTION 2: HOW VENN FITS ==================== -->
+<section>
+  <div class="container">
+    <div class="section-number">02 / How Venn Fits</div>
+    <h2>What this looks like with Venn</h2>
+    <p>Venn replaces the friction points you described with a single banking layer built for contractors moving real money. Same-day EFTs up to $200K. Free US payments at 0.25-0.45% FX. Corporate cards with per-employee limits that sync automatically to QuickBooks. And yield on the balance sitting in your account between jobs.</p>
+
+    <div class="solution-list">
+      <div class="solution-item">
+        <div class="solution-dot"></div>
+        <div>
+          <div class="solution-label">EFT Payments</div>
+          <h3>Send up to $200K same-day, no phone call required</h3>
+          <p>No per-transfer cap, no setup delays, no branch visit. Pay a full invoice in one shot, directly from your dashboard.</p>
+        </div>
+      </div>
+      <div class="solution-item">
+        <div class="solution-dot"></div>
+        <div>
+          <div class="solution-label">USD Payments via ACH</div>
+          <h3>Pay US vendors at 0.25-0.45% FX, not 2.5-3%</h3>
+          <p>A real USD account under Stalwart Electric's name. Send US payments free via ACH and stop subsidizing your bank's FX margin.</p>
+        </div>
+      </div>
+      <div class="solution-item">
+        <div class="solution-dot"></div>
+        <div>
+          <div class="solution-label">Corporate Cards</div>
+          <h3>Custom-limit cards for every field manager and project</h3>
+          <p>Issue cards to Reuben, Eva, Carlos, and site leads instantly. Set individual spend limits, capture receipts by text, and see every transaction in real time.</p>
+        </div>
+      </div>
+      <div class="solution-item">
+        <div class="solution-dot"></div>
+        <div>
+          <div class="solution-label">QuickBooks Sync</div>
+          <h3>Two-way sync eliminates month-end catch-up</h3>
+          <p>Transactions code automatically with your rules. Carlos gets cleaner books without chasing receipts or correcting miscodes.</p>
+        </div>
+      </div>
+      <div class="solution-item">
+        <div class="solution-dot"></div>
+        <div>
+          <div class="solution-label">Interest on Balances</div>
+          <h3>Earn up to 2% monthly on operating cash</h3>
+          <p>Your idle balance between projects earns yield instead of sitting flat at TD.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Corporate Card Mockup -->
+    <div class="card-wrap">
+      <div class="venn-card">
+        <div class="card-top">
+          <span class="card-business">Business</span>
+          <div class="card-logo">
+            <svg width="16" height="16" viewBox="0 0 28 28" fill="none">
+              <line x1="14" y1="2" x2="14" y2="26" stroke="#099250" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="2" y1="14" x2="26" y2="14" stroke="#099250" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="5.51" y1="5.51" x2="22.49" y2="22.49" stroke="#099250" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="22.49" y1="5.51" x2="5.51" y2="22.49" stroke="#099250" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+            <span>venn</span>
+          </div>
+        </div>
+        <div class="card-middle">
+          <div class="chip"></div>
+        </div>
+        <div class="card-bottom">
+          <span class="card-company">Stalwart Electric Ltd.</span>
+          <div class="mastercard">
+            <div class="mc-circle mc-red"></div>
+            <div class="mc-circle mc-orange"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Testimonial -->
+    <div class="testimonial">
+      <blockquote>"My old bank charged for each wire that I sent and I could only send a limited amount at a time. With Venn, I pay no wire transfer fees and I don't have to send multiple wires to pay one invoice."</blockquote>
+      <cite>Nathan Nasseri, Founder and CEO, ResVR</cite>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat">
+        <span class="stat-value">5,000+</span>
+        <div class="stat-label">Canadian businesses</div>
+      </div>
+      <div class="stat">
+        <span class="stat-value">$3B+</span>
+        <div class="stat-label">Transacted on Venn</div>
+      </div>
+      <div class="stat">
+        <span class="stat-value">$95.5M</span>
+        <div class="stat-label">Raised to date</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SECTION 3: NEXT STEPS ==================== -->
+<section>
+  <div class="container">
+    <div class="section-number">03 / Next Steps</div>
+    <h2>Getting started</h2>
+    <p>Based on your card volume and payment needs, the Plus plan is the right fit. Unlimited EFTs, corporate cards, USD account, and QuickBooks sync - for $50 a month. That is less than the cost of a single wire you send today.</p>
+
+    <div class="plan-card">
+      <div>
+        <div class="plan-name">Recommended Plan</div>
+        <div class="plan-title">Venn Plus</div>
+        <div class="plan-desc">Unlimited EFTs - Corporate cards - USD account - QBO sync</div>
+      </div>
+      <div class="plan-price">
+        <div class="amount">$50</div>
+        <div class="period">CAD / month</div>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <h3>Review with Eva and Carlos this week</h3>
+          <p>You mentioned looping them in before Leo returns from his work trip. Forward this page as a reference.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <h3>Open your Venn account online</h3>
+          <p>Takes 5-7 minutes. No branch visit, no lengthy EFT setup. The account is live the same day.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <h3>Connect QuickBooks and issue cards</h3>
+          <p>Sync QBO, set card limits for your team, and move your first payment. Leo will be back to help with onboarding the week after his trip.</p>
+        </div>
+      </div>
+    </div>
+
+    <a href="https://app.venn.ca/signup" class="cta-btn">Open your Venn account</a>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer>
+  <div class="container">
+    <p>Questions? Reach Leo at <a href="mailto:leo@tryvault.com">leo@tryvault.com</a></p>
+    <p>Banking built for Canadian businesses.</p>
+  </div>
+</footer>
+
+</body>
+</html>
