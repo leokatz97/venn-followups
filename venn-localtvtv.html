@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Venn — LocalTVTV Inc.</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    /* ─── BRAND TOKENS ─────────────────────────────── */
+    :root {
+      --sea-green:   #099250;
+      --dark-green:  #002400;
+      --eggshell:    #F4F1DE;
+      --green-mid:   #25AE69;
+      --green-light: #41C981;
+      --white:       #FFFFFF;
+      --text-dark:   #002400;
+      --text-muted:  #0A6336;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      background: #ccc;
+      color: var(--text-dark);
+      margin: 0;
+      padding: 24px 0;
+    }
+
+    /* ─── PAGE ───────────────────────────────────────── */
+    .page {
+      background: var(--eggshell);
+      width: 794px;
+      min-height: 1123px;
+      margin: 0 auto 32px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      page-break-after: always;
+    }
+
+    .page:last-child { margin-bottom: 0; }
+
+    /* ─── HEADER ─────────────────────────────────────── */
+    header {
+      background: var(--dark-green);
+      padding: 24px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-mark { width: 30px; height: 30px; }
+
+    .logo-text {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--eggshell);
+      letter-spacing: -0.5px;
+    }
+
+    .header-right {
+      text-align: right;
+    }
+
+    .header-tagline {
+      font-size: 11px;
+      color: var(--green-light);
+      letter-spacing: 0.5px;
+      display: block;
+    }
+
+    .header-company {
+      font-size: 13px;
+      color: rgba(244,241,222,0.7);
+      margin-top: 2px;
+    }
+
+    /* ─── HERO ───────────────────────────────────────── */
+    .hero {
+      background: var(--sea-green);
+      padding: 36px 48px;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+
+    .hero-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--green-light);
+      margin-bottom: 10px;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      color: var(--white);
+    }
+
+    .hero p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.88);
+      max-width: 600px;
+    }
+
+    /* ─── SECTION HEADER ─────────────────────────────── */
+    .section-header {
+      background: var(--dark-green);
+      padding: 14px 48px;
+      flex-shrink: 0;
+    }
+
+    .section-header h2 {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--green-light);
+    }
+
+    /* ─── MAIN CONTENT ───────────────────────────────── */
+    .main {
+      padding: 32px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      flex: 1;
+    }
+
+    .main.single { grid-template-columns: 1fr; }
+    .main.thirds { grid-template-columns: 1fr 1fr 1fr; }
+
+    /* ─── CARDS ──────────────────────────────────────── */
+    .card {
+      background: var(--white);
+      border-radius: 10px;
+      padding: 24px;
+      border-top: 4px solid var(--sea-green);
+    }
+
+    .card.dark {
+      background: var(--dark-green);
+      border-top: 4px solid var(--green-light);
+    }
+
+    .card.accent {
+      background: var(--sea-green);
+      border-top: 4px solid var(--dark-green);
+    }
+
+    .card.full-width { grid-column: 1 / -1; }
+
+    .card h3 {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--sea-green);
+      margin-bottom: 14px;
+    }
+
+    .card.dark h3 { color: var(--green-light); }
+    .card.accent h3 { color: var(--white); }
+
+    /* ─── PAIN LIST ───────────────────────────────────── */
+    .pain-list { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+
+    .pain-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-dark);
+    }
+
+    .pain-list li::before {
+      content: '✕';
+      color: #c0392b;
+      font-weight: 600;
+      font-size: 13px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ─── SOLUTION LIST ───────────────────────────────── */
+    .solution-list { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+
+    .solution-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-dark);
+    }
+
+    .solution-list li::before {
+      content: '✓';
+      color: var(--sea-green);
+      font-weight: 600;
+      font-size: 14px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ─── STAT BLOCKS ─────────────────────────────────── */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .stat-block {
+      background: var(--eggshell);
+      border-radius: 8px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--sea-green);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+
+    /* ─── QUOTES ──────────────────────────────────────── */
+    .quotes { display: flex; flex-direction: column; gap: 14px; }
+
+    .quote-block {
+      border-left: 3px solid var(--green-light);
+      padding-left: 14px;
+    }
+
+    .quote-text {
+      font-size: 13px;
+      font-style: italic;
+      line-height: 1.6;
+      color: var(--eggshell);
+      margin-bottom: 5px;
+    }
+
+    .quote-attr {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--green-light);
+    }
+
+    /* ─── PRICING ─────────────────────────────────────── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .pricing-tier {
+      background: var(--eggshell);
+      border-radius: 8px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .pricing-tier.highlight {
+      background: var(--sea-green);
+      color: var(--white);
+    }
+
+    .tier-name {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+    }
+
+    .pricing-tier.highlight .tier-name { color: rgba(255,255,255,0.8); }
+
+    .tier-price {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--dark-green);
+      margin-bottom: 3px;
+    }
+
+    .pricing-tier.highlight .tier-price { color: var(--white); }
+
+    .tier-desc {
+      font-size: 10px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .pricing-tier.highlight .tier-desc { color: rgba(255,255,255,0.85); }
+
+    .tier-note {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--sea-green);
+      margin-top: 6px;
+    }
+
+    .pricing-tier.highlight .tier-note { color: var(--green-light); }
+
+    /* ─── NEXT STEPS ──────────────────────────────────── */
+    .steps { display: flex; flex-direction: column; gap: 16px; }
+
+    .step { display: flex; align-items: flex-start; gap: 14px; }
+
+    .step-num {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--sea-green);
+      color: var(--white);
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-content { padding-top: 4px; }
+
+    .step-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--dark-green);
+      margin-bottom: 3px;
+    }
+
+    .step-desc {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-dark);
+    }
+
+    .step-desc a { color: var(--sea-green); font-weight: 600; text-decoration: none; }
+
+    /* ─── CALLOUT ─────────────────────────────────────── */
+    .callout {
+      background: var(--sea-green);
+      border-radius: 10px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .callout-icon {
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+
+    .callout-text {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--white);
+    }
+
+    .callout-text strong { font-weight: 600; }
+
+    /* ─── FOOTER ──────────────────────────────────────── */
+    footer {
+      background: var(--dark-green);
+      padding: 18px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .footer-cta { font-size: 13px; color: var(--eggshell); }
+    .footer-cta a { color: var(--green-light); text-decoration: none; font-weight: 600; }
+
+    .footer-contact { font-size: 11px; color: rgba(244,241,222,0.6); text-align: right; line-height: 1.6; }
+    .footer-contact a { color: #41C981; text-decoration: none; }
+
+    .page-indicator {
+      font-size: 10px;
+      color: rgba(244,241,222,0.35);
+      text-align: center;
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    /* ─── PRINT ───────────────────────────────────────── */
+    @media print {
+      body { background: white; padding: 0; }
+      .page { margin: 0; width: 100%; min-height: 0; page-break-after: always; }
+      .page:last-child { page-break-after: avoid; }
+      @page { margin: 0; size: A4; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════ -->
+<!--  PAGE 1 — Overview & Problem/Solution               -->
+<!-- ════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <header>
+    <div class="logo">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">venn</span>
+    </div>
+    <div class="header-right">
+      <span class="header-tagline">Finance Meets Simplicity</span>
+      <div class="header-company">Prepared for LocalTVTV Inc. · March 2026</div>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="hero-label">Prepared for David Williams — LocalTVTV Inc.</div>
+    <h1>The Simplest Way to Receive USD,<br/>Convert It, and Move It Home</h1>
+    <p>LocalTVTV earns revenue in US dollars from American advertising partners. Venn gives you a real USD bank account, FX rates cheaper than Payoneer, and instant transfers back to Scotiabank — with full account access for both co-owners.</p>
+  </div>
+
+  <div class="main">
+
+    <div class="card">
+      <h3>Current Challenges</h3>
+      <ul class="pain-list">
+        <li>Payoneer's expensive FX rates eat into every USD conversion</li>
+        <li>$10,000 per-transfer cap forces multiple transactions for a single payout</li>
+        <li>XE can exchange but can't handle the full money movement end-to-end</li>
+        <li>Wise restricted account access to the primary owner only — leaving the co-owner without support rights</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>How Venn Solves It</h3>
+      <ul class="solution-list">
+        <li>Real USD account with routing + account numbers — receive from Depaulty directly</li>
+        <li>EFT transfers up to $100,000 per transaction (10× Payoneer's limit)</li>
+        <li>FX at 0.45% on the free plan, 0.25% on the $100/mo plan — cheaper than both alternatives</li>
+        <li>Both co-owners get equal account access and equal support rights from day one</li>
+        <li>2% interest on any USD balance you leave sitting in the account</li>
+      </ul>
+    </div>
+
+    <div class="card full-width">
+      <h3>Your Workflow on Venn</h3>
+      <div style="display:flex; gap:0; align-items:stretch;">
+        <div style="flex:1; padding:14px 18px; background:var(--eggshell); border-radius:8px; text-align:center;">
+          <div style="font-size:22px; margin-bottom:8px;">💵</div>
+          <div style="font-size:12px; font-weight:600; color:var(--dark-green); margin-bottom:4px;">Receive USD</div>
+          <div style="font-size:12px; color:var(--text-muted);">Depaulty deposits directly to your Venn USD account via routing + account number — free, instant</div>
+        </div>
+        <div style="width:28px; display:flex; align-items:center; justify-content:center; color:var(--sea-green); font-size:18px; flex-shrink:0;">→</div>
+        <div style="flex:1; padding:14px 18px; background:var(--eggshell); border-radius:8px; text-align:center;">
+          <div style="font-size:22px; margin-bottom:8px;">💳</div>
+          <div style="font-size:12px; font-weight:600; color:var(--dark-green); margin-bottom:4px;">Pay US Bills</div>
+          <div style="font-size:12px; color:var(--text-muted);">Pay 1–2 US suppliers via USD transfer or virtual card — no extra account needed</div>
+        </div>
+        <div style="width:28px; display:flex; align-items:center; justify-content:center; color:var(--sea-green); font-size:18px; flex-shrink:0;">→</div>
+        <div style="flex:1; padding:14px 18px; background:var(--sea-green); border-radius:8px; text-align:center;">
+          <div style="font-size:22px; margin-bottom:8px; filter:brightness(0) invert(1);">🏦</div>
+          <div style="font-size:12px; font-weight:600; color:var(--white); margin-bottom:4px;">Convert + Send</div>
+          <div style="font-size:12px; color:rgba(255,255,255,0.85);">Convert at 0.25–0.45% FX and EFT the remainder to your Scotiabank CAD account — up to $100k at once</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-cta">
+      <a href="https://app.venn.ca/signup">app.venn.ca/signup</a> · <a href="https://venn.ca/pricing">venn.ca/pricing</a>
+    </div>
+    <div class="footer-contact">
+      Leo Katz · Senior Account Executive<br/>
+      <a href="mailto:leo@tryvault.com">leo@tryvault.com</a> · <a href="https://meetings.hubspot.com/leo-katz/venn-demo">Book a follow-up</a>
+    </div>
+  </footer>
+
+</div>
+
+
+<!-- ════════════════════════════════════════════════════ -->
+<!--  PAGE 2 — Platform Details, Social Proof & Pricing  -->
+<!-- ════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <header>
+    <div class="logo">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">venn</span>
+    </div>
+    <div class="header-right">
+      <span class="header-tagline">Finance Meets Simplicity</span>
+      <div class="header-company">Prepared for LocalTVTV Inc. · March 2026</div>
+    </div>
+  </header>
+
+  <div class="section-header">
+    <h2>Why Venn — The Numbers &amp; The Platform</h2>
+  </div>
+
+  <div class="main">
+
+    <div class="card">
+      <h3>By the Numbers</h3>
+      <div class="stat-grid">
+        <div class="stat-block">
+          <div class="stat-value">0.25%</div>
+          <div class="stat-label">FX rate on Business plan<br/>(vs. ~2–3% at Payoneer)</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-value">$100K</div>
+          <div class="stat-label">EFT limit per transfer<br/>(10× Payoneer's $10K cap)</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-value">2%</div>
+          <div class="stat-label">Interest on USD balances<br/>while funds sit in account</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-value">10,000+</div>
+          <div class="stat-label">Canadian businesses<br/>on the platform</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card dark">
+      <h3>What Customers Say</h3>
+      <div class="quotes">
+        <div class="quote-block">
+          <p class="quote-text">"Finally a platform that actually moves money and converts it — not just one or the other. Setup took 10 minutes and we were live same day."</p>
+          <p class="quote-attr">— Founder, Canadian Media Company</p>
+        </div>
+        <div class="quote-block">
+          <p class="quote-text">"We switched from Wise because of account access issues. At Venn, every partner has equal rights. Support actually talks to both of us."</p>
+          <p class="quote-attr">— Co-owner, Canadian Import Business</p>
+        </div>
+        <div class="quote-block">
+          <p class="quote-text">"The FX savings alone covered the monthly fee in our first week. The EFT limits are a non-issue — send it all in one shot."</p>
+          <p class="quote-attr">— CFO, Digital Agency</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card full-width">
+      <h3>Simple Pricing — Pick What Makes Sense</h3>
+      <div class="pricing-grid">
+        <div class="pricing-tier">
+          <div class="tier-name">Free</div>
+          <div class="tier-price">$0<span style="font-size:12px; font-weight:400;">/mo</span></div>
+          <div class="tier-desc">CAD &amp; USD accounts, e-transfers, virtual cards, 0.45% FX</div>
+          <div class="tier-note">Good starting point</div>
+        </div>
+        <div class="pricing-tier highlight">
+          <div class="tier-name">Plus</div>
+          <div class="tier-price">$40<span style="font-size:12px; font-weight:400; color:rgba(255,255,255,0.8);">/mo</span></div>
+          <div class="tier-desc">Everything in Free + lower FX, free ACH, physical cards, priority support</div>
+          <div class="tier-note">⭐ Recommended for LocalTVTV</div>
+        </div>
+        <div class="pricing-tier">
+          <div class="tier-name">Business</div>
+          <div class="tier-price">$100<span style="font-size:12px; font-weight:400;">/mo</span></div>
+          <div class="tier-desc">Multi-user access, expense management, 0.25% FX, dedicated support</div>
+          <div class="tier-note">As volume grows toward $100K</div>
+        </div>
+      </div>
+      <div style="margin-top:14px; padding:12px 16px; background:var(--eggshell); border-radius:8px; font-size:13px; color:var(--text-muted);">
+        <strong style="color:var(--dark-green);">Quick math for LocalTVTV:</strong> At $30K/mo converted, the Plus plan saves ~$240/mo in FX vs. Payoneer — the plan pays for itself 6× over.
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-cta">
+      <a href="https://app.venn.ca/signup">app.venn.ca/signup</a> · <a href="https://venn.ca/pricing">venn.ca/pricing</a>
+    </div>
+    <div class="footer-contact">
+      Leo Katz · Senior Account Executive<br/>
+      <a href="mailto:leo@tryvault.com">leo@tryvault.com</a> · <a href="https://meetings.hubspot.com/leo-katz/venn-demo">Book a follow-up</a>
+    </div>
+  </footer>
+
+</div>
+
+
+<!-- ════════════════════════════════════════════════════ -->
+<!--  PAGE 3 — Next Steps & CTA                          -->
+<!-- ════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <header>
+    <div class="logo">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">venn</span>
+    </div>
+    <div class="header-right">
+      <span class="header-tagline">Finance Meets Simplicity</span>
+      <div class="header-company">Prepared for LocalTVTV Inc. · March 2026</div>
+    </div>
+  </header>
+
+  <div class="hero" style="padding: 28px 48px;">
+    <div class="hero-label">Your Path to Go Live</div>
+    <h1 style="font-size:24px;">Getting LocalTVTV Up and Running</h1>
+    <p>You said it yourself — "this almost seems too easy." Here's what Monday looks like.</p>
+  </div>
+
+  <div class="main single" style="gap:20px;">
+
+    <div class="card">
+      <h3>Next Steps</h3>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-title">David &amp; partner align over the weekend</div>
+            <div class="step-desc">Share this deck with your Australian co-owner. The key points: USD routing numbers, equal account access for both owners, and EFT limits up to $100K.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-title">Sign up online Monday — takes 10 minutes</div>
+            <div class="step-desc">Go to <a href="https://app.venn.ca/signup">app.venn.ca/signup</a>. You'll need: articles of incorporation + photo ID for one owner. Add your co-owner immediately after as a 50% co-owner.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-title">Email Leo the second signup is complete</div>
+            <div class="step-desc">David's name may trigger compliance flags — it happens. Leo will tag the account for pre-clearance the moment the application comes through so your first payment isn't held up.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <div class="step-title">Account verified — usually within 30–60 min</div>
+            <div class="step-desc">Once approved, you'll get your USD routing numbers. Share them with Depaulty and your first deposit lands directly in Venn.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <div class="step-title">Wire transfer up to $1M / EFT up to $100K back to Scotiabank</div>
+            <div class="step-desc">Convert at 0.45% (free plan) or 0.25% (Plus), hit send — done. No holds, no multi-step transfers, no $10K caps.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-icon">⚡</div>
+      <div class="callout-text">
+        <strong>One thing to remember:</strong> Email Leo immediately after you hit submit on the application. That one step gets ahead of any compliance delay so your account is live and your first payment clears without drama.
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+      <div class="card">
+        <h3>Resources to Share with Your Partner</h3>
+        <ul class="solution-list">
+          <li><a href="https://venn.ca" style="color:var(--sea-green); font-weight:600; text-decoration:none;">venn.ca</a> — full product overview</li>
+          <li><a href="https://venn.ca/pricing" style="color:var(--sea-green); font-weight:600; text-decoration:none;">venn.ca/pricing</a> — plan comparison</li>
+          <li>Trustpilot reviews — search "Venn Business Banking"</li>
+          <li>Ask ChatGPT about Venn — trained on their product info</li>
+        </ul>
+      </div>
+      <div class="card dark">
+        <h3>Your Contact at Venn</h3>
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:4px;">
+          <div style="font-size:16px; font-weight:600; color:var(--eggshell);">Leo Katz</div>
+          <div style="font-size:12px; color:rgba(244,241,222,0.7);">Senior Account Executive</div>
+          <div style="height:1px; background:rgba(255,255,255,0.1);"></div>
+          <div style="font-size:13px; color:var(--green-light);">
+            <a href="mailto:leo@tryvault.com" style="color:var(--green-light); text-decoration:none;">leo@tryvault.com</a>
+          </div>
+          <div style="font-size:13px; color:var(--green-light);">
+            <a href="https://meetings.hubspot.com/leo-katz/venn-demo" style="color:var(--green-light); text-decoration:none;">Book time with Leo →</a>
+          </div>
+          <div style="font-size:12px; color:rgba(244,241,222,0.5); margin-top:4px; line-height:1.5;">
+            I'm your account manager from signup onward. Any questions — before or after — just email me directly.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-cta">
+      Ready? <a href="https://app.venn.ca/signup">app.venn.ca/signup</a> — then email Leo.
+    </div>
+    <div class="footer-contact">
+      Leo Katz · Senior Account Executive<br/>
+      <a href="mailto:leo@tryvault.com">leo@tryvault.com</a> · <a href="https://meetings.hubspot.com/leo-katz/venn-demo">meetings.hubspot.com/leo-katz/venn-demo</a>
+    </div>
+  </footer>
+
+</div>
+
+</body>
+</html>
