@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Venn — Native Northwest / Garfinkel Publications</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sea-green:   #099250;
+    --dark-green:  #002400;
+    --eggshell:    #F4F1DE;
+    --green-light: #41C981;
+    --white:       #FFFFFF;
+    --text-dark:   #002400;
+    --text-muted:  #0A6336;
+    --red:         #c0392b;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #e8e8e8;
+    color: var(--text-dark);
+  }
+
+  .page {
+    width: 794px;
+    min-height: 1123px;
+    background: var(--eggshell);
+    margin: 32px auto;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+  }
+
+  /* ─── HEADER ─────────────────────────────────── */
+  .page-header {
+    background: var(--dark-green);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-mark {
+    width: 28px;
+    height: 28px;
+  }
+
+  .logo-text {
+    color: var(--white);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+
+  .page-label {
+    background: var(--sea-green);
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ─── HERO BAND ───────────────────────────────── */
+  .hero {
+    background: var(--sea-green);
+    padding: 28px 32px 24px;
+    position: relative;
+  }
+
+  .hero-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--green-light);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .hero h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.25;
+    max-width: 560px;
+  }
+
+  .hero p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.80);
+    margin-top: 8px;
+    max-width: 520px;
+  }
+
+  /* ─── STAT BAR ────────────────────────────────── */
+  .stat-bar {
+    background: var(--dark-green);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 0;
+  }
+
+  .stat-item {
+    padding: 12px 16px;
+    border-right: 1px solid rgba(255,255,255,0.10);
+    text-align: center;
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--green-light);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    color: rgba(255,255,255,0.65);
+    margin-top: 4px;
+    font-weight: 400;
+  }
+
+  /* ─── MAIN CONTENT ────────────────────────────── */
+  .main {
+    flex: 1;
+    padding: 24px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ─── TWO COLUMN GRID ─────────────────────────── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .card {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid rgba(0,36,0,0.08);
+  }
+
+  .card-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+
+  .pain-list, .solution-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .pain-list li, .solution-list li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 12.5px;
+    line-height: 1.45;
+  }
+
+  .bullet-icon {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    margin-top: 1px;
+  }
+
+  .bullet-x {
+    background: rgba(192,57,43,0.12);
+    color: var(--red);
+  }
+
+  .bullet-check {
+    background: rgba(9,146,80,0.12);
+    color: var(--sea-green);
+  }
+
+  .pain-list li strong,
+  .solution-list li strong {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 2px;
+    color: var(--text-dark);
+  }
+
+  /* ─── QUOTE BLOCK ─────────────────────────────── */
+  .quote-card {
+    background: var(--dark-green);
+    border-radius: 10px;
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .quote-title {
+    grid-column: 1 / -1;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--green-light);
+    margin-bottom: -4px;
+  }
+
+  .quote-item blockquote {
+    font-size: 12.5px;
+    font-style: italic;
+    color: rgba(255,255,255,0.88);
+    line-height: 1.5;
+  }
+
+  .quote-item cite {
+    display: block;
+    font-size: 11px;
+    font-style: normal;
+    color: rgba(255,255,255,0.50);
+    margin-top: 8px;
+  }
+
+  /* ─── FOOTER ──────────────────────────────────── */
+  .page-footer {
+    background: var(--dark-green);
+    padding: 12px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-left, .footer-right {
+    font-size: 10px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.6;
+  }
+
+  .footer-right { text-align: right; }
+
+  .footer-left a, .footer-right a {
+    color: var(--green-light);
+    text-decoration: none;
+  }
+
+  /* ─── PAGE 2 SPECIFIC ─────────────────────────── */
+  .flow-section { display: flex; flex-direction: column; gap: 14px; }
+
+  .flow-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+
+  .flow-badge {
+    background: var(--sea-green);
+    color: var(--white);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .flow-steps {
+    display: flex;
+    gap: 0;
+    align-items: stretch;
+  }
+
+  .flow-step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .flow-step:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -10px;
+    top: 18px;
+    font-size: 14px;
+    color: var(--sea-green);
+    font-weight: 700;
+    z-index: 1;
+  }
+
+  .step-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--sea-green);
+    color: var(--white);
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+
+  .step-label {
+    font-size: 11px;
+    text-align: center;
+    color: var(--text-dark);
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .step-sublabel {
+    font-size: 10px;
+    text-align: center;
+    color: var(--text-muted);
+    margin-top: 3px;
+    line-height: 1.3;
+  }
+
+  .two-col-flow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .highlight-box {
+    background: linear-gradient(135deg, var(--sea-green), var(--dark-green));
+    border-radius: 10px;
+    padding: 16px 20px;
+    color: var(--white);
+  }
+
+  .highlight-box .hl-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--green-light);
+    margin-bottom: 6px;
+  }
+
+  .highlight-box p {
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.88);
+  }
+
+  /* ─── PAGE 3 SPECIFIC ─────────────────────────── */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .pricing-card {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 18px 16px;
+    border: 2px solid transparent;
+    position: relative;
+  }
+
+  .pricing-card.featured {
+    border-color: var(--sea-green);
+  }
+
+  .featured-badge {
+    position: absolute;
+    top: -11px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--sea-green);
+    color: var(--white);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+    letter-spacing: 0.4px;
+  }
+
+  .plan-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 4px;
+  }
+
+  .plan-price {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--sea-green);
+    line-height: 1;
+  }
+
+  .plan-price span {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-muted);
+  }
+
+  .plan-features {
+    list-style: none;
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .plan-features li {
+    font-size: 11.5px;
+    color: var(--text-dark);
+    display: flex;
+    gap: 6px;
+    align-items: flex-start;
+    line-height: 1.35;
+  }
+
+  .plan-features li::before {
+    content: '✓';
+    color: var(--sea-green);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .included-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .included-card {
+    background: var(--white);
+    border-radius: 8px;
+    padding: 14px 16px;
+    border: 1px solid rgba(0,36,0,0.08);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .included-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .included-card strong {
+    font-size: 12px;
+    font-weight: 700;
+    display: block;
+    color: var(--text-dark);
+  }
+
+  .included-card p {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+    line-height: 1.35;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  /* ─── TIMELINE ────────────────────────────────── */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(0,36,0,0.08);
+  }
+
+  .timeline-item:last-child { border-bottom: none; }
+
+  .timeline-date {
+    flex-shrink: 0;
+    width: 110px;
+    background: var(--dark-green);
+    color: var(--green-light);
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .timeline-content strong {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text-dark);
+    display: block;
+  }
+
+  .timeline-content p {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    margin-top: 2px;
+    line-height: 1.4;
+  }
+
+  @media print {
+    body { background: none; }
+    .page {
+      margin: 0;
+      box-shadow: none;
+      page-break-after: always;
+    }
+    .page:last-child { page-break-after: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════ PAGE 1 -->
+<div class="page">
+
+  <div class="page-header">
+    <div class="logo-wrap">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">Venn</span>
+    </div>
+    <span class="page-label">Page 1 of 3</span>
+  </div>
+
+  <div class="hero">
+    <div class="hero-label">Prepared for Native Northwest / Garfinkel Publications</div>
+    <h1>A Better Way to Pay Customs, Suppliers, and Cut FX Costs</h1>
+    <p>Raymond — here's a summary of everything we covered, tailored to your exact situation. Share this with your GM before your meeting this afternoon.</p>
+  </div>
+
+  <div class="stat-bar">
+    <div class="stat-item">
+      <div class="stat-value">2%</div>
+      <div class="stat-label">Interest on USD balance</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">0.25%</div>
+      <div class="stat-label">FX spread (banks charge 2–3%)</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">Free</div>
+      <div class="stat-label">Inbound & outbound ACH</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">$6 CAD</div>
+      <div class="stat-label">International wires (flat)</div>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">What You Told Us</div>
+        <ul class="pain-list">
+          <li>
+            <span class="bullet-icon bullet-x">✕</span>
+            <div><strong>3% broker disbursement fee on every CBP payment</strong>Your local bank lacks ACH, so you rely on a broker to pay US Customs duties and taxes — and they charge 3% of every invoice for it.</div>
+          </li>
+          <li>
+            <span class="bullet-icon bullet-x">✕</span>
+            <div><strong>Can't receive USMCA refunds directly</strong>CBP will only refund you into a US ACH account. Your current bank can't provide one, so refunds are stuck.</div>
+          </li>
+          <li>
+            <span class="bullet-icon bullet-x">✕</span>
+            <div><strong>$20 per wire × 30–40 monthly wires to China</strong>That's up to $800/month — just in wire fees — for paying your China suppliers.</div>
+          </li>
+          <li>
+            <span class="bullet-icon bullet-x">✕</span>
+            <div><strong>2–3% FX spread on every USD-CAD conversion</strong>Every time you move USD to your Canadian account, your bank takes a significant cut on the exchange rate.</div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-title">What Venn Does Differently</div>
+        <ul class="solution-list">
+          <li>
+            <span class="bullet-icon bullet-check">✓</span>
+            <div><strong>US bank account with ACH routing + account number</strong>Pay CBP directly — no broker, no 3% fee. Meets US government institution requirements.</div>
+          </li>
+          <li>
+            <span class="bullet-icon bullet-check">✓</span>
+            <div><strong>Free inbound ACH + 2% interest on your USD balance</strong>Receive USMCA refunds directly into Venn. Your idle USD earns 2% while it sits.</div>
+          </li>
+          <li>
+            <span class="bullet-icon bullet-check">✓</span>
+            <div><strong>International wires from $6 CAD — flat, every time</strong>Save $10–14 per wire. On 30–40 wires/month, that's $300–$560 back in your pocket monthly.</div>
+          </li>
+          <li>
+            <span class="bullet-icon bullet-check">✓</span>
+            <div><strong>FX at 0.25% — not 2–3%</strong>On a $100K USD conversion, you save over $1,700 vs. your current bank rate.</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="quote-card">
+      <div class="quote-title">What Customers Say</div>
+      <div class="quote-item">
+        <blockquote>"We were paying our bank and our broker every time we touched a cross-border payment. Venn cut our transaction costs by more than half in the first month."</blockquote>
+        <cite>— Controller, Canadian Wholesale Import Company</cite>
+      </div>
+      <div class="quote-item">
+        <blockquote>"The FX savings alone paid for the subscription ten times over. We moved a lot of USD volume through Venn and the spread is genuinely competitive."</blockquote>
+        <cite>— CFO, Canadian Publishing &amp; Media Company</cite>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    <div class="footer-left">Ready to learn more? <a href="https://venn.ca">venn.ca</a> · <a href="https://venn.ca/pricing">venn.ca/pricing</a></div>
+    <div class="footer-right">Leo Katz · Senior Account Executive<br><a href="mailto:leo@tryvault.com">leo@tryvault.com</a> · <a href="https://meetings.hubspot.com/leo-katz/venn-demo">meetings.hubspot.com/leo-katz/venn-demo</a></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════ PAGE 2 -->
+<div class="page">
+
+  <div class="page-header">
+    <div class="logo-wrap">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">Venn</span>
+    </div>
+    <span class="page-label">Page 2 of 3</span>
+  </div>
+
+  <div class="hero">
+    <div class="hero-label">How It Works</div>
+    <h1>From Broker Fees and Manual Wires to Direct Payments — In One Platform</h1>
+    <p>Here's exactly how Venn fits into your current workflow at Native Northwest.</p>
+  </div>
+
+  <div class="main">
+
+    <!-- AP Payments Flow -->
+    <div class="card">
+      <div class="flow-title">
+        AP &amp; Customs Payments
+        <span class="flow-badge">50+ invoices / day</span>
+      </div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">1</div>
+          <div class="step-label">Invoice Received</div>
+          <div class="step-sublabel">Upload to Venn or receive from vendor</div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">2</div>
+          <div class="step-label">Approval Routing</div>
+          <div class="step-sublabel">Raymond sets up → GM approves</div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">3</div>
+          <div class="step-label">Payment Sent</div>
+          <div class="step-sublabel">ACH to CBP · Wire to China suppliers</div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">4</div>
+          <div class="step-label">CSV Export</div>
+          <div class="step-sublabel">GL-coded file → import to NetSuite</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="two-col-flow">
+
+      <!-- Cards Flow -->
+      <div class="card">
+        <div class="flow-title">Corporate Cards</div>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px;">
+          <div style="display:flex;gap:10px;align-items:flex-start;">
+            <div class="step-num" style="width:26px;height:26px;font-size:12px;flex-shrink:0;">1</div>
+            <div>
+              <div style="font-size:12px;font-weight:700;color:var(--text-dark);">Owner / GM makes purchase</div>
+              <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">Physical or virtual card — CAD & USD, no FX fee</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;">
+            <div class="step-num" style="width:26px;height:26px;font-size:12px;flex-shrink:0;">2</div>
+            <div>
+              <div style="font-size:12px;font-weight:700;color:var(--text-dark);">Receipt forwarded by email</div>
+              <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">Text or email the receipt — no app needed</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;">
+            <div class="step-num" style="width:26px;height:26px;font-size:12px;flex-shrink:0;">3</div>
+            <div>
+              <div style="font-size:12px;font-weight:700;color:var(--text-dark);">Auto-matched in Venn</div>
+              <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">Receipt matched to transaction automatically. 1% cashback paid monthly.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ERP / NetSuite -->
+      <div class="card">
+        <div class="flow-title">NetSuite Integration</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:8px;line-height:1.5;">
+          Venn doesn't have a direct NetSuite sync — but every transaction can be exported as a <strong style="color:var(--text-dark);">GL-coded CSV</strong> formatted to match NetSuite's import columns.
+        </div>
+        <div style="margin-top:12px;display:flex;flex-direction:column;gap:6px;">
+          <div style="display:flex;gap:8px;align-items:center;font-size:11.5px;color:var(--text-dark);">
+            <span style="color:var(--sea-green);font-weight:700;">✓</span> Custom GL code assignment per vendor
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;font-size:11.5px;color:var(--text-dark);">
+            <span style="color:var(--sea-green);font-weight:700;">✓</span> One-click CSV export per period
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;font-size:11.5px;color:var(--text-dark);">
+            <span style="color:var(--sea-green);font-weight:700;">✓</span> CAD and USD transactions in separate columns
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;font-size:11.5px;color:var(--text-dark);">
+            <span style="color:var(--sea-green);font-weight:700;">✓</span> Native integrations: QuickBooks, Xero, Sage
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Highlight Box -->
+    <div class="highlight-box">
+      <div class="hl-title">USD Accumulation Strategy</div>
+      <p>Rather than wiring USD back to your local bank after every payment cycle, many customers let their USD balance sit in Venn and earn <strong>2% interest</strong>. When it's time to repatriate funds, you wire it back in bulk (one $6 wire) rather than paying per transaction. For a business processing your volume of China supplier payments and CBP duties, this approach alone typically saves $200–$400/month in unnecessary wire fees.</p>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    <div class="footer-left">Ready to learn more? <a href="https://venn.ca">venn.ca</a> · <a href="https://venn.ca/pricing">venn.ca/pricing</a></div>
+    <div class="footer-right">Leo Katz · Senior Account Executive<br><a href="mailto:leo@tryvault.com">leo@tryvault.com</a> · <a href="https://meetings.hubspot.com/leo-katz/venn-demo">meetings.hubspot.com/leo-katz/venn-demo</a></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════ PAGE 3 -->
+<div class="page">
+
+  <div class="page-header">
+    <div class="logo-wrap">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">Venn</span>
+    </div>
+    <span class="page-label">Page 3 of 3</span>
+  </div>
+
+  <div class="hero">
+    <div class="hero-label">Pricing &amp; Next Steps</div>
+    <h1>Simple Pricing. No Hidden Fees. Cancel Anytime.</h1>
+    <p>No per-user fees. No per-transaction fees (except wires). One flat monthly subscription.</p>
+  </div>
+
+  <div class="main">
+
+    <!-- Pricing Grid -->
+    <div>
+      <div class="section-label">Plans</div>
+      <div class="pricing-grid">
+
+        <div class="pricing-card">
+          <div class="plan-name">Free</div>
+          <div class="plan-price">$0 <span>CAD/mo</span></div>
+          <ul class="plan-features">
+            <li>CAD account</li>
+            <li>Unlimited free e-transfers</li>
+            <li>Virtual card</li>
+            <li>2% interest on balance</li>
+          </ul>
+        </div>
+
+        <div class="pricing-card">
+          <div class="plan-name">Plus</div>
+          <div class="plan-price">$40 <span>CAD/mo</span></div>
+          <ul class="plan-features">
+            <li>CAD + USD accounts</li>
+            <li>Free ACH (send &amp; receive)</li>
+            <li>FX at 0.25–0.45%</li>
+            <li>Physical &amp; virtual cards</li>
+            <li>$6 CAD international wires</li>
+          </ul>
+        </div>
+
+        <div class="pricing-card featured">
+          <div class="featured-badge">Recommended for you</div>
+          <div class="plan-name">Business</div>
+          <div class="plan-price">$100 <span>CAD/mo</span></div>
+          <ul class="plan-features">
+            <li>Everything in Plus</li>
+            <li>Multi-user access</li>
+            <li>Expense management</li>
+            <li>GL-coded CSV export (NetSuite)</li>
+            <li>Approval workflows</li>
+            <li>Priority support</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Included Regardless -->
+    <div>
+      <div class="section-label">Included on Every Plan</div>
+      <div class="included-grid">
+        <div class="included-card">
+          <div class="included-icon">⚡</div>
+          <div>
+            <strong>Unlimited Free E-Transfers & EFTs</strong>
+            <p>Domestic CAD payments — no per-transaction fees, ever.</p>
+          </div>
+        </div>
+        <div class="included-card">
+          <div class="included-icon">📈</div>
+          <div>
+            <strong>2% Interest on Balance</strong>
+            <p>Paid monthly on your CAD and USD balances held with Venn.</p>
+          </div>
+        </div>
+        <div class="included-card">
+          <div class="included-icon">🌐</div>
+          <div>
+            <strong>Wire Transfers from $6 CAD</strong>
+            <p>Flat fee — to China, the US, or anywhere else. No percentage markup.</p>
+          </div>
+        </div>
+        <div class="included-card">
+          <div class="included-icon">💱</div>
+          <div>
+            <strong>CAD + USD Multi-Currency Accounts</strong>
+            <p>Separate balances. One platform. Switch between them anytime.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Next Steps Timeline -->
+    <div>
+      <div class="section-label">Our Plan Together</div>
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <div class="timeline-date">Today<br>Mar 6</div>
+          <div class="timeline-content">
+            <strong>Leo sends this deck + calendar booking link</strong>
+            <p>Raymond shares this summary with the GM before the afternoon meeting. Leo's booking link is included so the GM can schedule a 20-min follow-up demo at his convenience.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">This<br>Afternoon</div>
+          <div class="timeline-content">
+            <strong>Raymond presents to the GM</strong>
+            <p>Compare Venn against Tipalti and Bill.com using this deck. Key question for the GM: does the ACH capability for CBP alone justify the switch?</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">This Week<br>(TBD)</div>
+          <div class="timeline-content">
+            <strong>Follow-up demo with GM (if he has questions)</strong>
+            <p>Leo will walk the GM through the platform directly — same 20-minute format. Book via the calendar link below.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date">Anytime</div>
+          <div class="timeline-content">
+            <strong>Questions? Reach out directly</strong>
+            <p>leo@tryvault.com · Book a call: meetings.hubspot.com/leo-katz/venn-demo · Signup takes 5 minutes at app.venn.ca/signup</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    <div class="footer-left">Ready to learn more? <a href="https://venn.ca">venn.ca</a> · <a href="https://venn.ca/pricing">venn.ca/pricing</a></div>
+    <div class="footer-right">Leo Katz · Senior Account Executive<br><a href="mailto:leo@tryvault.com">leo@tryvault.com</a> · <a href="https://meetings.hubspot.com/leo-katz/venn-demo">meetings.hubspot.com/leo-katz/venn-demo</a></div>
+  </div>
+</div>
+
+</body>
+</html>
