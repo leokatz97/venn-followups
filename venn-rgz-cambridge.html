@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Venn — RGZ-Cambridge</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    /* ─── BRAND TOKENS ─────────────────────────────── */
+    :root {
+      --sea-green:   #099250;
+      --dark-green:  #002400;
+      --eggshell:    #F4F1DE;
+      --green-mid:   #25AE69;
+      --green-light: #41C981;
+      --white:       #FFFFFF;
+      --text-dark:   #002400;
+      --text-muted:  #0A6336;
+      --red:         #c0392b;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      background: #e8e8e8;
+      color: var(--text-dark);
+    }
+
+    /* ─── PAGE WRAPPER ───────────────────────────────── */
+    .page {
+      width: 794px;
+      min-height: 1123px;
+      background: var(--eggshell);
+      margin: 0 auto 40px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* ─── HEADER ─────────────────────────────────────── */
+    header {
+      background: var(--dark-green);
+      padding: 24px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      width: 30px;
+      height: 30px;
+    }
+
+    .logo-text {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--eggshell);
+      letter-spacing: -0.5px;
+    }
+
+    .header-tagline {
+      font-size: 11px;
+      color: var(--green-light);
+      letter-spacing: 0.5px;
+    }
+
+    /* ─── HERO ───────────────────────────────────────── */
+    .hero {
+      background: var(--sea-green);
+      padding: 44px 48px 40px;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+
+    .hero-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--green-light);
+      margin-bottom: 12px;
+    }
+
+    .hero h1 {
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      color: var(--white);
+    }
+
+    .hero p {
+      font-size: 15px;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.88);
+      max-width: 600px;
+    }
+
+    /* ─── STAT BAR ───────────────────────────────────── */
+    .stat-bar {
+      display: flex;
+      background: var(--dark-green);
+      padding: 0;
+    }
+
+    .stat {
+      flex: 1;
+      padding: 20px 24px;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .stat:last-child { border-right: none; }
+
+    .stat-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--green-light);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      color: rgba(244,241,222,0.55);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    /* ─── MAIN CONTENT ───────────────────────────────── */
+    .main {
+      padding: 36px 48px 32px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    /* ─── CARDS ──────────────────────────────────────── */
+    .card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 24px 26px;
+      border-top: 4px solid var(--sea-green);
+    }
+
+    .card.dark {
+      background: var(--dark-green);
+      border-top: 4px solid var(--green-light);
+    }
+
+    .card.accent {
+      background: var(--sea-green);
+      border-top: none;
+    }
+
+    .card h2 {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--sea-green);
+      margin-bottom: 18px;
+    }
+
+    .card.dark h2 { color: var(--green-light); }
+    .card.accent h2 { color: rgba(255,255,255,0.7); }
+
+    /* ─── PAIN LIST ──────────────────────────────────── */
+    .pain-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .pain-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: var(--text-dark);
+    }
+
+    .pain-list li::before {
+      content: '✕';
+      color: var(--red);
+      font-weight: 700;
+      font-size: 12px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .pain-list li strong {
+      display: block;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 2px;
+    }
+
+    /* ─── SOLUTION LIST ──────────────────────────────── */
+    .solution-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .solution-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: var(--text-dark);
+    }
+
+    .solution-list li::before {
+      content: '✓';
+      color: var(--sea-green);
+      font-weight: 700;
+      font-size: 14px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .solution-list li strong {
+      display: block;
+      font-weight: 600;
+      color: var(--dark-green);
+      margin-bottom: 2px;
+    }
+
+    /* ─── QUOTE BLOCK ────────────────────────────────── */
+    .quote-block {
+      border-left: 3px solid var(--green-light);
+      padding-left: 14px;
+      margin-bottom: 18px;
+    }
+
+    .quote-block:last-child { margin-bottom: 0; }
+
+    .quote-text {
+      font-size: 13px;
+      font-style: italic;
+      line-height: 1.6;
+      color: rgba(244,241,222,0.9);
+      margin-bottom: 6px;
+    }
+
+    .quote-attr {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--green-light);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    /* ─── PRICING ────────────────────────────────────── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .pricing-tier {
+      background: var(--eggshell);
+      border-radius: 8px;
+      padding: 16px 12px;
+      text-align: center;
+    }
+
+    .pricing-tier.highlight {
+      background: var(--sea-green);
+    }
+
+    .tier-name {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .pricing-tier.highlight .tier-name { color: rgba(255,255,255,0.75); }
+
+    .tier-price {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--dark-green);
+      margin-bottom: 4px;
+      line-height: 1;
+    }
+
+    .pricing-tier.highlight .tier-price { color: var(--white); }
+
+    .tier-period {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .pricing-tier.highlight .tier-period { color: rgba(255,255,255,0.65); }
+
+    .tier-desc {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .pricing-tier.highlight .tier-desc { color: rgba(255,255,255,0.8); }
+
+    /* ─── HOW IT WORKS ───────────────────────────────── */
+    .flow-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .step-num {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--sea-green);
+      color: var(--white);
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-body {
+      padding-top: 4px;
+    }
+
+    .step-title {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--dark-green);
+      margin-bottom: 3px;
+    }
+
+    .step-desc {
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: #444;
+    }
+
+    /* ─── INTEGRATION BADGE ──────────────────────────── */
+    .integration-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .badge {
+      background: var(--eggshell);
+      border: 1px solid rgba(9,146,80,0.2);
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .badge.active {
+      background: var(--sea-green);
+      color: var(--white);
+      border-color: transparent;
+    }
+
+    /* ─── HIGHLIGHT BOX ──────────────────────────────── */
+    .highlight-box {
+      background: rgba(9,146,80,0.08);
+      border: 1.5px solid rgba(9,146,80,0.25);
+      border-radius: 10px;
+      padding: 18px 22px;
+    }
+
+    .highlight-box p {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: var(--text-dark);
+    }
+
+    .highlight-box strong {
+      color: var(--sea-green);
+    }
+
+    /* ─── NEXT STEPS ─────────────────────────────────── */
+    .next-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .ns-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 16px;
+      background: var(--white);
+      border-radius: 10px;
+      border-left: 4px solid var(--sea-green);
+    }
+
+    .ns-date {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--sea-green);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+      padding-top: 2px;
+      min-width: 90px;
+    }
+
+    .ns-body {
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: var(--text-dark);
+    }
+
+    .ns-body strong {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* ─── PAGE LABEL ─────────────────────────────────── */
+    .page-label {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: var(--green-light);
+      color: var(--dark-green);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 0 0 0 8px;
+    }
+
+    /* ─── SECTION DIVIDER ────────────────────────────── */
+    .section-title {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(9,146,80,0.15);
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────── */
+    footer {
+      background: var(--dark-green);
+      padding: 18px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .footer-cta {
+      font-size: 12.5px;
+      color: var(--eggshell);
+    }
+
+    .footer-cta a {
+      color: var(--green-light);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-contact {
+      font-size: 11px;
+      color: rgba(244,241,222,0.55);
+      text-align: right;
+      line-height: 1.6;
+    }
+
+    .footer-contact a {
+      color: var(--green-light);
+      text-decoration: none;
+    }
+
+    /* ─── PRINT ──────────────────────────────────────── */
+    @media print {
+      body { background: white; }
+      .page { margin: 0; width: 100%; page-break-after: always; }
+      .page:last-child { page-break-after: auto; }
+      @page { margin: 0; size: A4; }
+    }
+
+    @media screen {
+      body { padding: 40px 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 1 — OVERVIEW
+════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-label">Page 1 of 3</div>
+
+  <header>
+    <div class="logo">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">venn</span>
+    </div>
+    <span class="header-tagline">Finance Meets Simplicity</span>
+  </header>
+
+  <div class="hero">
+    <div class="hero-label">Prepared for RGZ-Cambridge · Sanad &amp; Daphne</div>
+    <h1>A Better Way to Handle Payments,<br/>Cards, and Reconciliation</h1>
+    <p>You're spending 2–3 days a month chasing receipts, manually matching transactions, and working around an RBC interface that gives you numbered transactions instead of vendor names. Venn fixes all of that — and replaces your current bank setup with something that actually works for a team your size.</p>
+  </div>
+
+  <div class="stat-bar">
+    <div class="stat">
+      <div class="stat-value">2%</div>
+      <div class="stat-label">Interest on balances</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">0.25%</div>
+      <div class="stat-label">FX rate (vs bank's 2–3%)</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">$0</div>
+      <div class="stat-label">EFT / e-transfer cost</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">$6</div>
+      <div class="stat-label">Wire transfers (flat)</div>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <div class="two-col">
+
+      <div class="card">
+        <h2>What You Told Us</h2>
+        <ul class="pain-list">
+          <li>
+            <div>
+              <strong>Missed invoices = interest charges</strong>
+              Going one-by-one through vendor payments manually, with no system to flag what's coming due.
+            </div>
+          </li>
+          <li>
+            <div>
+              <strong>RBC shows numbers, not vendors</strong>
+              "Operating in the 90s" — no vendor detail on transactions, making it hard to know what you're looking at.
+            </div>
+          </li>
+          <li>
+            <div>
+              <strong>2–3 days/month on reconciliation</strong>
+              Chasing 6 corporate card holders for receipts, uploading manually to Plexus, cross-referencing statements.
+            </div>
+          </li>
+          <li>
+            <div>
+              <strong>Daphne is the bottleneck</strong>
+              All payment approvals route through the COO — no workflow to delegate or streamline this.
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>What Venn Does Differently</h2>
+        <ul class="solution-list">
+          <li>
+            <div>
+              <strong>Full vendor visibility on every transaction</strong>
+              Every card swipe shows who, what, where, and when — not just a number.
+            </div>
+          </li>
+          <li>
+            <div>
+              <strong>Automated receipt capture</strong>
+              Employees forward receipts by email or text — Venn auto-matches them to the right transaction.
+            </div>
+          </li>
+          <li>
+            <div>
+              <strong>Approval workflows for outgoing payments</strong>
+              Drop an invoice in, route it to the right approver, send the payment — no manual bank entry.
+            </div>
+          </li>
+          <li>
+            <div>
+              <strong>GL codes push directly to your ERP</strong>
+              CSV export with your GL structure built in — compatible with Oracle-based systems like Plexus.
+            </div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="card dark">
+      <h2>What Customers Say</h2>
+      <div class="two-col" style="gap:24px;">
+        <div class="quote-block">
+          <p class="quote-text">"We used to spend the last week of every month reconciling. Now our bookkeeper exports from Venn and she's done in an afternoon. The receipt matching alone saved us hours."</p>
+          <p class="quote-attr">— Controller, Canadian Construction Company</p>
+        </div>
+        <div class="quote-block">
+          <p class="quote-text">"The corporate card visibility changed everything. Instead of waiting for statements, we can see every transaction in real time and know exactly who spent what."</p>
+          <p class="quote-attr">— Finance Manager, Mid-Market Services Firm</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-cta">
+      Learn more at <a href="https://venn.ca">venn.ca</a> · <a href="https://venn.ca/pricing">View Pricing</a>
+    </div>
+    <div class="footer-contact">
+      Leo Katz · Senior Account Executive<br/>
+      <a href="mailto:leo@tryvault.com">leo@tryvault.com</a> · <a href="https://meetings.hubspot.com/leo-katz/venn-demo">Book a Call</a>
+    </div>
+  </footer>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 2 — HOW IT WORKS
+════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-label">Page 2 of 3</div>
+
+  <header>
+    <div class="logo">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">venn</span>
+    </div>
+    <span class="header-tagline">Finance Meets Simplicity</span>
+  </header>
+
+  <div class="hero" style="padding: 32px 48px;">
+    <div class="hero-label">How It Works for RGZ-Cambridge</div>
+    <h1 style="font-size:26px;">From Invoice to Payment to ERP —<br/>Without the Manual Steps</h1>
+    <p>Here's exactly how Venn would replace your current workflow across AP and corporate cards.</p>
+  </div>
+
+  <div class="main" style="gap: 28px;">
+
+    <div>
+      <div class="section-title">Accounts Payable — Outgoing Payments</div>
+      <div class="card" style="border-top-color: var(--sea-green);">
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-title">Invoice arrives — drop it in Venn</div>
+              <div class="step-desc">Upload a PDF invoice directly to the platform. Venn reads the vendor, amount, and due date automatically.</div>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-title">Routed for approval</div>
+              <div class="step-desc">Sanad flags it. Daphne gets a notification and approves the payment with one click — no bank login required on her end until she wants to.</div>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-title">Payment sent — free</div>
+              <div class="step-desc">EFT, Interac, ACH, or wire. Payments go out automatically on the scheduled date. No more manual bank entry, no missed due dates.</div>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <div class="step-title">GL-coded and exported to Plexus</div>
+              <div class="step-desc">Every transaction carries your GL codes and department classes. Export as CSV in the exact format your Oracle system expects.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="two-col">
+
+      <div>
+        <div class="section-title">Corporate Cards — Receipt Automation</div>
+        <div class="card">
+          <div class="flow-steps">
+            <div class="flow-step">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <div class="step-title">Employee makes a purchase</div>
+                <div class="step-desc">They forward the receipt to a dedicated email or text it to a number. That's it — their job is done.</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <div class="step-title">Venn auto-matches it</div>
+                <div class="step-desc">The receipt is matched to the correct transaction. Vendor, amount, date — all visible instantly. No more numbered mystery transactions.</div>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <div class="step-title">Card enforcement (optional)</div>
+                <div class="step-desc">If an employee misses 3+ receipts in a row, their card locks automatically until they comply. No chasing required.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">ERP Integration — Oracle / Plexus</div>
+        <div class="card">
+          <p style="font-size:13.5px; line-height:1.6; color:#333; margin-bottom:16px;">
+            Venn has native integrations with QuickBooks and Xero, and has completed custom integrations with Oracle NetSuite and other ERP systems via structured CSV export.
+          </p>
+          <p style="font-size:13px; line-height:1.6; color:#555; margin-bottom:16px;">
+            For Oracle Plexus, we configure the export columns to match your GL code structure, department classes, and cost centers — so the data lands exactly where you need it.
+          </p>
+
+          <p style="font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--text-muted); margin-bottom:10px;">Supported exports</p>
+          <div class="integration-list">
+            <span class="badge active">Oracle (via CSV)</span>
+            <span class="badge active">GL Codes</span>
+            <span class="badge active">Department Classes</span>
+            <span class="badge">QuickBooks</span>
+            <span class="badge">Xero</span>
+            <span class="badge">Sage</span>
+          </div>
+        </div>
+
+        <div class="highlight-box" style="margin-top:16px;">
+          <p>When you migrate to a new ERP, <strong>Venn's export format migrates with you</strong>. Your column structure lives in Venn — change ERPs without changing your workflow.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-cta">
+      Questions before our call? <a href="mailto:leo@tryvault.com">leo@tryvault.com</a>
+    </div>
+    <div class="footer-contact">
+      Leo Katz · Senior Account Executive<br/>
+      <a href="https://meetings.hubspot.com/leo-katz/venn-demo">meetings.hubspot.com/leo-katz/venn-demo</a>
+    </div>
+  </footer>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 3 — PRICING + NEXT STEPS
+════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-label">Page 3 of 3</div>
+
+  <header>
+    <div class="logo">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">venn</span>
+    </div>
+    <span class="header-tagline">Finance Meets Simplicity</span>
+  </header>
+
+  <div class="hero" style="padding: 32px 48px;">
+    <div class="hero-label">Pricing &amp; Next Steps — RGZ-Cambridge</div>
+    <h1 style="font-size:26px;">Simple Pricing. No Hidden Fees.<br/>Cancel Anytime.</h1>
+    <p>Venn is month-to-month with no contracts. Most businesses your size start on Business and see ROI within the first reconciliation cycle.</p>
+  </div>
+
+  <div class="main" style="gap:28px;">
+
+    <div>
+      <div class="section-title">Plans</div>
+      <div class="pricing-grid">
+        <div class="pricing-tier">
+          <div class="tier-name">Free</div>
+          <div class="tier-price">$0</div>
+          <div class="tier-period">/ month</div>
+          <div class="tier-desc">CAD account · Unlimited e-transfers · Virtual card · 2% interest</div>
+        </div>
+        <div class="pricing-tier">
+          <div class="tier-name">Plus</div>
+          <div class="tier-price">$40</div>
+          <div class="tier-period">CAD / month</div>
+          <div class="tier-desc">USD account · Free ACH · FX at 0.25–0.45% · Physical cards</div>
+        </div>
+        <div class="pricing-tier highlight">
+          <div class="tier-name">Business ✦ Best Fit</div>
+          <div class="tier-price">$100</div>
+          <div class="tier-period">CAD / month</div>
+          <div class="tier-desc">Multi-user access · Expense management · ERP export · Approval workflows · Priority support</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title">What's included regardless of plan</div>
+      <div class="two-col" style="gap:12px;">
+        <div style="background:white; border-radius:10px; padding:16px 18px; display:flex; gap:10px; align-items:flex-start;">
+          <span style="color:var(--sea-green); font-weight:700; font-size:14px; flex-shrink:0;">✓</span>
+          <div>
+            <div style="font-size:13px; font-weight:600; color:var(--dark-green); margin-bottom:2px;">Unlimited free e-transfers & EFTs</div>
+            <div style="font-size:12px; color:#666; line-height:1.5;">No per-transaction fees on domestic payments</div>
+          </div>
+        </div>
+        <div style="background:white; border-radius:10px; padding:16px 18px; display:flex; gap:10px; align-items:flex-start;">
+          <span style="color:var(--sea-green); font-weight:700; font-size:14px; flex-shrink:0;">✓</span>
+          <div>
+            <div style="font-size:13px; font-weight:600; color:var(--dark-green); margin-bottom:2px;">2% interest on your balance</div>
+            <div style="font-size:12px; color:#666; line-height:1.5;">Earn while your operating funds sit in the account</div>
+          </div>
+        </div>
+        <div style="background:white; border-radius:10px; padding:16px 18px; display:flex; gap:10px; align-items:flex-start;">
+          <span style="color:var(--sea-green); font-weight:700; font-size:14px; flex-shrink:0;">✓</span>
+          <div>
+            <div style="font-size:13px; font-weight:600; color:var(--dark-green); margin-bottom:2px;">Wire transfers from $6 CAD</div>
+            <div style="font-size:12px; color:#666; line-height:1.5;">Flat fee — not a percentage of the transfer</div>
+          </div>
+        </div>
+        <div style="background:white; border-radius:10px; padding:16px 18px; display:flex; gap:10px; align-items:flex-start;">
+          <span style="color:var(--sea-green); font-weight:700; font-size:14px; flex-shrink:0;">✓</span>
+          <div>
+            <div style="font-size:13px; font-weight:600; color:var(--dark-green); margin-bottom:2px;">CAD + USD multi-currency accounts</div>
+            <div style="font-size:12px; color:#666; line-height:1.5;">Hold and convert between currencies at 0.25–0.45%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title">Our Plan Together</div>
+      <div class="next-steps">
+        <div class="ns-item">
+          <div class="ns-date">Now</div>
+          <div class="ns-body">
+            <strong>Share this with Daphne</strong>
+            Loop in your COO before our follow-up. This doc covers everything from today's demo — pain points, how Venn solves them, and how the ERP export works with Plexus.
+          </div>
+        </div>
+        <div class="ns-item">
+          <div class="ns-date">Mar 13</div>
+          <div class="ns-body">
+            <strong>Daphne returns from vacation</strong>
+            Have a quick internal conversation — does this solve the right problems? Any questions before our call?
+          </div>
+        </div>
+        <div class="ns-item">
+          <div class="ns-date">Mar 20</div>
+          <div class="ns-body">
+            <strong>Follow-up demo — same time, Friday</strong>
+            We'll walk Daphne through the platform directly, focus on payment approvals and corporate card workflow, and answer any questions from her perspective.
+          </div>
+        </div>
+        <div class="ns-item">
+          <div class="ns-date" style="color:var(--text-muted);">Anytime</div>
+          <div class="ns-body">
+            <strong>Reach out before the call</strong>
+            Quick question? Reply to my email or reach me directly at <a href="mailto:leo@tryvault.com" style="color:var(--sea-green); font-weight:600;">leo@tryvault.com</a> — I'm fast on email.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-cta">
+      <a href="https://app.venn.ca/signup">app.venn.ca/signup</a> · 5–7 min · Articles of incorporation + photo ID
+    </div>
+    <div class="footer-contact">
+      Leo Katz · Senior Account Executive<br/>
+      <a href="mailto:leo@tryvault.com">leo@tryvault.com</a> · <a href="https://meetings.hubspot.com/leo-katz/venn-demo">Book a Demo</a>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>
