@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Venn — Mycionics</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --sea-green:   #099250;
+      --dark-green:  #002400;
+      --eggshell:    #F4F1DE;
+      --green-mid:   #25AE69;
+      --green-light: #41C981;
+      --white:       #FFFFFF;
+      --text-dark:   #002400;
+      --text-muted:  #0A6336;
+      --red:         #c0392b;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      background: #ccc;
+      color: var(--text-dark);
+      padding: 24px 0;
+    }
+
+    .page {
+      background: var(--eggshell);
+      width: 794px;
+      min-height: 1123px;
+      margin: 0 auto 32px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      page-break-after: always;
+    }
+    .page:last-child { margin-bottom: 0; }
+
+    header {
+      background: var(--dark-green);
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-mark { width: 28px; height: 28px; }
+    .logo-text { font-size: 22px; font-weight: 600; color: var(--eggshell); letter-spacing: -0.5px; }
+    .header-right { text-align: right; }
+    .header-tagline { font-size: 10px; color: var(--green-light); letter-spacing: 0.5px; display: block; text-transform: uppercase; }
+    .header-company { font-size: 13px; color: var(--eggshell); font-weight: 600; display: block; margin-top: 2px; }
+    .page-badge {
+      position: absolute; top: 20px; right: 40px;
+      background: var(--sea-green); color: var(--white);
+      font-size: 10px; font-weight: 600; padding: 4px 10px;
+      border-radius: 4px; letter-spacing: 0.5px;
+    }
+
+    .hero {
+      background: var(--sea-green);
+      padding: 28px 40px;
+      flex-shrink: 0;
+    }
+    .hero-eyebrow { font-size: 10px; font-weight: 600; color: var(--green-light); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+    .hero h1 { font-size: 26px; font-weight: 700; color: var(--white); line-height: 1.25; letter-spacing: -0.3px; }
+    .hero p { font-size: 13px; color: rgba(255,255,255,0.75); margin-top: 8px; line-height: 1.6; max-width: 580px; }
+
+    .stat-bar {
+      background: var(--dark-green);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      flex-shrink: 0;
+    }
+    .stat-item { padding: 14px 16px; text-align: center; border-right: 1px solid rgba(255,255,255,0.08); }
+    .stat-item:last-child { border-right: none; }
+    .stat-val { font-size: 18px; font-weight: 700; color: var(--green-light); line-height: 1; }
+    .stat-lbl { font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 3px; line-height: 1.4; }
+
+    .main { flex: 1; padding: 28px 40px 24px; display: flex; flex-direction: column; gap: 20px; }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .card {
+      background: var(--white);
+      border-radius: 8px;
+      padding: 20px;
+      border: 1px solid rgba(0,36,0,0.08);
+    }
+    .card-title {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; margin-bottom: 14px; padding-bottom: 10px;
+      border-bottom: 1px solid rgba(0,36,0,0.08);
+    }
+    .card-title.bad  { color: var(--red); }
+    .card-title.good { color: var(--sea-green); }
+
+    .point-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .point-list li { font-size: 12.5px; line-height: 1.55; color: var(--text-dark); padding-left: 18px; position: relative; }
+    .point-list li::before { position: absolute; left: 0; top: 1px; font-weight: 700; font-size: 13px; }
+    .point-list.bad  li::before { content: '✕'; color: var(--red); }
+    .point-list.good li::before { content: '✓'; color: var(--sea-green); }
+    .point-list li strong { font-weight: 600; display: block; margin-bottom: 2px; }
+
+    .quote-card {
+      background: var(--dark-green); border-radius: 8px; padding: 20px 24px;
+      display: grid; grid-template-columns: 1fr 1px 1fr; gap: 20px;
+    }
+    .quote-block { color: var(--white); }
+    .quote-block blockquote { font-size: 12.5px; font-style: italic; color: rgba(255,255,255,0.85); line-height: 1.6; margin-bottom: 8px; }
+    .quote-block cite { font-size: 11px; color: var(--green-light); font-style: normal; font-weight: 600; }
+    .quote-divider { background: rgba(255,255,255,0.1); }
+
+    .steps-section { display: flex; flex-direction: column; gap: 6px; }
+    .steps-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 8px; }
+    .step-row { display: flex; align-items: flex-start; gap: 12px; background: var(--white); border-radius: 6px; padding: 12px 16px; border: 1px solid rgba(0,36,0,0.07); }
+    .step-num { width: 24px; height: 24px; border-radius: 50%; background: var(--sea-green); color: var(--white); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+    .step-body strong { font-size: 13px; font-weight: 600; color: var(--text-dark); display: block; margin-bottom: 2px; }
+    .step-body span { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+    .highlight-box { background: #e8f5ee; border-left: 4px solid var(--sea-green); border-radius: 6px; padding: 14px 18px; }
+    .highlight-box p { font-size: 12.5px; color: var(--text-dark); line-height: 1.6; }
+    .highlight-box strong { color: var(--sea-green); }
+
+    .vs-card {
+      background: var(--dark-green); border-radius: 8px; overflow: hidden;
+    }
+    .vs-header {
+      display: grid; grid-template-columns: 1fr 1fr;
+    }
+    .vs-col-head {
+      padding: 10px 16px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; text-align: center;
+    }
+    .vs-col-head.venn { background: var(--sea-green); color: var(--white); }
+    .vs-col-head.loop { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); }
+    .vs-row {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .vs-cell { padding: 10px 16px; font-size: 12px; line-height: 1.45; }
+    .vs-cell.venn { color: var(--green-light); font-weight: 600; }
+    .vs-cell.loop { color: rgba(255,255,255,0.4); }
+
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .pricing-tier { background: var(--white); border-radius: 8px; padding: 18px; border: 1px solid rgba(0,36,0,0.1); display: flex; flex-direction: column; gap: 10px; }
+    .pricing-tier.highlight { border: 2px solid var(--sea-green); position: relative; }
+    .pricing-tier.highlight::before { content: 'Recommended'; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--sea-green); color: #fff; font-size: 10px; font-weight: 700; padding: 2px 10px; border-radius: 10px; white-space: nowrap; }
+    .tier-name { font-size: 13px; font-weight: 700; color: var(--text-dark); }
+    .tier-price { font-size: 22px; font-weight: 700; color: var(--sea-green); line-height: 1; }
+    .tier-price sub { font-size: 12px; font-weight: 400; color: var(--text-muted); }
+    .tier-features { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .tier-features li { font-size: 11.5px; color: var(--text-muted); padding-left: 14px; position: relative; line-height: 1.45; }
+    .tier-features li::before { content: '·'; position: absolute; left: 3px; color: var(--sea-green); font-weight: 700; }
+
+    .included-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .included-item { background: var(--dark-green); border-radius: 6px; padding: 14px 16px; display: flex; align-items: flex-start; gap: 10px; }
+    .included-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .included-item strong { font-size: 12px; font-weight: 600; color: var(--green-light); display: block; margin-bottom: 2px; }
+    .included-item span { font-size: 11px; color: rgba(255,255,255,0.55); line-height: 1.4; }
+
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .timeline-item { display: flex; gap: 16px; align-items: flex-start; position: relative; padding-bottom: 14px; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item:not(:last-child)::after { content: ''; position: absolute; left: 15px; top: 30px; bottom: 0; width: 2px; background: rgba(9,146,80,0.2); }
+    .tl-dot { width: 30px; height: 30px; border-radius: 50%; background: var(--sea-green); color: var(--white); font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; z-index: 1; }
+    .tl-body { padding-top: 4px; }
+    .tl-date { font-size: 10px; font-weight: 700; color: var(--sea-green); text-transform: uppercase; letter-spacing: 0.5px; }
+    .tl-text { font-size: 12.5px; color: var(--text-dark); line-height: 1.5; margin-top: 2px; }
+
+    footer { background: var(--dark-green); padding: 14px 40px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+    .footer-left { font-size: 11px; color: rgba(255,255,255,0.45); }
+    .footer-left a { color: var(--green-light); text-decoration: none; }
+    .footer-right { text-align: right; }
+    .footer-right span { display: block; font-size: 11px; color: rgba(255,255,255,0.45); }
+    .footer-right span.name { color: var(--eggshell); font-weight: 600; font-size: 12px; }
+
+    @media print {
+      body { background: #fff; padding: 0; }
+      .page { margin: 0; page-break-after: always; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ PAGE 1 — OVERVIEW ═══ -->
+<div class="page">
+  <header>
+    <a class="logo">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">venn</span>
+    </a>
+    <div class="header-right">
+      <span class="header-tagline">Prepared for</span>
+      <span class="header-company">Mycionics · March 9, 2026</span>
+    </div>
+    <div class="page-badge">Page 1 of 3</div>
+  </header>
+
+  <div class="hero">
+    <div class="hero-eyebrow">The Challenge</div>
+    <h1>A Better Way to Manage Cards<br>and International Payments</h1>
+    <p>One card shared across a 5-person installation team — and FX payments through a slow, expensive intermediary. Here's what's breaking down.</p>
+  </div>
+
+  <div class="stat-bar">
+    <div class="stat-item"><div class="stat-val">2%</div><div class="stat-lbl">Interest on<br>account balance</div></div>
+    <div class="stat-item"><div class="stat-val">0.25%</div><div class="stat-lbl">FX rate<br>(vs bank's 2–3%)</div></div>
+    <div class="stat-item"><div class="stat-val">$0</div><div class="stat-lbl">EFT &amp; local<br>transfer cost</div></div>
+    <div class="stat-item"><div class="stat-val">$6</div><div class="stat-lbl">Wire transfers<br>(flat fee CAD)</div></div>
+  </div>
+
+  <div class="main">
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title bad">What You Told Us</div>
+        <ul class="point-list bad">
+          <li>
+            <strong>One card for five people</strong>
+            Your installation team shares a single Canadian credit card. Tracking receipts across a month-long trip — ~$3K per head — is a full-time problem.
+          </li>
+          <li>
+            <strong>International payments are a nightmare</strong>
+            Paying US and European parts suppliers through Convera (formerly Western Union) is slow, unreliable, and expensive — and you just processed a $500K USD motor order.
+          </li>
+          <li>
+            <strong>No visibility until it's too late</strong>
+            With one card out in the field, there's no way to see what's being spent in real time — or stop an overspend before it happens.
+          </li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title good">What Venn Does Differently</div>
+        <ul class="point-list good">
+          <li>
+            <strong>A card for every team member</strong>
+            Issue physical or virtual Mastercards instantly — one per installer, with custom spending limits. Works in any currency, accepted everywhere.
+          </li>
+          <li>
+            <strong>Fast, cheap international payments</strong>
+            Free local transfers to the US, Europe, and the UK. $6 flat for wires anywhere else. Set limit orders to lock in a good rate before it moves.
+          </li>
+          <li>
+            <strong>Automated receipt collection</strong>
+            Every purchase triggers an SMS or email asking for the receipt. Your team replies with a photo — it's matched automatically. No chasing at month-end.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="quote-card">
+      <div class="quote-block">
+        <blockquote>"We were sharing cards and chasing receipts every month. Venn gave everyone their own card and the reconciliation basically took care of itself."</blockquote>
+        <cite>— Operations Lead, Canadian Tech Hardware Company</cite>
+      </div>
+      <div class="quote-divider"></div>
+      <div class="quote-block">
+        <blockquote>"The FX rates were meaningfully better than what we were getting from our bank, and the transfers actually arrived on time."</blockquote>
+        <cite>— Finance Manager, International Manufacturer</cite>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-left">Ready to learn more? <a href="https://venn.ca">venn.ca</a> · <a href="https://venn.ca/pricing">venn.ca/pricing</a></div>
+    <div class="footer-right">
+      <span class="name">Leo Katz · Senior Account Executive</span>
+      <span>leo@tryvault.com · meetings.hubspot.com/leo-katz/venn-demo</span>
+    </div>
+  </footer>
+</div>
+
+
+<!-- ═══ PAGE 2 — HOW IT WORKS ═══ -->
+<div class="page">
+  <header>
+    <a class="logo">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">venn</span>
+    </a>
+    <div class="header-right">
+      <span class="header-tagline">Prepared for</span>
+      <span class="header-company">Mycionics · March 9, 2026</span>
+    </div>
+    <div class="page-badge">Page 2 of 3</div>
+  </header>
+
+  <div class="hero">
+    <div class="hero-eyebrow">How It Works</div>
+    <h1>From One Shared Card and Slow Wires<br>to a Platform Built for Your Team</h1>
+    <p>Here's exactly how Venn fits into how Mycionics operates — on the road and across borders.</p>
+  </div>
+
+  <div class="main">
+    <div class="two-col">
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div class="steps-section">
+          <div class="steps-title">Corporate Cards for Installation Teams</div>
+          <div class="step-row">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <strong>Issue a card per team member instantly</strong>
+              <span>Virtual or physical Mastercard — works in CAD, USD, EUR, or GBP. Set a per-trip limit per card. Update limits mid-trip in seconds.</span>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <strong>Automatic receipt request after every purchase</strong>
+              <span>SMS or email (both work internationally on data). Team member replies with a photo — no login required.</span>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <strong>Receipt matched, dashboard updated in real time</strong>
+              <span>You see every transaction live. Missing receipts auto-lock the card until uploaded — no chasing at month-end.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div class="steps-section">
+          <div class="steps-title">International Payments (US &amp; Europe)</div>
+          <div class="step-row">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <strong>Add your US and European suppliers once</strong>
+              <span>Invite vendors by email to submit their own banking details — Venn verifies everything. ACH limit is $100K per transfer.</span>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <strong>Convert CAD → USD or EUR at 0.25–0.45%</strong>
+              <span>Type in the amount, select the currency, hit send. Or set a limit order to auto-convert when the rate hits your target.</span>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <strong>Transfer sent — free to US, EU, UK</strong>
+              <span>Local transfers to Canada, US, Europe, and UK are free. $6 CAD flat for wires anywhere else. Arrives fast.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="highlight-box">
+          <p>Mycionics is on <strong>QuickBooks Desktop</strong>. Venn exports all transactions as CSV — download and import directly into QuickBooks with no manual data entry.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="vs-card">
+      <div class="vs-header">
+        <div class="vs-col-head venn">Venn</div>
+        <div class="vs-col-head loop">Loop</div>
+      </div>
+      <div class="vs-row">
+        <div class="vs-cell venn">One card works in every currency</div>
+        <div class="vs-cell loop">Separate cards per currency</div>
+      </div>
+      <div class="vs-row">
+        <div class="vs-cell venn">2% cashback on all purchases</div>
+        <div class="vs-cell loop">Points (~0.5% cash equivalent)</div>
+      </div>
+      <div class="vs-row">
+        <div class="vs-cell venn">$40/month flat</div>
+        <div class="vs-cell loop">~$300/month</div>
+      </div>
+      <div class="vs-row">
+        <div class="vs-cell venn">Employee onboarding via email — instant</div>
+        <div class="vs-cell loop">Full KYC for every employee</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-left">Ready to learn more? <a href="https://venn.ca">venn.ca</a> · <a href="https://venn.ca/pricing">venn.ca/pricing</a></div>
+    <div class="footer-right">
+      <span class="name">Leo Katz · Senior Account Executive</span>
+      <span>leo@tryvault.com · meetings.hubspot.com/leo-katz/venn-demo</span>
+    </div>
+  </footer>
+</div>
+
+
+<!-- ═══ PAGE 3 — PRICING + NEXT STEPS ═══ -->
+<div class="page">
+  <header>
+    <a class="logo">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">venn</span>
+    </a>
+    <div class="header-right">
+      <span class="header-tagline">Prepared for</span>
+      <span class="header-company">Mycionics · March 9, 2026</span>
+    </div>
+    <div class="page-badge">Page 3 of 3</div>
+  </header>
+
+  <div class="hero">
+    <div class="hero-eyebrow">Pricing &amp; Next Steps</div>
+    <h1>Simple Pricing. No Hidden Fees.<br>Cancel Anytime.</h1>
+    <p>One flat monthly fee — no per-user charges, no FX markups buried in the rate.</p>
+  </div>
+
+  <div class="main">
+    <div class="pricing-grid">
+      <div class="pricing-tier">
+        <div class="tier-name">Free</div>
+        <div class="tier-price">$0 <sub>CAD / mo</sub></div>
+        <ul class="tier-features">
+          <li>CAD business account</li>
+          <li>Unlimited free e-transfers</li>
+          <li>1 virtual card</li>
+          <li>2% interest on balance</li>
+        </ul>
+      </div>
+      <div class="pricing-tier highlight">
+        <div class="tier-name">Plus</div>
+        <div class="tier-price">$40 <sub>CAD / mo</sub></div>
+        <ul class="tier-features">
+          <li>25 virtual + physical cards</li>
+          <li>Custom limits &amp; merchant restrictions</li>
+          <li>Free EFTs, ACH &amp; local transfers</li>
+          <li>FX at 0.25–0.45%</li>
+          <li>Custom user roles</li>
+          <li>2% cashback up to $25K/mo</li>
+          <li>Automated SMS/email receipts</li>
+          <li>Limit orders for FX</li>
+        </ul>
+      </div>
+      <div class="pricing-tier">
+        <div class="tier-name">Business</div>
+        <div class="tier-price">$100 <sub>CAD / mo</sub></div>
+        <ul class="tier-features">
+          <li>Everything in Plus</li>
+          <li>Multi-user expense management</li>
+          <li>ERP &amp; accounting export</li>
+          <li>Approval workflows</li>
+          <li>Priority support</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="included-grid">
+      <div class="included-item">
+        <div class="included-icon">🌍</div>
+        <div>
+          <strong>Free Transfers — US, EU, UK, Canada</strong>
+          <span>Send to your parts suppliers abroad at zero cost. $6 flat for wires everywhere else.</span>
+        </div>
+      </div>
+      <div class="included-item">
+        <div class="included-icon">💱</div>
+        <div>
+          <strong>FX at 0.25–0.45%</strong>
+          <span>Convert CAD to USD or EUR at near-interbank rates — a fraction of what Convera charges.</span>
+        </div>
+      </div>
+      <div class="included-item">
+        <div class="included-icon">💳</div>
+        <div>
+          <strong>Cards That Work in Any Currency</strong>
+          <span>One Mastercard per team member — accepted everywhere, in any currency, no separate cards needed.</span>
+        </div>
+      </div>
+      <div class="included-item">
+        <div class="included-icon">💰</div>
+        <div>
+          <strong>2% Interest on Your Balance</strong>
+          <span>Every dollar sitting in Venn earns you 2% annually — including funds held for upcoming FX payments.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title good" style="margin-bottom:16px;">Our Plan Together</div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="tl-dot">→</div>
+          <div class="tl-body">
+            <div class="tl-date">Now</div>
+            <div class="tl-text">Leo sends this recap + comparison resources. Matthew reviews and presents to the management team.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">📅</div>
+          <div class="tl-body">
+            <div class="tl-date">March 23 — Follow-Up Call</div>
+            <div class="tl-text">Reconnect after the Loop evaluation. Answer any questions from the management review. Same time, two weeks out.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">✓</div>
+          <div class="tl-body">
+            <div class="tl-date">Decision — Before End of March</div>
+            <div class="tl-text">Next installation trip is in April — get set up before then. Onboarding takes under 10 minutes at app.venn.ca/signup.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">✉</div>
+          <div class="tl-body">
+            <div class="tl-date">Anytime</div>
+            <div class="tl-text">Reach out directly: leo@tryvault.com · meetings.hubspot.com/leo-katz/venn-demo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-left">Ready to learn more? <a href="https://venn.ca">venn.ca</a> · <a href="https://venn.ca/pricing">venn.ca/pricing</a></div>
+    <div class="footer-right">
+      <span class="name">Leo Katz · Senior Account Executive</span>
+      <span>leo@tryvault.com · meetings.hubspot.com/leo-katz/venn-demo</span>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>
