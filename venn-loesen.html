@@ -2,590 +2,833 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Venn x Loesen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Venn — Loesen</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    /* ─── BRAND TOKENS ─────────────────────────────── */
+    :root {
+      --sea-green:   #099250;
+      --dark-green:  #002400;
+      --eggshell:    #F4F1DE;
+      --green-mid:   #25AE69;
+      --green-light: #41C981;
+      --white:       #FFFFFF;
+      --text-dark:   #002400;
+      --text-muted:  #0A6336;
+      --red:         #c0392b;
+    }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Inter', sans-serif;
-      background: #0a0a0a;
-      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      background: #ccc;
+      color: var(--text-dark);
+      padding: 24px 0;
     }
 
-    /* ── PAGE SHELL ── */
+    /* ─── PAGE ───────────────────────────────────────── */
     .page {
-      width: 1280px;
-      min-height: 720px;
-      margin: 0 auto 48px;
-      position: relative;
-      overflow: hidden;
-      background: #0f0f0f;
-      border: 1px solid #1e1e1e;
+      background: var(--eggshell);
+      width: 794px;
+      min-height: 1123px;
+      margin: 0 auto 32px;
       display: flex;
       flex-direction: column;
+      position: relative;
+      page-break-after: always;
     }
+    .page:last-child { margin-bottom: 0; }
 
-    /* ── HEADER BAR ── */
-    .header {
+    /* ─── HEADER ─────────────────────────────────────── */
+    header {
+      background: var(--dark-green);
+      padding: 20px 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 28px 48px;
-      border-bottom: 1px solid #1e1e1e;
+      flex-shrink: 0;
     }
 
     .logo {
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      color: #fff;
-    }
-    .logo span { color: #00c896; }
-
-    .header-right {
-      font-size: 13px;
-      color: #555;
-      font-weight: 400;
-    }
-
-    /* ── CONTENT ── */
-    .content {
-      flex: 1;
-      padding: 52px 48px 48px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    /* ── HERO (page 1) ── */
-    .hero-eyebrow {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: #00c896;
-      margin-bottom: 20px;
-    }
-    .hero-heading {
-      font-size: 52px;
-      font-weight: 800;
-      line-height: 1.08;
-      letter-spacing: -1.5px;
-      color: #fff;
-      max-width: 700px;
-      margin-bottom: 28px;
-    }
-    .hero-heading em {
-      font-style: normal;
-      color: #00c896;
-    }
-    .hero-sub {
-      font-size: 17px;
-      color: #888;
-      font-weight: 400;
-      max-width: 540px;
-      line-height: 1.65;
-      margin-bottom: 56px;
-    }
-
-    /* pain points grid */
-    .pain-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-    .pain-card {
-      background: #161616;
-      border: 1px solid #262626;
-      border-radius: 12px;
-      padding: 24px;
-    }
-    .pain-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      background: #1a1a1a;
-      border: 1px solid #2a2a2a;
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 17px;
-      margin-bottom: 14px;
+      gap: 10px;
+      text-decoration: none;
     }
-    .pain-title {
-      font-size: 14px;
+    .logo-mark { width: 28px; height: 28px; }
+    .logo-text {
+      font-size: 22px;
       font-weight: 600;
-      color: #e0e0e0;
-      margin-bottom: 6px;
-    }
-    .pain-desc {
-      font-size: 13px;
-      color: #666;
-      line-height: 1.6;
+      color: var(--eggshell);
+      letter-spacing: -0.5px;
     }
 
-    /* ── SECTION LABEL ── */
-    .section-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 2.5px;
+    .header-right { text-align: right; }
+    .header-tagline {
+      font-size: 10px;
+      color: var(--green-light);
+      letter-spacing: 0.5px;
+      display: block;
       text-transform: uppercase;
-      color: #00c896;
-      margin-bottom: 14px;
     }
-    .section-heading {
-      font-size: 38px;
-      font-weight: 800;
-      letter-spacing: -1px;
-      line-height: 1.1;
-      color: #fff;
-      margin-bottom: 40px;
+    .header-company {
+      font-size: 13px;
+      color: var(--eggshell);
+      font-weight: 600;
+      display: block;
+      margin-top: 2px;
     }
-    .section-heading em {
-      font-style: normal;
-      color: #00c896;
+    .page-badge {
+      position: absolute;
+      top: 20px;
+      right: 40px;
+      background: var(--sea-green);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
     }
 
-    /* ── TWO-COL LAYOUT ── */
+    /* ─── HERO STRIP ─────────────────────────────────── */
+    .hero {
+      background: var(--sea-green);
+      padding: 28px 40px;
+      flex-shrink: 0;
+    }
+    .hero-eyebrow {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--green-light);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .hero h1 {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.25;
+      letter-spacing: -0.3px;
+    }
+    .hero p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.75);
+      margin-top: 8px;
+      line-height: 1.6;
+      max-width: 560px;
+    }
+
+    /* ─── STAT BAR ───────────────────────────────────── */
+    .stat-bar {
+      background: var(--dark-green);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      flex-shrink: 0;
+    }
+    .stat-item {
+      padding: 14px 16px;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-val {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--green-light);
+      line-height: 1;
+    }
+    .stat-lbl {
+      font-size: 10px;
+      color: rgba(255,255,255,0.5);
+      margin-top: 3px;
+      line-height: 1.4;
+    }
+
+    /* ─── MAIN CONTENT ───────────────────────────────── */
+    .main {
+      flex: 1;
+      padding: 28px 40px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* ─── TWO-COL GRID ───────────────────────────────── */
     .two-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      flex: 1;
-    }
-
-    /* solution card */
-    .sol-card {
-      background: #161616;
-      border: 1px solid #262626;
-      border-radius: 14px;
-      padding: 28px;
-      display: flex;
-      flex-direction: column;
       gap: 16px;
     }
-    .sol-card-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+
+    .card {
+      background: var(--white);
+      border-radius: 8px;
+      padding: 20px;
+      border: 1px solid rgba(0,36,0,0.08);
     }
-    .sol-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      background: #0d2e22;
-      border: 1px solid #00c89633;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-    .sol-title {
-      font-size: 15px;
+    .card-title {
+      font-size: 11px;
       font-weight: 700;
-      color: #e8e8e8;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(0,36,0,0.08);
     }
-    .sol-items {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-    }
-    .sol-items li {
-      font-size: 13px;
-      color: #777;
+    .card-title.bad  { color: var(--red); }
+    .card-title.good { color: var(--sea-green); }
+
+    .point-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .point-list li {
+      font-size: 12.5px;
       line-height: 1.55;
-      padding-left: 16px;
+      color: var(--text-dark);
+      padding-left: 18px;
       position: relative;
     }
-    .sol-items li::before {
-      content: '';
+    .point-list li::before {
       position: absolute;
       left: 0;
-      top: 8px;
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: #00c896;
+      top: 1px;
+      font-weight: 700;
+      font-size: 13px;
     }
+    .point-list.bad  li::before { content: '✕'; color: var(--red); }
+    .point-list.good li::before { content: '✓'; color: var(--sea-green); }
+    .point-list li strong { font-weight: 600; display: block; margin-bottom: 2px; }
 
-    /* stat strip */
-    .stat-strip {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-top: 24px;
-    }
-    .stat-card {
-      background: #0d2e22;
-      border: 1px solid #00c89633;
-      border-radius: 12px;
+    /* ─── QUOTE CARD ─────────────────────────────────── */
+    .quote-card {
+      background: var(--dark-green);
+      border-radius: 8px;
       padding: 20px 24px;
-      text-align: center;
-    }
-    .stat-value {
-      font-size: 28px;
-      font-weight: 800;
-      color: #00c896;
-      letter-spacing: -0.5px;
-    }
-    .stat-label {
-      font-size: 12px;
-      color: #777;
-      margin-top: 4px;
-    }
-
-    /* ── PAGE 3 — NEXT STEPS ── */
-    .steps-layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      flex: 1;
+      gap: 20px;
     }
-    .steps-col {}
-    .steps-col-title {
+    .quote-block { color: var(--white); }
+    .quote-block blockquote {
+      font-size: 12.5px;
+      font-style: italic;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+    .quote-block cite {
       font-size: 11px;
+      color: var(--green-light);
+      font-style: normal;
       font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #555;
-      margin-bottom: 20px;
     }
-    .step-item {
+    .quote-divider {
+      width: 1px;
+      background: rgba(255,255,255,0.1);
+      margin: 0 auto;
+    }
+
+    /* ─── NUMBERED STEPS ─────────────────────────────── */
+    .steps-section { display: flex; flex-direction: column; gap: 6px; }
+    .steps-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .step-row {
       display: flex;
-      gap: 16px;
-      margin-bottom: 20px;
       align-items: flex-start;
+      gap: 12px;
+      background: var(--white);
+      border-radius: 6px;
+      padding: 12px 16px;
+      border: 1px solid rgba(0,36,0,0.07);
     }
     .step-num {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      background: #00c896;
-      color: #000;
-      font-size: 13px;
-      font-weight: 800;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--sea-green);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
       margin-top: 1px;
     }
-    .step-text strong {
-      display: block;
-      font-size: 14px;
-      font-weight: 600;
-      color: #e0e0e0;
-      margin-bottom: 3px;
-    }
-    .step-text span {
+    .step-body strong {
       font-size: 13px;
-      color: #666;
-      line-height: 1.55;
+      font-weight: 600;
+      color: var(--text-dark);
+      display: block;
+      margin-bottom: 2px;
+    }
+    .step-body span {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
     }
 
-    /* pricing card */
-    .pricing-card {
-      background: #161616;
-      border: 1px solid #262626;
-      border-radius: 16px;
-      padding: 32px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .pricing-badge {
-      display: inline-flex;
-      align-items: center;
-      background: #0d2e22;
-      border: 1px solid #00c89633;
+    /* ─── HIGHLIGHT BOX ──────────────────────────────── */
+    .highlight-box {
+      background: #e8f5ee;
+      border-left: 4px solid var(--sea-green);
       border-radius: 6px;
-      padding: 4px 10px;
-      font-size: 11px;
-      font-weight: 600;
-      color: #00c896;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      width: fit-content;
+      padding: 14px 18px;
     }
-    .pricing-amount {
-      font-size: 42px;
-      font-weight: 800;
-      letter-spacing: -1px;
-      color: #fff;
+    .highlight-box p {
+      font-size: 12.5px;
+      color: var(--text-dark);
+      line-height: 1.6;
     }
-    .pricing-amount sub {
-      font-size: 16px;
-      font-weight: 400;
-      color: #666;
-      letter-spacing: 0;
+    .highlight-box strong { color: var(--sea-green); }
+
+    /* ─── PRICING GRID ───────────────────────────────── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
     }
-    .pricing-items {
-      list-style: none;
+    .pricing-tier {
+      background: var(--white);
+      border-radius: 8px;
+      padding: 18px;
+      border: 1px solid rgba(0,36,0,0.1);
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
-    .pricing-items li {
-      font-size: 13px;
-      color: #777;
-      padding-left: 20px;
+    .pricing-tier.highlight {
+      border: 2px solid var(--sea-green);
       position: relative;
-      line-height: 1.5;
     }
-    .pricing-items li::before {
-      content: '✓';
+    .pricing-tier.highlight::before {
+      content: 'Recommended';
       position: absolute;
-      left: 0;
-      color: #00c896;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--sea-green);
+      color: #fff;
+      font-size: 10px;
       font-weight: 700;
-      font-size: 12px;
+      padding: 2px 10px;
+      border-radius: 10px;
+      white-space: nowrap;
     }
-    .pricing-cta {
-      display: inline-block;
-      background: #00c896;
-      color: #000;
-      font-size: 14px;
+    .tier-name {
+      font-size: 13px;
       font-weight: 700;
-      padding: 14px 28px;
-      border-radius: 8px;
-      text-decoration: none;
-      text-align: center;
-      margin-top: 4px;
+      color: var(--text-dark);
+    }
+    .tier-price {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--sea-green);
+      line-height: 1;
+    }
+    .tier-price sub {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+    .tier-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .tier-features li {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      padding-left: 14px;
+      position: relative;
+      line-height: 1.45;
+    }
+    .tier-features li::before {
+      content: '·';
+      position: absolute;
+      left: 3px;
+      color: var(--sea-green);
+      font-weight: 700;
     }
 
-    /* ── FOOTER ── */
-    .footer {
-      padding: 18px 48px;
-      border-top: 1px solid #1a1a1a;
+    /* ─── INCLUDED GRID ──────────────────────────────── */
+    .included-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .included-item {
+      background: var(--dark-green);
+      border-radius: 6px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .included-icon {
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .included-item strong {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--green-light);
+      display: block;
+      margin-bottom: 2px;
+    }
+    .included-item span {
+      font-size: 11px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.4;
+    }
+
+    /* ─── TIMELINE ───────────────────────────────────── */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .timeline-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      position: relative;
+      padding-bottom: 14px;
+    }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 30px;
+      bottom: 0;
+      width: 2px;
+      background: rgba(9,146,80,0.2);
+    }
+    .tl-dot {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--sea-green);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      z-index: 1;
+    }
+    .tl-body { padding-top: 4px; }
+    .tl-date {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--sea-green);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .tl-text {
+      font-size: 12.5px;
+      color: var(--text-dark);
+      line-height: 1.5;
+      margin-top: 2px;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────── */
+    footer {
+      background: var(--dark-green);
+      padding: 14px 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-shrink: 0;
     }
     .footer-left {
+      font-size: 11px;
+      color: rgba(255,255,255,0.45);
+    }
+    .footer-left a { color: var(--green-light); text-decoration: none; }
+    .footer-right { text-align: right; }
+    .footer-right span {
+      display: block;
+      font-size: 11px;
+      color: rgba(255,255,255,0.45);
+    }
+    .footer-right span.name {
+      color: var(--eggshell);
+      font-weight: 600;
       font-size: 12px;
-      color: #444;
     }
-    .footer-right {
-      font-size: 12px;
-      color: #444;
-    }
-    .page-indicator {
-      display: flex;
-      gap: 6px;
-      align-items: center;
-    }
-    .dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #333;
-    }
-    .dot.active { background: #00c896; }
 
-    /* print */
     @media print {
-      body { background: #fff; }
-      .page { margin: 0; page-break-after: always; border: none; }
+      body { background: #fff; padding: 0; }
+      .page { margin: 0; page-break-after: always; }
     }
   </style>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════
-     PAGE 1 — THE PROBLEM
-════════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 1 — OVERVIEW
+════════════════════════════════════════════════════════ -->
 <div class="page">
-  <div class="header">
-    <div class="logo">venn<span>.</span></div>
-    <div class="header-right">Prepared for Loesen · March 9, 2026</div>
-  </div>
+  <header>
+    <a class="logo">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">venn</span>
+    </a>
+    <div class="header-right">
+      <span class="header-tagline">Prepared for</span>
+      <span class="header-company">Loesen · March 9, 2026</span>
+    </div>
+    <div class="page-badge">Page 1 of 3</div>
+  </header>
 
-  <div class="content">
+  <div class="hero">
     <div class="hero-eyebrow">The Challenge</div>
-    <h1 class="hero-heading">Your crews move fast.<br>Your banking <em>doesn't.</em></h1>
-    <p class="hero-sub">Three field crews, 11 employees, and a bank that can't keep up — here's where things are breaking down.</p>
+    <h1>A Better Way to Handle<br>Field Expense Management</h1>
+    <p>Your crews are in the field every day — your banking infrastructure isn't keeping up with them.</p>
+  </div>
 
-    <div class="pain-grid">
-      <div class="pain-card">
-        <div class="pain-icon">🧾</div>
-        <div class="pain-title">Receipt collection is a nightmare</div>
-        <div class="pain-desc">Field teams make purchases and hand in receipts at month-end — or don't. Reconciliation is slow and error-prone.</div>
-      </div>
-      <div class="pain-card">
-        <div class="pain-icon">👁️</div>
-        <div class="pain-title">No visibility into card spend</div>
-        <div class="pain-desc">11 employees on cards with limited real-time oversight. You can't see what's being spent, by whom, or where — until the statement arrives.</div>
-      </div>
-      <div class="pain-card">
-        <div class="pain-icon">🏦</div>
-        <div class="pain-title">No EFT capability</div>
-        <div class="pain-desc">Your current bank doesn't support EFTs — meaning vendor payments require workarounds that cost time and money.</div>
-      </div>
+  <div class="stat-bar">
+    <div class="stat-item">
+      <div class="stat-val">2%</div>
+      <div class="stat-lbl">Interest on<br>account balance</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">0.25%</div>
+      <div class="stat-lbl">FX rate<br>(vs bank's 2–3%)</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">$0</div>
+      <div class="stat-lbl">EFT &amp; e-transfer<br>cost</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">$6</div>
+      <div class="stat-lbl">Wire transfers<br>(flat fee)</div>
     </div>
   </div>
 
-  <div class="footer">
-    <div class="footer-left">venn.ca</div>
-    <div class="page-indicator">
-      <div class="dot active"></div><div class="dot"></div><div class="dot"></div>
-    </div>
-    <div class="footer-right">Confidential</div>
-  </div>
-</div>
-
-
-<!-- ═══════════════════════════════════════════
-     PAGE 2 — THE SOLUTION
-════════════════════════════════════════════ -->
-<div class="page">
-  <div class="header">
-    <div class="logo">venn<span>.</span></div>
-    <div class="header-right">Prepared for Loesen · March 9, 2026</div>
-  </div>
-
-  <div class="content">
-    <div class="section-label">The Solution</div>
-    <h2 class="section-heading">Everything your bank<br>should be doing — <em>actually does.</em></h2>
-
+  <div class="main">
     <div class="two-col">
-      <div class="sol-card">
-        <div class="sol-card-header">
-          <div class="sol-icon">💳</div>
-          <div class="sol-title">Smart Corporate Cards</div>
-        </div>
-        <ul class="sol-items">
-          <li>Issue virtual + physical Mastercards instantly — per employee, per crew</li>
-          <li>Set custom spending limits and merchant-category restrictions per card</li>
-          <li>Automated SMS receipt requests after every transaction — no chasing</li>
-          <li>Auto-lock cards when receipts aren't uploaded above a set threshold</li>
-          <li>Real-time spend visibility across all 11 employees from one dashboard</li>
+      <div class="card">
+        <div class="card-title bad">What You Told Us</div>
+        <ul class="point-list bad">
+          <li>
+            <strong>No EFT capability at your bank</strong>
+            Your current bank doesn't support EFTs — something you flagged immediately as a clear gap for vendor payments.
+          </li>
+          <li>
+            <strong>Receipt collection is a headache</strong>
+            Field crews make purchases across 3 separate teams and hand receipts in late — or not at all. Reconciliation is manual and slow.
+          </li>
+          <li>
+            <strong>Limited visibility across 11 cards</strong>
+            Cards are out in the field with minimal real-time oversight. No easy way to see what's being spent, by whom, until the statement arrives.
+          </li>
         </ul>
       </div>
-      <div class="sol-card">
-        <div class="sol-card-header">
-          <div class="sol-icon">🏦</div>
-          <div class="sol-title">Vendor Payments & Banking</div>
-        </div>
-        <ul class="sol-items">
-          <li>Free EFTs — send vendor payments directly from the platform</li>
-          <li>Approval workflows for larger payments — set up, review, approve in one flow</li>
-          <li>Fund your Venn balance via EFT (same-day), e-transfer (instant), or bank link</li>
-          <li>2% interest earned on your account balance</li>
-          <li>Role-based access: admins, payment clerks, card-only employees, read-only accountants</li>
+      <div class="card">
+        <div class="card-title good">What Venn Does Differently</div>
+        <ul class="point-list good">
+          <li>
+            <strong>Free EFTs, built in</strong>
+            Send vendor payments directly from Venn — no extra bank, no extra cost. ACH to the US, local transfers to Europe and UK, $6 wires everywhere else.
+          </li>
+          <li>
+            <strong>Automated SMS receipt collection</strong>
+            Every purchase triggers an automatic text to your employee asking for the receipt. They reply with a photo — it's matched to the transaction instantly. No chasing.
+          </li>
+          <li>
+            <strong>Real-time spend dashboard</strong>
+            See every card, every transaction, every employee — live. Set per-card limits and merchant restrictions. Lock a card in seconds if needed.
+          </li>
         </ul>
       </div>
     </div>
 
-    <div class="stat-strip">
-      <div class="stat-card">
-        <div class="stat-value">$40</div>
-        <div class="stat-label">flat / month — all-in</div>
+    <div class="quote-card">
+      <div class="quote-block">
+        <blockquote>"We used to spend days every month reconciling receipts from the field. Venn basically eliminated that problem entirely."</blockquote>
+        <cite>— Operations Manager, Canadian Construction Company</cite>
       </div>
-      <div class="stat-card">
-        <div class="stat-value">25</div>
-        <div class="stat-label">cards included</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value">1%</div>
-        <div class="stat-label">cashback on all purchases</div>
+      <div class="quote-divider"></div>
+      <div class="quote-block">
+        <blockquote>"The card controls and the receipt automation are exactly what we needed. Our team actually uses it without any complaints."</blockquote>
+        <cite>— Controller, Field Services Company</cite>
       </div>
     </div>
   </div>
 
-  <div class="footer">
-    <div class="footer-left">venn.ca</div>
-    <div class="page-indicator">
-      <div class="dot"></div><div class="dot active"></div><div class="dot"></div>
+  <footer>
+    <div class="footer-left">Ready to learn more? <a href="https://venn.ca">venn.ca</a> · <a href="https://venn.ca/pricing">venn.ca/pricing</a></div>
+    <div class="footer-right">
+      <span class="name">Leo Katz · Senior Account Executive</span>
+      <span>leo@tryvault.com · meetings.hubspot.com/leo-katz/venn-demo</span>
     </div>
-    <div class="footer-right">Confidential</div>
-  </div>
+  </footer>
 </div>
 
 
-<!-- ═══════════════════════════════════════════
-     PAGE 3 — NEXT STEPS
-════════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 2 — HOW IT WORKS
+════════════════════════════════════════════════════════ -->
 <div class="page">
-  <div class="header">
-    <div class="logo">venn<span>.</span></div>
-    <div class="header-right">Prepared for Loesen · March 9, 2026</div>
+  <header>
+    <a class="logo">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">venn</span>
+    </a>
+    <div class="header-right">
+      <span class="header-tagline">Prepared for</span>
+      <span class="header-company">Loesen · March 9, 2026</span>
+    </div>
+    <div class="page-badge">Page 2 of 3</div>
+  </header>
+
+  <div class="hero">
+    <div class="hero-eyebrow">How It Works</div>
+    <h1>From Buckets of Receipts to Zero<br>Manual Work — Without the Headache</h1>
+    <p>Here's exactly how Venn fits into how your three crews operate day-to-day.</p>
   </div>
 
-  <div class="content">
-    <div class="section-label">What Happens Next</div>
-    <h2 class="section-heading">Simple path<br>to getting <em>started.</em></h2>
-
-    <div class="steps-layout">
-      <div>
-        <div class="steps-col-title">Next Steps</div>
-
-        <div class="step-item">
-          <div class="step-num">1</div>
-          <div class="step-text">
-            <strong>Garret shares internally</strong>
-            <span>Review this with the owners and key users — the team that will be using cards day-to-day.</span>
+  <div class="main">
+    <div class="two-col">
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div class="steps-section">
+          <div class="steps-title">Corporate Cards &amp; Receipt Flow</div>
+          <div class="step-row">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <strong>Employee makes a purchase</strong>
+              <span>Card functions as a Mastercard at any vendor — accepted everywhere, debit-style with your balance backing it.</span>
+            </div>
           </div>
-        </div>
-
-        <div class="step-item">
-          <div class="step-num">2</div>
-          <div class="step-text">
-            <strong>Leo follows up Wednesday, March 11</strong>
-            <span>Answer any questions that come up during your internal review.</span>
+          <div class="step-row">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <strong>Automated SMS receipt request sent</strong>
+              <span>Immediately after the transaction, your employee gets a text from Venn asking for the receipt. They just reply with a photo.</span>
+            </div>
           </div>
-        </div>
-
-        <div class="step-item">
-          <div class="step-num">3</div>
-          <div class="step-text">
-            <strong>Onboard in under 10 minutes</strong>
-            <span>Sign up at app.venn.ca/signup — just articles of incorporation and a photo ID. Cards issued instantly.</span>
+          <div class="step-row">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <strong>Receipt auto-matched, dashboard updated</strong>
+              <span>The receipt is matched to the transaction automatically. You see it in real time. No month-end pile of paper.</span>
+            </div>
           </div>
-        </div>
-
-        <div class="step-item">
-          <div class="step-num">4</div>
-          <div class="step-text">
-            <strong>Invite your team</strong>
-            <span>Add employees via email — they only need to log in once to add their card to Apple/Google Wallet.</span>
+          <div class="step-row">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <strong>Non-compliant cards auto-locked</strong>
+              <span>Set a threshold — if an employee doesn't upload a receipt over $X, their card locks automatically until they do.</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <div>
-        <div class="pricing-card">
-          <div class="pricing-badge">Plus Plan</div>
-          <div>
-            <div class="pricing-amount">$40 <sub>CAD / month</sub></div>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div class="steps-section">
+          <div class="steps-title">Vendor Payments (Free EFTs)</div>
+          <div class="step-row">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <strong>Add your vendor once</strong>
+              <span>Enter their banking details or invite them via email to securely submit their own — Venn verifies everything.</span>
+            </div>
           </div>
-          <ul class="pricing-items">
-            <li>25 virtual + physical Mastercards</li>
-            <li>Custom spending limits + merchant restrictions</li>
-            <li>Automated SMS receipt collection</li>
-            <li>Free EFTs for all vendor payments</li>
-            <li>Role-based access (admin, employee, accountant)</li>
-            <li>1% cashback up to $25K monthly spend</li>
-            <li>2% interest on account balance</li>
-            <li>No per-user fees</li>
-          </ul>
-          <a class="pricing-cta" href="https://app.venn.ca/signup">Get Started → app.venn.ca/signup</a>
+          <div class="step-row">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <strong>Set up the payment with approval</strong>
+              <span>Junior staff set up the EFT; it routes to you for approval before anything moves. Full audit trail.</span>
+            </div>
+          </div>
+          <div class="step-row">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <strong>Payment sent — free</strong>
+              <span>EFTs to Canadian vendors are free. ACH to the US, free. Wires to anywhere else, $6 flat. No surprises.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="highlight-box">
+          <p>Loesen uses <strong>Saje</strong> for accounting. Venn exports transactions as CSV with GL codes — import directly into your accounting workflow, no manual data entry.</p>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="footer">
-    <div class="footer-left">Leo Katz · leo@tryvault.com · meetings.hubspot.com/leo-katz/venn-demo</div>
-    <div class="page-indicator">
-      <div class="dot"></div><div class="dot"></div><div class="dot active"></div>
+  <footer>
+    <div class="footer-left">Ready to learn more? <a href="https://venn.ca">venn.ca</a> · <a href="https://venn.ca/pricing">venn.ca/pricing</a></div>
+    <div class="footer-right">
+      <span class="name">Leo Katz · Senior Account Executive</span>
+      <span>leo@tryvault.com · meetings.hubspot.com/leo-katz/venn-demo</span>
     </div>
-    <div class="footer-right">venn.ca/pricing</div>
+  </footer>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 3 — PRICING + NEXT STEPS
+════════════════════════════════════════════════════════ -->
+<div class="page">
+  <header>
+    <a class="logo">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">venn</span>
+    </a>
+    <div class="header-right">
+      <span class="header-tagline">Prepared for</span>
+      <span class="header-company">Loesen · March 9, 2026</span>
+    </div>
+    <div class="page-badge">Page 3 of 3</div>
+  </header>
+
+  <div class="hero">
+    <div class="hero-eyebrow">Pricing &amp; Next Steps</div>
+    <h1>Simple Pricing. No Hidden Fees.<br>Cancel Anytime.</h1>
+    <p>One flat monthly fee — no per-user charges, no surprise costs.</p>
   </div>
+
+  <div class="main">
+    <div class="pricing-grid">
+      <div class="pricing-tier">
+        <div class="tier-name">Free</div>
+        <div class="tier-price">$0 <sub>CAD / mo</sub></div>
+        <ul class="tier-features">
+          <li>CAD business account</li>
+          <li>Unlimited free e-transfers</li>
+          <li>1 virtual card</li>
+          <li>2% interest on balance</li>
+        </ul>
+      </div>
+      <div class="pricing-tier highlight">
+        <div class="tier-name">Plus</div>
+        <div class="tier-price">$40 <sub>CAD / mo</sub></div>
+        <ul class="tier-features">
+          <li>25 virtual + physical cards</li>
+          <li>Custom limits &amp; merchant restrictions</li>
+          <li>Free EFTs &amp; ACH payments</li>
+          <li>FX at 0.25–0.45%</li>
+          <li>Custom user roles</li>
+          <li>1% cashback up to $25K/mo</li>
+          <li>Automated receipt collection</li>
+        </ul>
+      </div>
+      <div class="pricing-tier">
+        <div class="tier-name">Business</div>
+        <div class="tier-price">$100 <sub>CAD / mo</sub></div>
+        <ul class="tier-features">
+          <li>Everything in Plus</li>
+          <li>Multi-user expense management</li>
+          <li>ERP &amp; accounting export</li>
+          <li>Approval workflows</li>
+          <li>Priority support</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="included-grid">
+      <div class="included-item">
+        <div class="included-icon">🔁</div>
+        <div>
+          <strong>Unlimited Free E-Transfers &amp; EFTs</strong>
+          <span>Send and receive with no per-transaction fees — ever.</span>
+        </div>
+      </div>
+      <div class="included-item">
+        <div class="included-icon">💰</div>
+        <div>
+          <strong>2% Interest on Your Balance</strong>
+          <span>Every dollar sitting in Venn earns you 2% annually.</span>
+        </div>
+      </div>
+      <div class="included-item">
+        <div class="included-icon">🌍</div>
+        <div>
+          <strong>Wire Transfers from $6 CAD</strong>
+          <span>Flat fee to anywhere in the world — no percentage markup.</span>
+        </div>
+      </div>
+      <div class="included-item">
+        <div class="included-icon">🏦</div>
+        <div>
+          <strong>CAD + USD Multi-Currency Accounts</strong>
+          <span>Hold and transact in both currencies from one platform.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:0;">
+      <div class="card-title good" style="margin-bottom:16px;">Our Plan Together</div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="tl-dot">→</div>
+          <div class="tl-body">
+            <div class="tl-date">Now</div>
+            <div class="tl-text">Leo sends this recap. Garret reviews with the owners and key users at Loesen internally.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">📅</div>
+          <div class="tl-body">
+            <div class="tl-date">Wednesday, March 11</div>
+            <div class="tl-text">Leo follows up — answer any questions that came up during the internal review.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">✓</div>
+          <div class="tl-body">
+            <div class="tl-date">Decision</div>
+            <div class="tl-text">Once the team is aligned, onboarding takes under 10 minutes at app.venn.ca/signup — cards issued instantly.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">✉</div>
+          <div class="tl-body">
+            <div class="tl-date">Anytime</div>
+            <div class="tl-text">Reach out directly: leo@tryvault.com or book time at meetings.hubspot.com/leo-katz/venn-demo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-left">Ready to learn more? <a href="https://venn.ca">venn.ca</a> · <a href="https://venn.ca/pricing">venn.ca/pricing</a></div>
+    <div class="footer-right">
+      <span class="name">Leo Katz · Senior Account Executive</span>
+      <span>leo@tryvault.com · meetings.hubspot.com/leo-katz/venn-demo</span>
+    </div>
+  </footer>
 </div>
 
 </body>
