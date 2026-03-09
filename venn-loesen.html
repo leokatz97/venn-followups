@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Venn x Loesen</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+    }
+
+    /* ── PAGE SHELL ── */
+    .page {
+      width: 1280px;
+      min-height: 720px;
+      margin: 0 auto 48px;
+      position: relative;
+      overflow: hidden;
+      background: #0f0f0f;
+      border: 1px solid #1e1e1e;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── HEADER BAR ── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 48px;
+      border-bottom: 1px solid #1e1e1e;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #fff;
+    }
+    .logo span { color: #00c896; }
+
+    .header-right {
+      font-size: 13px;
+      color: #555;
+      font-weight: 400;
+    }
+
+    /* ── CONTENT ── */
+    .content {
+      flex: 1;
+      padding: 52px 48px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* ── HERO (page 1) ── */
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #00c896;
+      margin-bottom: 20px;
+    }
+    .hero-heading {
+      font-size: 52px;
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -1.5px;
+      color: #fff;
+      max-width: 700px;
+      margin-bottom: 28px;
+    }
+    .hero-heading em {
+      font-style: normal;
+      color: #00c896;
+    }
+    .hero-sub {
+      font-size: 17px;
+      color: #888;
+      font-weight: 400;
+      max-width: 540px;
+      line-height: 1.65;
+      margin-bottom: 56px;
+    }
+
+    /* pain points grid */
+    .pain-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .pain-card {
+      background: #161616;
+      border: 1px solid #262626;
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .pain-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      margin-bottom: 14px;
+    }
+    .pain-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #e0e0e0;
+      margin-bottom: 6px;
+    }
+    .pain-desc {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #00c896;
+      margin-bottom: 14px;
+    }
+    .section-heading {
+      font-size: 38px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      color: #fff;
+      margin-bottom: 40px;
+    }
+    .section-heading em {
+      font-style: normal;
+      color: #00c896;
+    }
+
+    /* ── TWO-COL LAYOUT ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      flex: 1;
+    }
+
+    /* solution card */
+    .sol-card {
+      background: #161616;
+      border: 1px solid #262626;
+      border-radius: 14px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .sol-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .sol-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: #0d2e22;
+      border: 1px solid #00c89633;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .sol-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #e8e8e8;
+    }
+    .sol-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .sol-items li {
+      font-size: 13px;
+      color: #777;
+      line-height: 1.55;
+      padding-left: 16px;
+      position: relative;
+    }
+    .sol-items li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #00c896;
+    }
+
+    /* stat strip */
+    .stat-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .stat-card {
+      background: #0d2e22;
+      border: 1px solid #00c89633;
+      border-radius: 12px;
+      padding: 20px 24px;
+      text-align: center;
+    }
+    .stat-value {
+      font-size: 28px;
+      font-weight: 800;
+      color: #00c896;
+      letter-spacing: -0.5px;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: #777;
+      margin-top: 4px;
+    }
+
+    /* ── PAGE 3 — NEXT STEPS ── */
+    .steps-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      flex: 1;
+    }
+    .steps-col {}
+    .steps-col-title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 20px;
+    }
+    .step-item {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+      align-items: flex-start;
+    }
+    .step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: #00c896;
+      color: #000;
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .step-text strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #e0e0e0;
+      margin-bottom: 3px;
+    }
+    .step-text span {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.55;
+    }
+
+    /* pricing card */
+    .pricing-card {
+      background: #161616;
+      border: 1px solid #262626;
+      border-radius: 16px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .pricing-badge {
+      display: inline-flex;
+      align-items: center;
+      background: #0d2e22;
+      border: 1px solid #00c89633;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #00c896;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      width: fit-content;
+    }
+    .pricing-amount {
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: #fff;
+    }
+    .pricing-amount sub {
+      font-size: 16px;
+      font-weight: 400;
+      color: #666;
+      letter-spacing: 0;
+    }
+    .pricing-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .pricing-items li {
+      font-size: 13px;
+      color: #777;
+      padding-left: 20px;
+      position: relative;
+      line-height: 1.5;
+    }
+    .pricing-items li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #00c896;
+      font-weight: 700;
+      font-size: 12px;
+    }
+    .pricing-cta {
+      display: inline-block;
+      background: #00c896;
+      color: #000;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      padding: 18px 48px;
+      border-top: 1px solid #1a1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-left {
+      font-size: 12px;
+      color: #444;
+    }
+    .footer-right {
+      font-size: 12px;
+      color: #444;
+    }
+    .page-indicator {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #333;
+    }
+    .dot.active { background: #00c896; }
+
+    /* print */
+    @media print {
+      body { background: #fff; }
+      .page { margin: 0; page-break-after: always; border: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 1 — THE PROBLEM
+════════════════════════════════════════════ -->
+<div class="page">
+  <div class="header">
+    <div class="logo">venn<span>.</span></div>
+    <div class="header-right">Prepared for Loesen · March 9, 2026</div>
+  </div>
+
+  <div class="content">
+    <div class="hero-eyebrow">The Challenge</div>
+    <h1 class="hero-heading">Your crews move fast.<br>Your banking <em>doesn't.</em></h1>
+    <p class="hero-sub">Three field crews, 11 employees, and a bank that can't keep up — here's where things are breaking down.</p>
+
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="pain-icon">🧾</div>
+        <div class="pain-title">Receipt collection is a nightmare</div>
+        <div class="pain-desc">Field teams make purchases and hand in receipts at month-end — or don't. Reconciliation is slow and error-prone.</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">👁️</div>
+        <div class="pain-title">No visibility into card spend</div>
+        <div class="pain-desc">11 employees on cards with limited real-time oversight. You can't see what's being spent, by whom, or where — until the statement arrives.</div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">🏦</div>
+        <div class="pain-title">No EFT capability</div>
+        <div class="pain-desc">Your current bank doesn't support EFTs — meaning vendor payments require workarounds that cost time and money.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-left">venn.ca</div>
+    <div class="page-indicator">
+      <div class="dot active"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+    <div class="footer-right">Confidential</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE 2 — THE SOLUTION
+════════════════════════════════════════════ -->
+<div class="page">
+  <div class="header">
+    <div class="logo">venn<span>.</span></div>
+    <div class="header-right">Prepared for Loesen · March 9, 2026</div>
+  </div>
+
+  <div class="content">
+    <div class="section-label">The Solution</div>
+    <h2 class="section-heading">Everything your bank<br>should be doing — <em>actually does.</em></h2>
+
+    <div class="two-col">
+      <div class="sol-card">
+        <div class="sol-card-header">
+          <div class="sol-icon">💳</div>
+          <div class="sol-title">Smart Corporate Cards</div>
+        </div>
+        <ul class="sol-items">
+          <li>Issue virtual + physical Mastercards instantly — per employee, per crew</li>
+          <li>Set custom spending limits and merchant-category restrictions per card</li>
+          <li>Automated SMS receipt requests after every transaction — no chasing</li>
+          <li>Auto-lock cards when receipts aren't uploaded above a set threshold</li>
+          <li>Real-time spend visibility across all 11 employees from one dashboard</li>
+        </ul>
+      </div>
+      <div class="sol-card">
+        <div class="sol-card-header">
+          <div class="sol-icon">🏦</div>
+          <div class="sol-title">Vendor Payments & Banking</div>
+        </div>
+        <ul class="sol-items">
+          <li>Free EFTs — send vendor payments directly from the platform</li>
+          <li>Approval workflows for larger payments — set up, review, approve in one flow</li>
+          <li>Fund your Venn balance via EFT (same-day), e-transfer (instant), or bank link</li>
+          <li>2% interest earned on your account balance</li>
+          <li>Role-based access: admins, payment clerks, card-only employees, read-only accountants</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="stat-strip">
+      <div class="stat-card">
+        <div class="stat-value">$40</div>
+        <div class="stat-label">flat / month — all-in</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">25</div>
+        <div class="stat-label">cards included</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">1%</div>
+        <div class="stat-label">cashback on all purchases</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-left">venn.ca</div>
+    <div class="page-indicator">
+      <div class="dot"></div><div class="dot active"></div><div class="dot"></div>
+    </div>
+    <div class="footer-right">Confidential</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE 3 — NEXT STEPS
+════════════════════════════════════════════ -->
+<div class="page">
+  <div class="header">
+    <div class="logo">venn<span>.</span></div>
+    <div class="header-right">Prepared for Loesen · March 9, 2026</div>
+  </div>
+
+  <div class="content">
+    <div class="section-label">What Happens Next</div>
+    <h2 class="section-heading">Simple path<br>to getting <em>started.</em></h2>
+
+    <div class="steps-layout">
+      <div>
+        <div class="steps-col-title">Next Steps</div>
+
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-text">
+            <strong>Garret shares internally</strong>
+            <span>Review this with the owners and key users — the team that will be using cards day-to-day.</span>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-text">
+            <strong>Leo follows up Wednesday, March 11</strong>
+            <span>Answer any questions that come up during your internal review.</span>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-text">
+            <strong>Onboard in under 10 minutes</strong>
+            <span>Sign up at app.venn.ca/signup — just articles of incorporation and a photo ID. Cards issued instantly.</span>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-text">
+            <strong>Invite your team</strong>
+            <span>Add employees via email — they only need to log in once to add their card to Apple/Google Wallet.</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="pricing-card">
+          <div class="pricing-badge">Plus Plan</div>
+          <div>
+            <div class="pricing-amount">$40 <sub>CAD / month</sub></div>
+          </div>
+          <ul class="pricing-items">
+            <li>25 virtual + physical Mastercards</li>
+            <li>Custom spending limits + merchant restrictions</li>
+            <li>Automated SMS receipt collection</li>
+            <li>Free EFTs for all vendor payments</li>
+            <li>Role-based access (admin, employee, accountant)</li>
+            <li>1% cashback up to $25K monthly spend</li>
+            <li>2% interest on account balance</li>
+            <li>No per-user fees</li>
+          </ul>
+          <a class="pricing-cta" href="https://app.venn.ca/signup">Get Started → app.venn.ca/signup</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-left">Leo Katz · leo@tryvault.com · meetings.hubspot.com/leo-katz/venn-demo</div>
+    <div class="page-indicator">
+      <div class="dot"></div><div class="dot"></div><div class="dot active"></div>
+    </div>
+    <div class="footer-right">venn.ca/pricing</div>
+  </div>
+</div>
+
+</body>
+</html>
