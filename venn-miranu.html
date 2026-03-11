@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Venn × Miranu</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --sea-green:   #099250;
+    --dark-green:  #002400;
+    --eggshell:    #F4F1DE;
+    --green-light: #41C981;
+    --white:       #FFFFFF;
+    --text-dark:   #002400;
+    --text-muted:  #0A6336;
+    --red:         #c0392b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #d0cfc4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    padding: 40px 20px;
+  }
+
+  .page {
+    width: 794px;
+    min-height: 1123px;
+    background: var(--eggshell);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ── HEADER ── */
+  .page-header {
+    background: var(--dark-green);
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-mark { width: 28px; height: 28px; }
+  .logo-text {
+    color: var(--white);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+  .page-badge {
+    background: var(--sea-green);
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.4px;
+  }
+
+  /* ── HERO ── */
+  .page-hero {
+    background: var(--sea-green);
+    padding: 28px 32px 24px;
+  }
+  .hero-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--green-light);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .hero-headline {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.25;
+  }
+  .hero-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.78);
+    margin-top: 8px;
+    font-weight: 400;
+  }
+
+  /* ── STAT BAR ── */
+  .stat-bar {
+    background: var(--dark-green);
+    display: flex;
+    justify-content: space-around;
+    padding: 14px 32px;
+  }
+  .stat-item { text-align: center; }
+  .stat-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--green-light);
+  }
+  .stat-label {
+    font-size: 10px;
+    color: rgba(255,255,255,0.65);
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    margin-top: 2px;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .page-content {
+    flex: 1;
+    padding: 28px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── TWO-COL CARDS ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .card {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid rgba(0,36,0,0.08);
+  }
+  .card-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+  .point {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+    align-items: flex-start;
+  }
+  .point:last-child { margin-bottom: 0; }
+  .bullet {
+    font-size: 14px;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+  .bullet.red { color: var(--red); }
+  .bullet.green { color: var(--sea-green); }
+  .point-body { flex: 1; }
+  .point-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 2px;
+  }
+  .point-desc {
+    font-size: 12px;
+    color: #4a5040;
+    line-height: 1.5;
+  }
+
+  /* ── QUOTE BAR ── */
+  .quote-bar {
+    background: var(--dark-green);
+    border-radius: 10px;
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .quote-block { }
+  .quote-text {
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.88);
+    line-height: 1.55;
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+  .quote-attr {
+    font-size: 11px;
+    color: var(--green-light);
+    font-weight: 600;
+  }
+  .quote-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.12);
+    margin: 0 4px;
+  }
+
+  /* ── PAGE 2 FLOW SECTIONS ── */
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .flow-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+  .flow-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .step-num {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--sea-green);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-body { flex: 1; padding-top: 2px; }
+  .step-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-dark);
+  }
+  .step-desc {
+    font-size: 12px;
+    color: #4a5040;
+    line-height: 1.5;
+    margin-top: 2px;
+  }
+  .highlight-box {
+    background: #e8f5ee;
+    border-left: 4px solid var(--sea-green);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    font-size: 13px;
+    color: var(--text-dark);
+    line-height: 1.55;
+  }
+  .highlight-box strong { color: var(--sea-green); }
+
+  /* ── PAGE 3 PRICING ── */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+  }
+  .pricing-card {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 20px;
+    border: 2px solid transparent;
+    position: relative;
+  }
+  .pricing-card.recommended {
+    border-color: var(--sea-green);
+  }
+  .rec-badge {
+    position: absolute;
+    top: -11px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--sea-green);
+    color: var(--white);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  .plan-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 4px;
+  }
+  .plan-price {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--sea-green);
+  }
+  .plan-period {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    font-weight: 400;
+  }
+  .plan-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .plan-features li {
+    font-size: 11.5px;
+    color: #4a5040;
+    display: flex;
+    gap: 6px;
+    align-items: flex-start;
+  }
+  .plan-features li::before {
+    content: "✓";
+    color: var(--sea-green);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .included-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .included-card {
+    background: var(--white);
+    border-radius: 8px;
+    padding: 14px 16px;
+    border: 1px solid rgba(0,36,0,0.08);
+  }
+  .included-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 3px;
+  }
+  .included-desc {
+    font-size: 11px;
+    color: #5a6450;
+    line-height: 1.4;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .tl-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding-bottom: 14px;
+    position: relative;
+  }
+  .tl-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 18px;
+    top: 36px;
+    bottom: 0;
+    width: 2px;
+    background: rgba(9,146,80,0.2);
+  }
+  .tl-dot {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--sea-green);
+    color: var(--white);
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-shrink: 0;
+    line-height: 1.2;
+  }
+  .tl-body { flex: 1; padding-top: 6px; }
+  .tl-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 2px;
+  }
+  .tl-desc {
+    font-size: 12px;
+    color: #4a5040;
+    line-height: 1.5;
+  }
+
+  /* ── FOOTER ── */
+  .page-footer {
+    background: var(--dark-green);
+    padding: 14px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-left {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  .footer-left strong { color: var(--green-light); font-weight: 600; }
+  .footer-right {
+    text-align: right;
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+  .footer-right strong { color: var(--white); font-weight: 600; }
+
+  @media print {
+    body { background: none; padding: 0; gap: 0; }
+    .page { page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════
+     PAGE 1 — OVERVIEW
+════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="logo-row">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">Venn</span>
+    </div>
+    <span class="page-badge">Page 1 of 3</span>
+  </div>
+
+  <div class="page-hero">
+    <div class="hero-label">Prepared for Miranu</div>
+    <div class="hero-headline">A Better Way to Handle<br>Vendor Payments — Without the Fraud Alerts</div>
+    <div class="hero-sub">Virtual cards, receipt capture, and zero-liability coverage — built for the way you actually work.</div>
+  </div>
+
+  <div class="stat-bar">
+    <div class="stat-item">
+      <div class="stat-value">2%</div>
+      <div class="stat-label">Interest on Balances</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">0.25%</div>
+      <div class="stat-label">FX Rate (vs. bank's 2–3%)</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">$0</div>
+      <div class="stat-label">EFT / e-Transfer Cost</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">$6</div>
+      <div class="stat-label">Flat-Rate Wire Transfers</div>
+    </div>
+  </div>
+
+  <div class="page-content">
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">What You Told Us</div>
+
+        <div class="point">
+          <span class="bullet red">✕</span>
+          <div class="point-body">
+            <div class="point-title">Scotiabank Keeps Flagging Your Vendor</div>
+            <div class="point-desc">Your Bay Street co-working space triggers 20+ daily fraud alerts. The result: card blocks, reissuance, and constant back-and-forth with the bank.</div>
+          </div>
+        </div>
+
+        <div class="point">
+          <span class="bullet red">✕</span>
+          <div class="point-body">
+            <div class="point-title">One Card, Every Vendor — One Block Breaks Everything</div>
+            <div class="point-desc">When your card gets blocked, every service tied to it goes down with it. No way to isolate one vendor without disrupting the rest.</div>
+          </div>
+        </div>
+
+        <div class="point">
+          <span class="bullet red">✕</span>
+          <div class="point-body">
+            <div class="point-title">No Spending Controls Per Vendor</div>
+            <div class="point-desc">You can't cap what a vendor charges against your card. AI and SaaS tools are notorious for double-billing — and there's no guardrail to stop it.</div>
+          </div>
+        </div>
+
+        <div class="point">
+          <span class="bullet red">✕</span>
+          <div class="point-body">
+            <div class="point-title">Receipt Tracking Is Still Manual</div>
+            <div class="point-desc">Year-end means hunting down receipts across inboxes and screenshots. No automated matching, no quick report for what's missing.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">What Venn Does Differently</div>
+
+        <div class="point">
+          <span class="bullet green">✓</span>
+          <div class="point-body">
+            <div class="point-title">One Virtual Card Per Vendor</div>
+            <div class="point-desc">Assign a unique card number to your Bay Street workspace. If it triggers again, only that card is affected — everything else keeps running.</div>
+          </div>
+        </div>
+
+        <div class="point">
+          <span class="bullet green">✓</span>
+          <div class="point-body">
+            <div class="point-title">Full Card Control in Real Time</div>
+            <div class="point-desc">Lock, delete, or adjust card limits instantly from the app. 25 free virtual cards and 3 physical cards included — no waiting for reissuance.</div>
+          </div>
+        </div>
+
+        <div class="point">
+          <span class="bullet green">✓</span>
+          <div class="point-body">
+            <div class="point-title">Spending Limits That Actually Enforce</div>
+            <div class="point-desc">Set a cap that matches your contract price. Charges above the limit decline automatically — your protection against overcharges on any subscription.</div>
+          </div>
+        </div>
+
+        <div class="point">
+          <span class="bullet green">✓</span>
+          <div class="point-body">
+            <div class="point-title">Automated Receipt Capture</div>
+            <div class="point-desc">Every transaction triggers a text or email asking for the receipt. Reply with a photo or screenshot — Venn matches it automatically. Year-end is just a filter.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quote-bar">
+      <div class="quote-block">
+        <div class="quote-text">"We saved over $105,000 in overcharges last year just from setting spending limits on our software cards. It pays for itself on day one."</div>
+        <div class="quote-attr">— Founder, Canadian SaaS Company</div>
+      </div>
+      <div class="quote-divider"></div>
+      <div class="quote-block">
+        <div class="quote-text">"Moving from our old bank was easier than I expected. The virtual card setup alone was worth it — we haven't had a payment disruption since."</div>
+        <div class="quote-attr">— Co-Founder, Toronto Tech Startup</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <div class="footer-left">Ready to learn more? <strong>venn.ca</strong> · <strong>venn.ca/pricing</strong></div>
+    <div class="footer-right">
+      <strong>Leo Katz · Senior Account Executive</strong><br>
+      leo@tryvault.com · meetings.hubspot.com/leo-katz/venn-demo
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════
+     PAGE 2 — HOW IT WORKS
+════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="logo-row">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">Venn</span>
+    </div>
+    <span class="page-badge">Page 2 of 3</span>
+  </div>
+
+  <div class="page-hero">
+    <div class="hero-label">How It Works for Miranu</div>
+    <div class="hero-headline">From Card Blocks and Manual Receipts<br>to Controlled, Isolated Payments — Automatically</div>
+    <div class="hero-sub">Set it up once. Venn handles the rest.</div>
+  </div>
+
+  <div class="page-content">
+
+    <div class="card">
+      <div class="section-title">Virtual Cards — Isolate Every Vendor</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Create a card per vendor</div>
+            <div class="step-desc">Assign one virtual card to your Bay Street workspace, another to each software subscription. Each gets its own card number and spending limit.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Set a limit that matches your contract</div>
+            <div class="step-desc">Cap the card at the exact amount you expect to be charged. Any attempt above that limit is automatically declined — no manual monitoring needed.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Lock, delete, or adjust in real time</div>
+            <div class="step-desc">If a vendor triggers issues again, lock that single card from the app in seconds. Everything else stays live. No new card reissuance, no bank calls.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Receipt Capture — No More Year-End Hunts</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Spend with your Venn card</div>
+            <div class="step-desc">Marko or Jelena uses a physical or virtual Venn card. The transaction logs instantly in the platform.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Get a receipt prompt by text or email</div>
+            <div class="step-desc">Venn sends an automatic prompt right after the purchase. Reply with a photo or screenshot of the receipt — done in 10 seconds.</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Run the missing-receipts report at year-end</div>
+            <div class="step-desc">Filter by "transactions not containing receipts" and see exactly what's outstanding — by person, by date, by amount. No spreadsheet required.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <strong>MasterCard Zero Liability — Same Protections, Better Platform:</strong> Every Venn card runs on the MasterCard network. That means the same zero-liability fraud protection and standard travel benefits (rental cars, hotels, flights) you'd expect from any major business card — plus the virtual card controls your current bank can't offer. Full T&amp;C available on request.
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    <div class="footer-left">Ready to learn more? <strong>venn.ca</strong> · <strong>venn.ca/pricing</strong></div>
+    <div class="footer-right">
+      <strong>Leo Katz · Senior Account Executive</strong><br>
+      leo@tryvault.com · meetings.hubspot.com/leo-katz/venn-demo
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════
+     PAGE 3 — PRICING + NEXT STEPS
+════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="logo-row">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">Venn</span>
+    </div>
+    <span class="page-badge">Page 3 of 3</span>
+  </div>
+
+  <div class="page-hero">
+    <div class="hero-label">Pricing &amp; Next Steps</div>
+    <div class="hero-headline">Simple Pricing. No Hidden Fees. Cancel Anytime.</div>
+    <div class="hero-sub">Start on Essentials to test the platform — upgrade to Plus when you're ready to unlock the full card suite.</div>
+  </div>
+
+  <div class="page-content">
+
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="plan-name">Essentials</div>
+        <div class="plan-price">$0</div>
+        <div class="plan-period">/month CAD</div>
+        <ul class="plan-features">
+          <li>CAD business account</li>
+          <li>Unlimited free e-transfers</li>
+          <li>1 virtual card</li>
+          <li>2% interest on balance</li>
+          <li>Cashback up to $5K spend</li>
+        </ul>
+      </div>
+
+      <div class="pricing-card recommended">
+        <div class="rec-badge">✦ Recommended for Miranu</div>
+        <div class="plan-name">Plus</div>
+        <div class="plan-price">$40</div>
+        <div class="plan-period">/month CAD</div>
+        <ul class="plan-features">
+          <li>Everything in Essentials</li>
+          <li>USD account + free ACH</li>
+          <li>FX at 0.25–0.45%</li>
+          <li>3 free physical cards</li>
+          <li>25 free virtual cards</li>
+          <li>Cashback on full $10K spend</li>
+          <li>Net +$10/mo ROI vs free plan</li>
+        </ul>
+      </div>
+
+      <div class="pricing-card">
+        <div class="plan-name">Business</div>
+        <div class="plan-price">$100</div>
+        <div class="plan-period">/month CAD</div>
+        <ul class="plan-features">
+          <li>Everything in Plus</li>
+          <li>Multi-user expense management</li>
+          <li>ERP export &amp; GL codes</li>
+          <li>Approval workflows</li>
+          <li>Priority support</li>
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title" style="margin-bottom:12px;">What's Included Regardless of Plan</div>
+      <div class="included-grid">
+        <div class="included-card">
+          <div class="included-title">Unlimited Free e-Transfers &amp; EFTs</div>
+          <div class="included-desc">Send as many transfers as you need with zero per-transaction fees.</div>
+        </div>
+        <div class="included-card">
+          <div class="included-title">2% Interest on Your Balance</div>
+          <div class="included-desc">Your operating balance earns interest automatically — no GIC lock-in.</div>
+        </div>
+        <div class="included-card">
+          <div class="included-title">Wire Transfers from $6 CAD</div>
+          <div class="included-desc">Flat-rate international wires. No hidden FX markup on top.</div>
+        </div>
+        <div class="included-card">
+          <div class="included-title">CAD + USD Multi-Currency Accounts</div>
+          <div class="included-desc">Hold and transact in both currencies from one platform.</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title" style="margin-bottom:12px;">Our Plan Together</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot">Now</div>
+          <div class="tl-body">
+            <div class="tl-label">Leo sends MasterCard T&amp;C</div>
+            <div class="tl-desc">Full MasterCard terms and card service agreement so you can review zero-liability coverage and travel benefits before making a decision.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">Soon</div>
+          <div class="tl-body">
+            <div class="tl-label">Marko loops in Jelena</div>
+            <div class="tl-desc">Review the deck together and align on whether Venn is the right move. No pressure — take the time you need.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">When ready</div>
+          <div class="tl-body">
+            <div class="tl-label">Self-serve onboarding — 5 to 7 minutes</div>
+            <div class="tl-desc">app.venn.ca/signup — you'll need your articles of incorporation, director info, and a photo ID. No minimum revenue requirement.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">Any&shy;time</div>
+          <div class="tl-body">
+            <div class="tl-label">Questions? Reach out to Leo directly</div>
+            <div class="tl-desc">leo@tryvault.com · Book a follow-up at meetings.hubspot.com/leo-katz/venn-demo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    <div class="footer-left">Ready to learn more? <strong>venn.ca</strong> · <strong>venn.ca/pricing</strong></div>
+    <div class="footer-right">
+      <strong>Leo Katz · Senior Account Executive</strong><br>
+      leo@tryvault.com · meetings.hubspot.com/leo-katz/venn-demo
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
