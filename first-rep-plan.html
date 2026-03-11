@@ -1,519 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>First Rep — Business Plan</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --green: #00C19A;
-      --green-light: #E6FAF6;
-      --green-mid: #00A381;
-      --dark: #1A1A1A;
-      --gray: #555;
-      --light-gray: #F7F7F7;
-      --border: #E5E5E5;
+    *{margin:0;padding:0;box-sizing:border-box;}
+    :root{
+      --green:#00C19A;
+      --green-light:#E6FAF6;
+      --green-mid:#00A381;
+      --dark:#1A1A1A;
+      --gray:#555;
+      --light-gray:#F7F7F7;
+      --border:#E5E5E5;
     }
-
-    body {
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #fff;
-      color: var(--dark);
-      line-height: 1.7;
-    }
+    body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:var(--dark);line-height:1.75;}
 
     /* NAV */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: #fff;
-      border-bottom: 1px solid var(--border);
-      padding: 14px 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .nav-logo {
-      font-size: 18px;
-      font-weight: 800;
-      color: var(--green);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-    .nav-logo span {
-      color: var(--dark);
-      font-weight: 400;
-      font-size: 14px;
-      letter-spacing: 0;
-      margin-left: 10px;
-    }
-    .nav-links {
-      display: flex;
-      gap: 28px;
-      list-style: none;
-    }
-    .nav-links a {
-      text-decoration: none;
-      color: var(--gray);
-      font-size: 13px;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--green); }
+    nav{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid var(--border);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;}
+    .nav-logo{font-size:17px;font-weight:900;color:var(--green);letter-spacing:2px;text-transform:uppercase;}
+    .nav-logo span{color:var(--gray);font-weight:400;font-size:13px;letter-spacing:0;margin-left:8px;}
+    .nav-links{display:flex;gap:26px;list-style:none;}
+    .nav-links a{text-decoration:none;color:var(--gray);font-size:13px;font-weight:500;transition:color .2s;}
+    .nav-links a:hover{color:var(--green);}
 
     /* HERO */
-    .hero {
-      background: linear-gradient(135deg, #f0fdf8 0%, #fff 60%);
-      border-bottom: 1px solid var(--border);
-      padding: 80px 40px 70px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .hero-badge {
-      display: inline-block;
-      background: var(--green-light);
-      color: var(--green-mid);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 5px 12px;
-      border-radius: 20px;
-      margin-bottom: 20px;
-    }
-    .hero h1 {
-      font-size: 56px;
-      font-weight: 900;
-      color: var(--green);
-      letter-spacing: -1px;
-      line-height: 1.1;
-      margin-bottom: 12px;
-    }
-    .hero h2 {
-      font-size: 22px;
-      font-weight: 400;
-      color: var(--dark);
-      margin-bottom: 18px;
-    }
-    .hero p {
-      font-size: 15px;
-      color: var(--gray);
-      max-width: 560px;
-    }
-    .hero-meta {
-      margin-top: 28px;
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-    .hero-pill {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 6px 16px;
-      font-size: 13px;
-      color: var(--gray);
-    }
-    .hero-pill strong { color: var(--dark); }
+    .hero{background:linear-gradient(135deg,#f0fdf8 0%,#fff 55%);border-bottom:1px solid var(--border);padding:80px 40px 68px;max-width:920px;margin:0 auto;}
+    .hero-badge{display:inline-block;background:var(--green-light);color:var(--green-mid);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:22px;}
+    .hero h1{font-size:62px;font-weight:900;color:var(--green);letter-spacing:-2px;line-height:1.05;margin-bottom:12px;}
+    .hero h2{font-size:22px;font-weight:400;color:var(--dark);margin-bottom:18px;}
+    .hero p{font-size:15px;color:var(--gray);max-width:540px;}
+    .hero-pills{margin-top:28px;display:flex;gap:10px;flex-wrap:wrap;}
+    .pill{background:#fff;border:1px solid var(--border);border-radius:20px;padding:6px 16px;font-size:13px;color:var(--gray);}
+    .pill strong{color:var(--dark);}
 
-    /* MAIN LAYOUT */
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 40px 80px;
-    }
+    /* LAYOUT */
+    .container{max-width:920px;margin:0 auto;padding:0 40px 100px;}
 
-    /* SECTIONS */
-    .section {
-      padding: 52px 0 0;
-      border-top: 1px solid var(--border);
-      margin-top: 48px;
-    }
-    .section:first-child { margin-top: 48px; }
-
-    .section-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: var(--green);
-      margin-bottom: 10px;
-    }
-    .section h2 {
-      font-size: 26px;
-      font-weight: 800;
-      color: var(--dark);
-      margin-bottom: 16px;
-    }
-    .section p {
-      font-size: 15px;
-      color: var(--gray);
-      max-width: 680px;
-      margin-bottom: 12px;
-    }
+    /* SECTION */
+    .section{padding-top:52px;border-top:1px solid var(--border);margin-top:48px;}
+    .section:first-child{margin-top:48px;}
+    .section-label{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--green);margin-bottom:8px;}
+    .section h2{font-size:26px;font-weight:800;color:var(--dark);margin-bottom:14px;}
+    .section p{font-size:15px;color:var(--gray);max-width:680px;margin-bottom:10px;}
 
     /* CARDS */
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-      margin-top: 20px;
-    }
-    .card {
-      background: var(--light-gray);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 22px 24px;
-    }
-    .card .card-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--gray);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 6px;
-    }
-    .card .card-value {
-      font-size: 28px;
-      font-weight: 900;
-      color: var(--dark);
-    }
-    .card .card-sub {
-      font-size: 13px;
-      color: var(--gray);
-      margin-top: 4px;
-    }
-    .card.highlight {
-      background: var(--green-light);
-      border-color: var(--green);
-    }
-    .card.highlight .card-value { color: var(--green); }
+    .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:22px;}
+    .card{background:var(--light-gray);border:1px solid var(--border);border-radius:12px;padding:22px 24px;}
+    .card .card-label{font-size:11px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+    .card .card-val{font-size:26px;font-weight:900;color:var(--dark);}
+    .card .card-note{font-size:13px;color:var(--gray);margin-top:4px;}
+    .card.green{background:var(--green-light);border-color:var(--green);}
+    .card.green .card-val{color:var(--green);}
 
     /* PRICING TABLE */
-    .pricing-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      font-size: 14px;
-    }
-    .pricing-table th {
-      text-align: left;
-      padding: 10px 16px;
-      background: var(--light-gray);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--gray);
-      border: 1px solid var(--border);
-    }
-    .pricing-table td {
-      padding: 14px 16px;
-      border: 1px solid var(--border);
-      color: var(--dark);
-      vertical-align: top;
-    }
-    .pricing-table tr:hover td { background: #fafafa; }
-    .tag {
-      display: inline-block;
-      background: var(--green-light);
-      color: var(--green-mid);
-      font-size: 11px;
-      font-weight: 600;
-      padding: 3px 9px;
-      border-radius: 10px;
-    }
-    .tag.gray {
-      background: var(--light-gray);
-      color: var(--gray);
-    }
+    .pricing-table{width:100%;border-collapse:collapse;margin-top:20px;font-size:14px;}
+    .pricing-table th{text-align:left;padding:10px 16px;background:var(--light-gray);font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--gray);border:1px solid var(--border);}
+    .pricing-table td{padding:14px 16px;border:1px solid var(--border);color:var(--dark);vertical-align:top;}
+    .pricing-table tr:hover td{background:#fafafa;}
+    .tag{display:inline-block;background:var(--green-light);color:var(--green-mid);font-size:11px;font-weight:600;padding:3px 9px;border-radius:10px;}
 
     /* BULLET LIST */
-    .bullet-list {
-      list-style: none;
-      margin-top: 16px;
-    }
-    .bullet-list li {
-      font-size: 15px;
-      color: var(--gray);
-      padding: 7px 0 7px 24px;
-      position: relative;
-      border-bottom: 1px solid var(--border);
-    }
-    .bullet-list li:last-child { border-bottom: none; }
-    .bullet-list li::before {
-      content: "→";
-      position: absolute;
-      left: 0;
-      color: var(--green);
-      font-weight: 700;
-    }
+    .bullet-list{list-style:none;margin-top:16px;}
+    .bullet-list li{font-size:15px;color:var(--gray);padding:8px 0 8px 26px;position:relative;border-bottom:1px solid var(--border);}
+    .bullet-list li:last-child{border-bottom:none;}
+    .bullet-list li::before{content:"→";position:absolute;left:0;color:var(--green);font-weight:700;}
 
-    /* REFERRAL BLOCK */
-    .referral-block {
-      background: var(--green-light);
-      border: 1px solid var(--green);
-      border-radius: 12px;
-      padding: 28px 32px;
-      margin-top: 20px;
-    }
-    .referral-block h3 {
-      font-size: 17px;
-      font-weight: 800;
-      color: var(--dark);
-      margin-bottom: 12px;
-    }
-    .referral-steps {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 16px;
-    }
-    .referral-step {
-      flex: 1;
-      min-width: 180px;
-      background: #fff;
-      border: 1px solid var(--green);
-      border-radius: 10px;
-      padding: 16px 18px;
-    }
-    .referral-step .step-num {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--green);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 6px;
-    }
-    .referral-step p {
-      font-size: 13px;
-      color: var(--dark);
-      margin: 0;
-    }
+    /* QUOTE */
+    .quote{border-left:3px solid var(--green);padding:14px 20px;background:var(--light-gray);border-radius:0 8px 8px 0;margin:16px 0;font-size:14px;color:var(--gray);font-style:italic;}
+
+    /* REFERRAL */
+    .referral-block{background:var(--green-light);border:1px solid var(--green);border-radius:12px;padding:28px 30px;margin-top:20px;}
+    .referral-block h3{font-size:16px;font-weight:800;color:var(--dark);margin-bottom:16px;}
+    .referral-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;}
+    .r-step{background:#fff;border:1px solid var(--green);border-radius:10px;padding:16px 18px;}
+    .r-step .r-num{font-size:11px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+    .r-step p{font-size:13px;color:var(--dark);margin:0;}
 
     /* CHANNELS */
-    .channel-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 14px;
-      margin-top: 20px;
-    }
-    .channel-card {
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 18px 20px;
-    }
-    .channel-card .channel-name {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--dark);
-      margin-bottom: 6px;
-    }
-    .channel-card p {
-      font-size: 13px;
-      color: var(--gray);
-      margin: 0;
-    }
-    .channel-card.primary {
-      border-color: var(--green);
-      background: var(--green-light);
-    }
+    .channel-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-top:20px;}
+    .channel-card{border:1px solid var(--border);border-radius:10px;padding:18px 20px;}
+    .channel-card .ch-name{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:6px;}
+    .channel-card p{font-size:13px;color:var(--gray);margin:0;}
 
     /* SHOPIFY STEPS */
-    .steps-list {
-      counter-reset: steps;
-      list-style: none;
-      margin-top: 20px;
-    }
-    .steps-list li {
-      counter-increment: steps;
-      display: flex;
-      gap: 16px;
-      margin-bottom: 14px;
-      align-items: flex-start;
-    }
-    .steps-list li::before {
-      content: counter(steps);
-      background: var(--green);
-      color: #fff;
-      font-size: 12px;
-      font-weight: 800;
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-    .steps-list li span {
-      font-size: 14px;
-      color: var(--gray);
-    }
-    .steps-list li span strong { color: var(--dark); }
-
-    /* CHECKLIST */
-    .checklist-group {
-      margin-top: 28px;
-    }
-    .checklist-group-title {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--green-mid);
-      margin-bottom: 10px;
-      padding-bottom: 6px;
-      border-bottom: 2px solid var(--green-light);
-    }
-    .checklist {
-      list-style: none;
-    }
-    .checklist li {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      padding: 8px 0;
-      border-bottom: 1px solid #f0f0f0;
-      font-size: 14px;
-      color: var(--dark);
-    }
-    .checklist li:last-child { border-bottom: none; }
-    .checklist li .check-box {
-      width: 18px;
-      height: 18px;
-      border: 2px solid var(--border);
-      border-radius: 4px;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-
-    /* QUOTE BLOCK */
-    .quote-block {
-      border-left: 3px solid var(--green);
-      padding: 12px 20px;
-      background: var(--light-gray);
-      border-radius: 0 8px 8px 0;
-      margin: 16px 0;
-      font-size: 14px;
-      color: var(--gray);
-      font-style: italic;
-    }
+    .steps{counter-reset:steps;list-style:none;margin-top:20px;}
+    .steps li{counter-increment:steps;display:flex;gap:14px;margin-bottom:14px;align-items:flex-start;}
+    .steps li::before{content:counter(steps);background:var(--green);color:#fff;font-size:12px;font-weight:800;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+    .steps li span{font-size:14px;color:var(--gray);}
+    .steps li span strong{color:var(--dark);}
 
     /* SCALE TRIGGER */
-    .trigger-box {
-      background: var(--dark);
-      color: #fff;
-      border-radius: 12px;
-      padding: 28px 32px;
-      margin-top: 20px;
-      display: flex;
-      gap: 24px;
-      align-items: center;
-    }
-    .trigger-num {
-      font-size: 52px;
-      font-weight: 900;
-      color: var(--green);
-      line-height: 1;
-      flex-shrink: 0;
-    }
-    .trigger-text h3 { font-size: 17px; margin-bottom: 6px; }
-    .trigger-text p { font-size: 14px; color: #aaa; margin: 0; }
+    .trigger{background:var(--dark);color:#fff;border-radius:12px;padding:28px 32px;margin-top:20px;display:flex;gap:24px;align-items:center;}
+    .trigger-num{font-size:52px;font-weight:900;color:var(--green);line-height:1;flex-shrink:0;}
+    .trigger-text h3{font-size:17px;margin-bottom:6px;}
+    .trigger-text p{font-size:14px;color:#aaa;margin:0;}
 
-    /* FOOTER */
-    footer {
-      background: var(--dark);
-      color: #aaa;
-      text-align: center;
-      padding: 36px 40px;
-      font-size: 13px;
-      margin-top: 60px;
-    }
-    footer strong { color: var(--green); }
+    /* CHECKLIST */
+    .checklist-group{margin-top:28px;}
+    .group-title{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--green-mid);margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--green-light);}
+    .checklist{list-style:none;}
+    .checklist li{display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #f0f0f0;font-size:14px;color:var(--dark);cursor:pointer;transition:background .1s;}
+    .checklist li:last-child{border-bottom:none;}
+    .checklist li:hover{color:var(--green-mid);}
+    .check-box{width:18px;height:18px;border:2px solid var(--border);border-radius:4px;flex-shrink:0;margin-top:2px;transition:all .15s;}
+    .checklist li.done .check-box{background:var(--green);border-color:var(--green);display:flex;align-items:center;justify-content:center;}
+    .checklist li.done .check-box::after{content:"✓";color:#fff;font-size:11px;font-weight:700;}
+    .checklist li.done span{text-decoration:line-through;color:#aaa;}
 
-    @media (max-width: 640px) {
-      nav { padding: 14px 20px; }
-      .nav-links { display: none; }
-      .hero { padding: 50px 20px; }
-      .hero h1 { font-size: 38px; }
-      .container { padding: 0 20px 60px; }
-      .trigger-box { flex-direction: column; gap: 12px; }
+    /* EDITABLE PRICE */
+    .price-edit{display:inline-flex;align-items:center;gap:4px;background:var(--green-light);border:1px solid var(--green);border-radius:8px;padding:2px 10px;}
+    .price-edit .currency{font-weight:700;color:var(--green-mid);font-size:15px;}
+    .price-input{border:none;background:transparent;font-size:15px;font-weight:700;color:var(--dark);width:52px;outline:none;font-family:inherit;}
+    .price-input:focus{color:var(--green);}
+    td .price-edit{margin:0;}
+
+    footer{background:var(--dark);color:#888;text-align:center;padding:36px 40px;font-size:13px;margin-top:60px;}
+    footer strong{color:var(--green);}
+
+    @media(max-width:640px){
+      nav{padding:14px 20px;}
+      .nav-links{display:none;}
+      .hero{padding:50px 20px;}
+      .hero h1{font-size:42px;}
+      .container{padding:0 20px 60px;}
+      .trigger{flex-direction:column;gap:12px;}
     }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
-  <div class="nav-logo">First Rep <span>· First Sell</span></div>
+  <div class="nav-logo">First Rep <span>· Consulting & Mentorship</span></div>
   <ul class="nav-links">
-    <li><a href="#idea">The Idea</a></li>
+    <li><a href="#idea">Idea</a></li>
     <li><a href="#offer">Offer</a></li>
     <li><a href="#referral">Referral</a></li>
+    <li><a href="#clients">Clients</a></li>
     <li><a href="#shopify">Shopify</a></li>
     <li><a href="#checklist">Checklist</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
 <div class="hero">
   <div class="hero-badge">Business Plan · 2026</div>
   <h1>First Rep</h1>
   <h2>Software Sales Consulting &amp; Mentorship</h2>
-  <p>Paired with the <strong>First Sell</strong> podcast. One-on-one mentorship for recent grads breaking into software sales — part tactical coaching, part real talk from someone who's lived it.</p>
-  <div class="hero-meta">
-    <div class="hero-pill"><strong>Ontario</strong> based to start</div>
-    <div class="hero-pill">Target: <strong>5–10 clients/month</strong></div>
-    <div class="hero-pill">Hosted by <strong>Leo Katz</strong></div>
+  <p>One-on-one mentorship for recent grads breaking into software sales. Part tactical coaching, part real talk from someone who's lived it. You're not a firm — you're the person they wish they knew.</p>
+  <div class="hero-pills">
+    <div class="pill"><strong>Ontario</strong> based to start</div>
+    <div class="pill">Target: <strong>5–10 clients / month</strong></div>
+    <div class="pill">Hosted by <strong>Leo Katz</strong></div>
+    <div class="pill">Overhead: <strong>$5/month</strong></div>
   </div>
 </div>
 
 <div class="container">
 
-  <!-- THE IDEA -->
+  <!-- IDEA -->
   <div class="section" id="idea">
     <div class="section-label">Overview</div>
     <h2>The Idea</h2>
-    <p>A personal consulting and mentorship service helping recent grads break into software sales. The <strong>First Sell</strong> podcast gets you in front of founders and their networks. The consulting converts the young professionals watching who want to get into the space.</p>
-    <p>Two connected properties. One identity. They feed each other.</p>
+    <p>A personal consulting and mentorship service helping recent grads break into software sales. No slides, no worksheets, no prep. The value is you — your experience, your stories, your real advice.</p>
+    <p>Small by design. 5–10 clients a month, every session personal.</p>
 
-    <div class="card-grid" style="margin-top:28px">
-      <div class="card highlight">
-        <div class="card-title">First Rep</div>
-        <div class="card-value" style="font-size:20px;margin-top:4px">Consulting &amp; Mentorship</div>
-        <div class="card-sub">One-on-one sessions with recent grads trying to break into software sales</div>
+    <div class="card-grid">
+      <div class="card green">
+        <div class="card-label">The Model</div>
+        <div class="card-val" style="font-size:19px;margin-top:4px">One-on-One Sessions</div>
+        <div class="card-note">Show up, be yourself, help them. No admin before or after.</div>
       </div>
-      <div class="card highlight">
-        <div class="card-title">First Sell</div>
-        <div class="card-value" style="font-size:20px;margin-top:4px">Founder Podcast</div>
-        <div class="card-sub">10–15 min episodes. Canadian founders tell the story of their very first sale.</div>
+      <div class="card green">
+        <div class="card-label">The Edge</div>
+        <div class="card-val" style="font-size:19px;margin-top:4px">Real Experience</div>
+        <div class="card-note">Years in software sales. Never lost an interview. Met thousands of business owners.</div>
+      </div>
+      <div class="card green">
+        <div class="card-label">The Goal</div>
+        <div class="card-val" style="font-size:19px;margin-top:4px">Get Them Hired</div>
+        <div class="card-note">One client who lands a job is worth more than any ad spend.</div>
       </div>
     </div>
   </div>
 
-  <!-- TARGET CLIENT -->
+  <!-- TARGET -->
   <div class="section">
     <div class="section-label">Who You Help</div>
     <h2>Target Client</h2>
-    <p>Recent grads and young professionals (Ontario-based to start) who have decided they want software sales but can't get hired — or who are actively interviewing and not converting.</p>
-
+    <p>Recent grads and young professionals in Ontario who have decided they want software sales but can't get hired — or who are actively interviewing and not converting.</p>
     <ul class="bullet-list">
       <li>Decided on software sales but stuck getting past the application stage</li>
       <li>Interviewing but not converting — need real prep, not generic advice</li>
-      <li>Unsure how to present themselves on LinkedIn</li>
+      <li>Unsure how to build or present themselves on LinkedIn</li>
       <li>Just graduated and don't know how to navigate the job market</li>
     </ul>
   </div>
 
-  <!-- OFFER & PRICING -->
+  <!-- OFFER -->
   <div class="section" id="offer">
     <div class="section-label">Pricing</div>
     <h2>Offer &amp; Pricing</h2>
-    <p>Simple, accessible, and low commitment. No packages to overthink — just show up and help them.</p>
+    <p>Simple, accessible, low commitment. No packages to overthink.</p>
 
     <table class="pricing-table">
       <thead>
@@ -529,98 +217,91 @@
           <td><strong>Intro Call</strong></td>
           <td>10 min</td>
           <td><span class="tag">Free</span></td>
-          <td>No hard sell — just find out if you can help</td>
+          <td>No hard sell — just see if you can help</td>
         </tr>
         <tr>
           <td><strong>Single Session</strong></td>
           <td>30 min</td>
-          <td><strong>$50</strong></td>
-          <td>One-on-one, verbal, no prep required from either side</td>
+          <td><span class="price-edit"><span class="currency">$</span><input class="price-input" type="number" value="50" min="0"/></span></td>
+          <td>One-on-one, verbal, no prep needed from either side</td>
         </tr>
         <tr>
           <td><strong>3-Session Pack</strong></td>
           <td>3 × 30 min</td>
-          <td><strong>$120</strong></td>
-          <td>Natural upsell — saves them $30</td>
+          <td><span class="price-edit"><span class="currency">$</span><input class="price-input" type="number" value="120" min="0"/></span></td>
+          <td>Natural upsell — saves them money</td>
         </tr>
         <tr>
           <td><strong>LinkedIn Audit</strong></td>
           <td>15 min</td>
-          <td><strong>$25</strong></td>
-          <td>Add-on. Easy entry point before a full session.</td>
+          <td><span class="price-edit"><span class="currency">$</span><input class="price-input" type="number" value="25" min="0"/></span></td>
+          <td>Easy add-on. Great entry point before a full session.</td>
         </tr>
       </tbody>
     </table>
 
-    <div class="quote-block" style="margin-top:20px">
-      Show up, be yourself, help them. The value is you — your stories, your experience, your real advice. No slides, no worksheets, no prep.
-    </div>
+    <div class="quote">Show up, be yourself, help them. One link or one sentence after the call if anything — that's it.</div>
   </div>
 
   <!-- FIRST GOAL -->
   <div class="section">
-    <div class="section-label">First Priority</div>
+    <div class="section-label">Priority One</div>
     <h2>First Goal: One Win</h2>
-    <p>Before anything else — get one person hired. Do the first session free or discounted if needed. That story is worth more than any LinkedIn post or paid ad.</p>
-    <p>Ask every client to send you a short update when they land their first job. That's your testimonial pipeline with zero effort.</p>
+    <p>Before chasing 5–10 clients, focus on getting one person hired. Do the first session free or discounted if needed. That story becomes your best marketing asset.</p>
+    <p>Ask every client to send you a quick update when they land their first job. Testimonial pipeline, zero effort.</p>
   </div>
 
   <!-- REFERRAL -->
   <div class="section" id="referral">
     <div class="section-label">Growth</div>
     <h2>Referral Program</h2>
-    <p>Simple, automatic, costs nothing. Run entirely through Shopify's built-in discount code system.</p>
+    <p>Simple, automatic, costs nothing. Runs entirely through Shopify's discount code system — no manual tracking.</p>
 
     <div class="referral-block">
       <h3>How It Works</h3>
       <div class="referral-steps">
-        <div class="referral-step">
-          <div class="step-num">Step 1</div>
-          <p>Client completes their first session. You send them a unique discount code (e.g. FIRSTREPMIKE).</p>
+        <div class="r-step">
+          <div class="r-num">Step 1</div>
+          <p>Client finishes their first session. You send them a unique code (e.g. <strong>FIRSTREPMIKE</strong>).</p>
         </div>
-        <div class="referral-step">
-          <div class="step-num">Step 2</div>
-          <p>They share it with a friend. Friend gets <strong>$10 off</strong> their first session at checkout.</p>
+        <div class="r-step">
+          <div class="r-num">Step 2</div>
+          <p>They share it. Their friend gets <strong>$10 off</strong> their first session at checkout.</p>
         </div>
-        <div class="referral-step">
-          <div class="step-num">Step 3</div>
-          <p>Once the friend books, the original client gets their <strong>next session free</strong>.</p>
+        <div class="r-step">
+          <div class="r-num">Step 3</div>
+          <p>Friend books → original client gets their <strong>next session free</strong>.</p>
         </div>
       </div>
-
-      <div class="quote-block" style="margin-top:20px;background:#fff">
-        Message to send after every session: "If you know anyone else trying to break into sales, send them your code — [CODE]. They get $10 off and you get your next one free."
-      </div>
+      <div class="quote" style="background:#fff;margin-top:20px;margin-bottom:0">"If you know anyone trying to break into sales, send them your code — [CODE]. They get $10 off and you get your next one free."</div>
     </div>
   </div>
 
   <!-- HOW TO GET CLIENTS -->
-  <div class="section">
+  <div class="section" id="clients">
     <div class="section-label">Marketing</div>
     <h2>How to Get Clients</h2>
 
     <div class="channel-grid">
-      <div class="channel-card primary">
-        <div class="channel-name">🎙 The Podcast</div>
-        <p>Your main funnel. Every First Sell episode puts you in front of a founder's network. Young people watching find First Rep naturally.</p>
+      <div class="channel-card" style="border-color:var(--green);background:var(--green-light)">
+        <div class="ch-name">LinkedIn</div>
+        <p>One honest launch post. Lean into your story. Then one post a week — one thing you wish you knew before your first sales job. That's your whole strategy.</p>
       </div>
       <div class="channel-card">
-        <div class="channel-name">LinkedIn</div>
-        <p>One launch post. Then a weekly format: one thing you wish you knew before your first sales job. That's it.</p>
+        <div class="ch-name">Facebook Groups</div>
+        <p>Ontario new grad and alumni groups. Add value first, answer a question or two, then mention what you offer.</p>
       </div>
       <div class="channel-card">
-        <div class="channel-name">Facebook Groups</div>
-        <p>Ontario new grad and alumni groups. Add value first, answer questions, then mention what you offer.</p>
+        <div class="ch-name">Word of Mouth</div>
+        <p>Tell five people personally — not a mass message. At 5–10 clients a month this alone is enough.</p>
       </div>
       <div class="channel-card">
-        <div class="channel-name">Word of Mouth</div>
-        <p>Tell five people personally. At 5–10 clients a month you don't need much more than this.</p>
+        <div class="ch-name">Referral Codes</div>
+        <p>Every client becomes a distribution channel. One hire leads to three more conversations.</p>
       </div>
     </div>
 
-    <div class="quote-block" style="margin-top:24px">
-      Hook with questions, not statements — <em>"Struggling to get your first job in sales?"  "Not getting callbacks after interviews?"  "Not sure how to stand out on LinkedIn?"</em>
-    </div>
+    <div class="quote" style="margin-top:22px">Hook with questions, not statements — <em>"Struggling to get your first job in sales?"  "Not getting callbacks after interviews?"  "Not sure how to stand out on LinkedIn?"</em></div>
   </div>
 
   <!-- WHAT YOU COVER -->
@@ -640,16 +321,16 @@
   <div class="section" id="shopify">
     <div class="section-label">Payments</div>
     <h2>How to Launch on Shopify</h2>
-    <p>Shopify is the cleanest way to accept payments without building anything custom. Start on the <strong>Starter plan at $5/month</strong> — you don't need a full store, just shareable payment links.</p>
+    <p>Shopify is the cleanest way to accept payments without building anything custom. Start on the <strong>Starter plan at $5/month</strong> — shareable payment links, no full store needed.</p>
 
-    <ol class="steps-list" style="margin-top:24px">
+    <ol class="steps">
       <li><span>Go to <strong>shopify.com</strong> and create an account under "First Rep"</span></li>
       <li><span>Create three products: <strong>Intro Call (Free)</strong>, <strong>30-Minute Session — $50</strong>, <strong>3-Session Package — $120</strong></span></li>
       <li><span>Connect <strong>Shopify Payments</strong> to accept credit cards — no third-party processor needed</span></li>
-      <li><span>Install <strong>Sesami</strong> or <strong>Appointo</strong> (free booking apps) so clients pick a time slot right at checkout</span></li>
-      <li><span>Set up automatic <strong>order confirmation emails</strong> so clients get a booking confirmation the moment they pay</span></li>
-      <li><span>For referral codes: go to <strong>Discounts → Create Discount</strong>. Set $10 off per unique client code. Shopify logs every use automatically.</span></li>
-      <li><span>Share your product links directly on LinkedIn and in your Linktree — <strong>no website needed to start</strong></span></li>
+      <li><span>Install <strong>Sesami</strong> or <strong>Appointo</strong> (free booking apps) so clients pick a time slot right at checkout — no separate Calendly needed</span></li>
+      <li><span>Set up automatic <strong>order confirmation emails</strong> so clients get a booking link the moment they pay</span></li>
+      <li><span>For referral codes: <strong>Discounts → Create Discount</strong> → unique code per client → $10 off → Shopify logs every use automatically</span></li>
+      <li><span>Share product links on LinkedIn and in a Linktree — <strong>no website required to start</strong></span></li>
     </ol>
   </div>
 
@@ -657,13 +338,12 @@
   <div class="section">
     <div class="section-label">Scale</div>
     <h2>Scale Trigger</h2>
-    <p>Without a defined trigger it stays a side project indefinitely. Set a concrete threshold and hold yourself to it.</p>
-
-    <div class="trigger-box">
+    <p>Without a defined trigger it stays a side project indefinitely. Set the line and hold to it.</p>
+    <div class="trigger">
       <div class="trigger-num">10</div>
       <div class="trigger-text">
-        <h3>At 10 paid sessions — invest in a real landing page and one paid channel</h3>
-        <p>Until then, keep overhead at zero. Shopify Starter ($5/month) is your only cost.</p>
+        <h3>At 10 paid sessions — build a real landing page and invest in one paid channel</h3>
+        <p>Until then, overhead stays at $5/month. No incorporation needed yet — revisit when money is sitting idle.</p>
       </div>
     </div>
   </div>
@@ -672,95 +352,79 @@
   <div class="section" id="checklist">
     <div class="section-label">Launch</div>
     <h2>Full Launch Checklist</h2>
+    <p>Click to check items off as you go.</p>
 
     <div class="checklist-group">
-      <div class="checklist-group-title">Brand &amp; Setup</div>
+      <div class="group-title">Brand &amp; Setup</div>
       <ul class="checklist">
-        <li><div class="check-box"></div>Commit to the names: First Rep and First Sell</li>
-        <li><div class="check-box"></div>Buy a domain (firstrep.ca or firstrepcoaching.com)</li>
-        <li><div class="check-box"></div>Set up Shopify Starter ($5/month)</li>
-        <li><div class="check-box"></div>Create three service products in Shopify</li>
-        <li><div class="check-box"></div>Connect Shopify Payments</li>
-        <li><div class="check-box"></div>Install a booking app (Sesami or Appointo)</li>
-        <li><div class="check-box"></div>Set up a Linktree connecting your Shopify links, podcast, and LinkedIn</li>
-        <li><div class="check-box"></div>Set up a dedicated email (leo@firstrep.ca or similar)</li>
+        <li onclick="toggle(this)"><div class="check-box"></div><span>Commit to the name: First Rep</span></li>
+        <li onclick="toggle(this)"><div class="check-box"></div><span>Buy a domain (firstrep.ca or firstrepcoaching.com)</span></li>
+        <li onclick="toggle(this)"><div class="check-box"></div><span>Set up Shopify Starter ($5/month)</span></li>
+        <li onclick="toggle(this)"><div class="check-box"></div><span>Create three service products in Shopify</span></li>
+        <li onclick="toggle(this)"><div class="check-box"></div><span>Connect Shopify Payments</span></li>
+        <li onclick="toggle(this)"><div class="check-box"></div><span>Install a booking app (Sesami or Appointo) so clients book at checkout</span></li>
+        <li onclick="toggle(this)"><div class="check-box"></div><span>Set up a Linktree connecting your Shopify links and LinkedIn</span></li>
+        <li onclick="toggle(this)"><div class="check-box"></div><span>Set up a dedicated email (leo@firstrep.ca or similar)</span></li>
       </ul>
     </div>
 
     <div class="checklist-group">
-      <div class="checklist-group-title">Referral System</div>
+      <div class="group-title">Referral System</div>
       <ul class="checklist">
-        <li><div class="check-box"></div>Create a discount code template in Shopify (FIRSTREP + client name)</li>
-        <li><div class="check-box"></div>Write your one-line post-session message with referral code</li>
-        <li><div class="check-box"></div>Track referrals in a simple note until you hit 10 clients</li>
+        <li onclick="toggle(this)"><div class="check-box"></div><span>Create a discount code template in Shopify (FIRSTREP + client name)</span></li>
+        <li onclick="toggle(this)"><div class="check-box"></div><span>Write your one-line post-session message with referral code</span></li>
+        <li onclick="toggle(this)"><div class="check-box"></div><span>Track referrals in a simple note until you hit 10 clients</span></li>
       </ul>
     </div>
 
     <div class="checklist-group">
-      <div class="checklist-group-title">LinkedIn</div>
+      <div class="group-title">LinkedIn</div>
       <ul class="checklist">
-        <li><div class="check-box"></div>Update your LinkedIn bio to mention First Rep and First Sell</li>
-        <li><div class="check-box"></div>Write and schedule your launch post announcing both</li>
-        <li><div class="check-box"></div>Schedule 4 weekly posts in advance — one insight per post, no fluff</li>
-        <li><div class="check-box"></div>Join 3–5 relevant LinkedIn groups for new grads and young sales professionals</li>
+        <li onclick="toggle(this)"><div class="check-box"></div><span>Update your LinkedIn bio to mention First Rep</span></li>
+        <li onclick="toggle(this)"><div class="check-box"></div><span>Write and schedule your launch post</span></li>
+        <li onclick="toggle(this)"><div class="check-box"></div><span>Schedule 4 weekly posts in advance — one insight per post, no fluff</span></li>
+        <li onclick="toggle(this)"><div class="check-box"></div><span>Join 3–5 LinkedIn groups for new grads and young sales professionals</span></li>
       </ul>
     </div>
 
     <div class="checklist-group">
-      <div class="checklist-group-title">Facebook</div>
+      <div class="group-title">Facebook</div>
       <ul class="checklist">
-        <li><div class="check-box"></div>Join 3–5 Ontario new grad and young professional Facebook groups</li>
-        <li><div class="check-box"></div>Introduce yourself naturally — add value before mentioning the service</li>
+        <li onclick="toggle(this)"><div class="check-box"></div><span>Join 3–5 Ontario new grad and young professional Facebook groups</span></li>
+        <li onclick="toggle(this)"><div class="check-box"></div><span>Introduce yourself naturally — add value before mentioning the service</span></li>
       </ul>
     </div>
 
     <div class="checklist-group">
-      <div class="checklist-group-title">Podcast — Episode 001</div>
+      <div class="group-title">First Client</div>
       <ul class="checklist">
-        <li><div class="check-box"></div>Pick your first guest — someone you already know, easy yes, good story</li>
-        <li><div class="check-box"></div>Send the casual outreach message</li>
-        <li><div class="check-box"></div>Set up Riverside.fm (free tier to start)</li>
-        <li><div class="check-box"></div>Confirm mic and headphones</li>
-        <li><div class="check-box"></div>Record in vertical 9:16 framing from day one</li>
-        <li><div class="check-box"></div>Brief guest: casual, no prep, 10–15 minutes</li>
+        <li onclick="toggle(this)"><div class="check-box"></div><span>Personally reach out to 5 people with younger siblings or recent grad friends</span></li>
+        <li onclick="toggle(this)"><div class="check-box"></div><span>Offer the first session free or discounted — just get the win</span></li>
+        <li onclick="toggle(this)"><div class="check-box"></div><span>Get a testimonial the moment they land a job</span></li>
+        <li onclick="toggle(this)"><div class="check-box"></div><span>Send them their referral code immediately after</span></li>
       </ul>
     </div>
 
     <div class="checklist-group">
-      <div class="checklist-group-title">Post-Recording</div>
+      <div class="group-title">Admin</div>
       <ul class="checklist">
-        <li><div class="check-box"></div>Upload raw file to editor</li>
-        <li><div class="check-box"></div>Send guest their clips with a one-liner</li>
-        <li><div class="check-box"></div>Schedule clip drops: Mon / Wed / Fri</li>
-        <li><div class="check-box"></div>Full episode drops biweekly</li>
-      </ul>
-    </div>
-
-    <div class="checklist-group">
-      <div class="checklist-group-title">First Client</div>
-      <ul class="checklist">
-        <li><div class="check-box"></div>Personally reach out to 5 people with younger siblings or recent grad friends</li>
-        <li><div class="check-box"></div>Offer the first session free or discounted — just get the win</li>
-        <li><div class="check-box"></div>Get a testimonial the moment they land a job</li>
-        <li><div class="check-box"></div>Send them their referral code immediately after</li>
-      </ul>
-    </div>
-
-    <div class="checklist-group">
-      <div class="checklist-group-title">Admin</div>
-      <ul class="checklist">
-        <li><div class="check-box"></div>No incorporation needed yet — revisit at 10 paid sessions</li>
-        <li><div class="check-box"></div>Optional: coaching certificate at a local college for added credibility</li>
+        <li onclick="toggle(this)"><div class="check-box"></div><span>No incorporation needed yet — revisit at 10 paid sessions</span></li>
+        <li onclick="toggle(this)"><div class="check-box"></div><span>Optional: coaching certificate at a local college for added credibility</span></li>
       </ul>
     </div>
 
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
-  <strong>First Rep</strong> &nbsp;·&nbsp; First Sell Podcast &nbsp;·&nbsp; Leo Katz &nbsp;·&nbsp; Ontario, Canada &nbsp;·&nbsp; 2026
+  <strong>First Rep</strong> &nbsp;·&nbsp; Software Sales Consulting &amp; Mentorship &nbsp;·&nbsp; Leo Katz &nbsp;·&nbsp; Ontario, Canada &nbsp;·&nbsp; 2026
 </footer>
+
+<script>
+  function toggle(el){
+    el.classList.toggle('done');
+  }
+</script>
 
 </body>
 </html>
