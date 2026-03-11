@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Venn — Friesen Kaye &amp; Associates</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sea-green:   #099250;
+    --dark-green:  #002400;
+    --eggshell:    #F4F1DE;
+    --green-light: #41C981;
+    --white:       #FFFFFF;
+    --text-dark:   #002400;
+    --text-muted:  #0A6336;
+    --red:         #c0392b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #e0ddd0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 0;
+    gap: 32px;
+  }
+  .page {
+    width: 794px;
+    min-height: 1123px;
+    background: var(--eggshell);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* HEADER */
+  .page-header {
+    background: var(--dark-green);
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-mark { width: 28px; height: 28px; }
+  .logo-text {
+    color: var(--white);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .page-badge {
+    background: var(--sea-green);
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--sea-green);
+    padding: 28px 32px 24px;
+    position: relative;
+  }
+  .hero-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--green-light);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .hero h1 {
+    color: var(--white);
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.25;
+    max-width: 560px;
+  }
+  .hero-sub {
+    color: rgba(255,255,255,0.82);
+    font-size: 13px;
+    margin-top: 8px;
+    font-weight: 400;
+  }
+
+  /* STAT BAR */
+  .stat-bar {
+    background: var(--dark-green);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 0;
+  }
+  .stat-item {
+    padding: 14px 18px;
+    border-right: 1px solid rgba(255,255,255,0.1);
+    text-align: center;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-value {
+    color: var(--green-light);
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .stat-label {
+    color: rgba(255,255,255,0.65);
+    font-size: 10px;
+    margin-top: 2px;
+    font-weight: 400;
+    line-height: 1.3;
+  }
+
+  /* MAIN */
+  .main { padding: 24px 28px; flex: 1; display: flex; flex-direction: column; gap: 20px; }
+
+  /* CARDS GRID */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .card {
+    background: var(--white);
+    border-radius: 8px;
+    padding: 18px 20px;
+    border: 1px solid rgba(0,36,0,0.08);
+  }
+  .card-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid;
+  }
+  .card-title.bad  { color: var(--red);       border-color: var(--red); }
+  .card-title.good { color: var(--sea-green);  border-color: var(--sea-green); }
+
+  .point {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+    align-items: flex-start;
+  }
+  .point:last-child { margin-bottom: 0; }
+  .bullet {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .bullet.x { background: #fde8e8; color: var(--red); }
+  .bullet.check { background: #e0f5eb; color: var(--sea-green); }
+  .point-body strong {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 2px;
+  }
+  .point-body p {
+    font-size: 11.5px;
+    color: #4a5a4a;
+    line-height: 1.45;
+  }
+
+  /* QUOTE CARD */
+  .quote-card {
+    background: var(--dark-green);
+    border-radius: 8px;
+    padding: 18px 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .quote-block { padding-right: 20px; border-right: 1px solid rgba(255,255,255,0.12); }
+  .quote-block:last-child { padding-right: 0; border-right: none; padding-left: 4px; }
+  .quote-mark {
+    color: var(--green-light);
+    font-size: 28px;
+    line-height: 1;
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+  .quote-text {
+    color: rgba(255,255,255,0.9);
+    font-size: 12px;
+    line-height: 1.55;
+    font-style: italic;
+    margin-bottom: 10px;
+  }
+  .quote-attr {
+    color: var(--green-light);
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  /* FOOTER */
+  .page-footer {
+    background: var(--dark-green);
+    padding: 12px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+  }
+  .footer-left {
+    color: rgba(255,255,255,0.65);
+    font-size: 11px;
+  }
+  .footer-left a, .footer-right a {
+    color: var(--green-light);
+    text-decoration: none;
+  }
+  .footer-right {
+    text-align: right;
+    color: rgba(255,255,255,0.65);
+    font-size: 11px;
+    line-height: 1.6;
+  }
+
+  /* PAGE 2 SPECIFICS */
+  .section-heading {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-heading::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(0,36,0,0.12);
+  }
+  .steps-list { display: flex; flex-direction: column; gap: 10px; }
+  .step-row {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    background: var(--white);
+    border-radius: 8px;
+    padding: 12px 16px;
+    border: 1px solid rgba(0,36,0,0.07);
+  }
+  .step-num {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--sea-green);
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-body strong {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 2px;
+  }
+  .step-body p { font-size: 11.5px; color: #4a5a4a; line-height: 1.45; }
+
+  .highlight-box {
+    background: #e8f5ef;
+    border-left: 4px solid var(--sea-green);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+  }
+  .highlight-box p {
+    font-size: 12px;
+    color: var(--text-dark);
+    line-height: 1.55;
+  }
+  .highlight-box strong { color: var(--sea-green); }
+
+  /* PAGE 3 SPECIFICS */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .pricing-card {
+    background: var(--white);
+    border-radius: 8px;
+    padding: 18px 16px;
+    border: 2px solid transparent;
+    position: relative;
+  }
+  .pricing-card.highlighted {
+    border-color: var(--sea-green);
+    background: #f0faf5;
+  }
+  .recommended-badge {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--sea-green);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+  }
+  .plan-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 4px;
+  }
+  .plan-price {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--sea-green);
+    margin-bottom: 12px;
+  }
+  .plan-price span { font-size: 12px; font-weight: 400; color: var(--text-muted); }
+  .plan-feature {
+    font-size: 11.5px;
+    color: #4a5a4a;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(0,36,0,0.06);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    line-height: 1.35;
+  }
+  .plan-feature:last-child { border-bottom: none; }
+  .plan-check { color: var(--sea-green); font-weight: 700; }
+
+  .included-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .included-card {
+    background: var(--white);
+    border-radius: 8px;
+    padding: 14px 16px;
+    border: 1px solid rgba(0,36,0,0.07);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .included-icon {
+    width: 32px;
+    height: 32px;
+    background: #e8f5ef;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+  .included-body strong {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 2px;
+  }
+  .included-body p { font-size: 11px; color: #4a5a4a; line-height: 1.4; }
+
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+  .timeline-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    position: relative;
+    padding-bottom: 16px;
+  }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .timeline-item:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 17px;
+    top: 34px;
+    bottom: 0;
+    width: 2px;
+    background: rgba(9,146,80,0.2);
+  }
+  .tl-dot {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--sea-green);
+    color: white;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .tl-body {
+    background: var(--white);
+    border-radius: 8px;
+    padding: 11px 16px;
+    border: 1px solid rgba(0,36,0,0.07);
+    flex: 1;
+  }
+  .tl-date {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--sea-green);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 2px;
+  }
+  .tl-text {
+    font-size: 12px;
+    color: var(--text-dark);
+    line-height: 1.45;
+  }
+
+  @media print {
+    body { background: none; padding: 0; }
+    .page { page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     PAGE 1 — OVERVIEW
+════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="logo-row">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">Venn</span>
+    </div>
+    <span class="page-badge">Page 1 of 3</span>
+  </div>
+
+  <div class="hero">
+    <div class="hero-label">Prepared for Friesen Kaye &amp; Associates</div>
+    <h1>A Better Way to Handle Business Expenses on the Road</h1>
+    <p class="hero-sub">Stop relying on personal cards. Give your field staff their own Venn cards — with limits, categories, and QuickBooks sync built in.</p>
+  </div>
+
+  <div class="stat-bar">
+    <div class="stat-item">
+      <div class="stat-value">2%</div>
+      <div class="stat-label">Interest on balances</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">0.25%</div>
+      <div class="stat-label">FX rate (vs. bank's 2–3%)</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">$0</div>
+      <div class="stat-label">EFT / e-transfer cost</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">$6</div>
+      <div class="stat-label">Wire transfers (flat)</div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-title bad">What You Told Us</div>
+
+        <div class="point">
+          <div class="bullet x">✕</div>
+          <div class="point-body">
+            <strong>Instructors using personal cards</strong>
+            <p>Your instructor in Texas is covering meals, accommodation, and flights out of his own pocket — then getting reimbursed. That's a manual, friction-heavy process for everyone.</p>
+          </div>
+        </div>
+        <div class="point">
+          <div class="bullet x">✕</div>
+          <div class="point-body">
+            <strong>No visibility or control over spend</strong>
+            <p>When staff use personal cards, you have no real-time view of what's being spent or where. Expenses only surface after the fact.</p>
+          </div>
+        </div>
+        <div class="point">
+          <div class="bullet x">✕</div>
+          <div class="point-body">
+            <strong>Frustrated with credit card companies</strong>
+            <p>You've been trying to sort this out with traditional card providers for a while. Slow, rigid, not built for small businesses with remote staff.</p>
+          </div>
+        </div>
+        <div class="point">
+          <div class="bullet x">✕</div>
+          <div class="point-body">
+            <strong>Spend varies — hard to predict</strong>
+            <p>Quiet months run ~$5K. Busy months hit $10K+. You need a system that scales up and down without complexity.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title good">What Venn Does Differently</div>
+
+        <div class="point">
+          <div class="bullet check">✓</div>
+          <div class="point-body">
+            <strong>Company cards for every field staff member</strong>
+            <p>Issue each instructor their own virtual or physical Venn card in minutes. Works everywhere Visa is accepted — no personal card reimbursements.</p>
+          </div>
+        </div>
+        <div class="point">
+          <div class="bullet check">✓</div>
+          <div class="point-body">
+            <strong>Per-card spending limits &amp; category locks</strong>
+            <p>Set a monthly cap per employee and restrict to specific categories — e.g., hotels and flights only. You stay in control without micromanaging.</p>
+          </div>
+        </div>
+        <div class="point">
+          <div class="bullet check">✓</div>
+          <div class="point-body">
+            <strong>All cards for $40/mo — unlimited</strong>
+            <p>One flat fee covers unlimited cards, 1% cashback, no foreign transaction fees, and full QuickBooks integration. No per-card charges.</p>
+          </div>
+        </div>
+        <div class="point">
+          <div class="bullet check">✓</div>
+          <div class="point-body">
+            <strong>Fund once, scale automatically</strong>
+            <p>Keep your expected monthly spend in Venn — that becomes your limit. Top up when it's a busy month. Simple, transparent, no surprises.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quote-card">
+      <div class="quote-block">
+        <div class="quote-mark">"</div>
+        <p class="quote-text">We switched from a big bank and the difference was immediate. Our team has their own cards with limits — no more expense reports, no more waiting on reimbursements.</p>
+        <div class="quote-attr">— Controller, Canadian Professional Services Firm</div>
+      </div>
+      <div class="quote-block">
+        <div class="quote-mark">"</div>
+        <p class="quote-text">Setup took less than an hour. The QuickBooks sync alone saved us hours every month. I wish we'd done this sooner.</p>
+        <div class="quote-attr">— Office Manager, Canadian Field Services Company</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <div class="footer-left">Ready to learn more? <a href="#">venn.ca</a> · <a href="#">venn.ca/pricing</a></div>
+    <div class="footer-right">
+      Leo Katz · Senior Account Executive<br>
+      <a href="mailto:leo@tryvault.com">leo@tryvault.com</a> · <a href="#">meetings.hubspot.com/leo-katz/venn-demo</a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE 2 — HOW IT WORKS
+════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="logo-row">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">Venn</span>
+    </div>
+    <span class="page-badge">Page 2 of 3</span>
+  </div>
+
+  <div class="hero">
+    <div class="hero-label">Prepared for Friesen Kaye &amp; Associates</div>
+    <h1>From Personal Cards and Manual Receipts to Automated Expense Management</h1>
+    <p class="hero-sub">Here's exactly how Venn fits into your workflow — from issuing cards to syncing with QuickBooks.</p>
+  </div>
+
+  <div class="main">
+
+    <div class="section-heading">Corporate Cards — How It Works</div>
+    <div class="steps-list">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Issue a card to your instructor in seconds</strong>
+          <p>Create a virtual card in Venn, assign it to your instructor, set a monthly limit (e.g. $2,500), and restrict it to travel categories like hotels and flights. Physical card ships in 3 business days and loads into Apple or Google Wallet instantly.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Instructor pays — no personal card, no reimbursement</strong>
+          <p>They tap their Venn card or use the virtual card number. Transactions are charged against the company balance in real time. They only see their own card and transactions — nothing else.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Transactions sync to QuickBooks automatically</strong>
+          <p>Every purchase flows directly into QuickBooks through Venn's native integration. No manual entry, no receipt chasing. Your account manager reviews categorized transactions — not individual receipts.</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 20px;">
+      <div class="section-heading">QuickBooks Integration</div>
+      <div class="steps-list">
+        <div class="step-row">
+          <div class="step-num">🔗</div>
+          <div class="step-body">
+            <strong>Native QuickBooks sync — already included in Plus</strong>
+            <p>Connect your QuickBooks account once. All Venn transactions — cards, transfers, and payments — sync automatically with GL codes, merchant names, and categories. No CSV exports, no manual reconciliation.</p>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-num">💳</div>
+          <div class="step-body">
+            <strong>1% cashback on all card spend — automatically applied</strong>
+            <p>Every dollar your instructors spend on Venn cards earns 1% back. No foreign transaction fees, no FX markup. If they're ever spending in USD (like in Texas), the rate is 0.25% — far below any bank or card provider.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-box" style="margin-top: 20px;">
+      <p>
+        <strong>The bottom line for Friesen Kaye &amp; Associates:</strong> Your account manager goes from manually tracking personal card receipts and processing reimbursements to simply reviewing pre-categorized transactions in QuickBooks. One $40/mo flat fee. Unlimited cards. Expenses handled.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    <div class="footer-left">Ready to learn more? <a href="#">venn.ca</a> · <a href="#">venn.ca/pricing</a></div>
+    <div class="footer-right">
+      Leo Katz · Senior Account Executive<br>
+      <a href="mailto:leo@tryvault.com">leo@tryvault.com</a> · <a href="#">meetings.hubspot.com/leo-katz/venn-demo</a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE 3 — PRICING + NEXT STEPS
+════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-header">
+    <div class="logo-row">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">Venn</span>
+    </div>
+    <span class="page-badge">Page 3 of 3</span>
+  </div>
+
+  <div class="hero">
+    <div class="hero-label">Prepared for Friesen Kaye &amp; Associates</div>
+    <h1>Simple Pricing. No Hidden Fees. Cancel Anytime.</h1>
+    <p class="hero-sub">One flat monthly fee. No per-card charges, no transaction minimums, no surprises.</p>
+  </div>
+
+  <div class="main">
+
+    <div class="pricing-grid" style="margin-top: 4px;">
+      <div class="pricing-card">
+        <div class="plan-name">Free</div>
+        <div class="plan-price">$0 <span>/mo</span></div>
+        <div class="plan-feature"><span class="plan-check">✓</span> CAD business account</div>
+        <div class="plan-feature"><span class="plan-check">✓</span> Unlimited free e-transfers</div>
+        <div class="plan-feature"><span class="plan-check">✓</span> Virtual card (1 user)</div>
+        <div class="plan-feature"><span class="plan-check">✓</span> 2% interest on balances</div>
+        <div class="plan-feature" style="color:#aaa;">✕ Multiple employees</div>
+        <div class="plan-feature" style="color:#aaa;">✕ QuickBooks sync</div>
+        <div class="plan-feature" style="color:#aaa;">✕ Physical cards</div>
+      </div>
+
+      <div class="pricing-card highlighted">
+        <div class="recommended-badge">✦ RECOMMENDED FOR YOU</div>
+        <div class="plan-name" style="color: var(--sea-green);">Plus</div>
+        <div class="plan-price">$40 <span>CAD/mo</span></div>
+        <div class="plan-feature"><span class="plan-check">✓</span> Everything in Free</div>
+        <div class="plan-feature"><span class="plan-check">✓</span> Unlimited cards for all staff</div>
+        <div class="plan-feature"><span class="plan-check">✓</span> Per-card limits &amp; category rules</div>
+        <div class="plan-feature"><span class="plan-check">✓</span> Physical + virtual cards</div>
+        <div class="plan-feature"><span class="plan-check">✓</span> QuickBooks integration</div>
+        <div class="plan-feature"><span class="plan-check">✓</span> 1% cashback, no FX fees</div>
+        <div class="plan-feature"><span class="plan-check">✓</span> USD account + free ACH</div>
+      </div>
+
+      <div class="pricing-card">
+        <div class="plan-name">Business</div>
+        <div class="plan-price">$100 <span>CAD/mo</span></div>
+        <div class="plan-feature"><span class="plan-check">✓</span> Everything in Plus</div>
+        <div class="plan-feature"><span class="plan-check">✓</span> Multi-user roles &amp; permissions</div>
+        <div class="plan-feature"><span class="plan-check">✓</span> Approval workflows</div>
+        <div class="plan-feature"><span class="plan-check">✓</span> ERP export (Xero, Sage, CSV)</div>
+        <div class="plan-feature"><span class="plan-check">✓</span> Advanced expense management</div>
+        <div class="plan-feature"><span class="plan-check">✓</span> Priority support</div>
+        <div class="plan-feature"><span class="plan-check">✓</span> Multi-currency accounts</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 16px;">
+      <div class="section-heading">What's Included Regardless of Plan</div>
+      <div class="included-grid">
+        <div class="included-card">
+          <div class="included-icon">💸</div>
+          <div class="included-body">
+            <strong>Unlimited free e-transfers &amp; EFTs</strong>
+            <p>Send and receive with no per-transaction fees.</p>
+          </div>
+        </div>
+        <div class="included-card">
+          <div class="included-icon">📈</div>
+          <div class="included-body">
+            <strong>2% interest on your balance</strong>
+            <p>Your cash earns while it sits — automatically.</p>
+          </div>
+        </div>
+        <div class="included-card">
+          <div class="included-icon">🌐</div>
+          <div class="included-body">
+            <strong>Wire transfers from $6 CAD</strong>
+            <p>Flat fee wires — no hidden correspondent charges.</p>
+          </div>
+        </div>
+        <div class="included-card">
+          <div class="included-icon">🏦</div>
+          <div class="included-body">
+            <strong>CAD + USD multi-currency accounts</strong>
+            <p>Hold and move both currencies without conversion friction.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 16px;">
+      <div class="section-heading">Our Plan Together</div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="tl-dot">📧</div>
+          <div class="tl-body">
+            <div class="tl-date">Now — Mar 11</div>
+            <div class="tl-text">Leo sends this deck and contact info. Ranjodh reviews and shares with the account manager before her return.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">💬</div>
+          <div class="tl-body">
+            <div class="tl-date">Thu–Fri, Mar 12–13</div>
+            <div class="tl-text">Account manager returns. Ranjodh walks her through Venn — she'll be the primary day-to-day user, so her buy-in is the key step.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">✅</div>
+          <div class="tl-body">
+            <div class="tl-date">By End of Week — Mar 14</div>
+            <div class="tl-text">Decision expected. If moving forward, signup is fully self-serve at app.venn.ca/signup — takes ~1 hour, no sales involvement needed.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">📞</div>
+          <div class="tl-body">
+            <div class="tl-date">Anytime</div>
+            <div class="tl-text">Questions? Reach out to Leo directly at leo@tryvault.com or book time at meetings.hubspot.com/leo-katz/venn-demo.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    <div class="footer-left">Ready to learn more? <a href="#">venn.ca</a> · <a href="#">venn.ca/pricing</a></div>
+    <div class="footer-right">
+      Leo Katz · Senior Account Executive<br>
+      <a href="mailto:leo@tryvault.com">leo@tryvault.com</a> · <a href="#">meetings.hubspot.com/leo-katz/venn-demo</a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
