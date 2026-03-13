@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Venn × Pavement Solutions</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sea-green:   #099250;
+    --dark-green:  #002400;
+    --eggshell:    #F4F1DE;
+    --green-light: #41C981;
+    --white:       #FFFFFF;
+    --text-dark:   #002400;
+    --text-muted:  #0A6336;
+    --red:         #c0392b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #e8e8e8;
+    padding: 32px;
+    color: var(--text-dark);
+  }
+  .page {
+    width: 794px;
+    min-height: 1123px;
+    background: var(--eggshell);
+    margin: 0 auto 48px auto;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+  }
+
+  /* HEADER */
+  .page-header {
+    background: var(--dark-green);
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo-row { display: flex; align-items: center; gap: 10px; }
+  .logo-mark { width: 28px; height: 28px; }
+  .logo-text { color: var(--white); font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
+  .logo-text span { color: var(--green-light); }
+  .page-badge {
+    background: rgba(255,255,255,0.12);
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--sea-green);
+    padding: 28px 32px 24px;
+  }
+  .hero-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--green-light);
+    margin-bottom: 8px;
+  }
+  .hero-headline {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.2;
+    max-width: 580px;
+  }
+  .hero-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.8);
+    margin-top: 8px;
+  }
+
+  /* STAT BAR */
+  .stat-bar {
+    background: var(--dark-green);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 14px 28px;
+  }
+  .stat-item { text-align: center; }
+  .stat-value { font-size: 17px; font-weight: 700; color: var(--green-light); }
+  .stat-label { font-size: 10px; color: rgba(255,255,255,0.65); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* MAIN CONTENT */
+  .main { flex: 1; padding: 24px 28px; }
+
+  /* TWO COLUMN */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 18px; }
+  .card {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 18px;
+  }
+  .card-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--eggshell);
+  }
+  .card-title.red  { color: var(--red); border-color: #fde8e8; }
+  .card-title.green { color: var(--sea-green); border-color: #d4f4e4; }
+  .pain-item, .solution-item { margin-bottom: 12px; }
+  .pain-item:last-child, .solution-item:last-child { margin-bottom: 0; }
+  .item-row { display: flex; gap: 8px; align-items: flex-start; }
+  .bullet-red  { color: var(--red);      font-size: 14px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .bullet-green{ color: var(--sea-green); font-size: 14px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .item-title  { font-size: 12px; font-weight: 700; color: var(--text-dark); }
+  .item-desc   { font-size: 11px; color: #444; line-height: 1.45; margin-top: 2px; }
+
+  /* QUOTE BLOCK */
+  .quote-block {
+    background: var(--dark-green);
+    border-radius: 10px;
+    padding: 18px 22px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .quote-section { border-right: 1px solid rgba(255,255,255,0.1); padding-right: 20px; }
+  .quote-section:last-child { border-right: none; padding-right: 0; }
+  .quote-mark { font-size: 32px; color: var(--green-light); line-height: 1; margin-bottom: 4px; font-weight: 700; }
+  .quote-text { font-size: 12px; color: rgba(255,255,255,0.85); line-height: 1.55; font-style: italic; }
+  .quote-attr { font-size: 10px; color: var(--green-light); margin-top: 8px; font-weight: 600; }
+
+  /* FOOTER */
+  .page-footer {
+    background: var(--dark-green);
+    padding: 12px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-left  { font-size: 10px; color: rgba(255,255,255,0.6); }
+  .footer-left a { color: var(--green-light); text-decoration: none; }
+  .footer-right { font-size: 10px; color: rgba(255,255,255,0.6); text-align: right; }
+  .footer-right strong { color: var(--white); }
+
+  /* PAGE 2 — FLOW */
+  .section-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid rgba(9,146,80,0.15);
+  }
+  .flow-steps { display: flex; gap: 0; margin-bottom: 20px; }
+  .flow-step {
+    flex: 1;
+    background: var(--white);
+    border-radius: 0;
+    padding: 14px 12px;
+    text-align: center;
+    position: relative;
+  }
+  .flow-step:first-child { border-radius: 8px 0 0 8px; }
+  .flow-step:last-child  { border-radius: 0 8px 8px 0; }
+  .flow-step:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: var(--sea-green);
+    font-weight: 700;
+    z-index: 1;
+  }
+  .step-num {
+    width: 22px; height: 22px;
+    background: var(--sea-green);
+    color: var(--white);
+    border-radius: 50%;
+    font-size: 11px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 6px;
+  }
+  .step-title { font-size: 11px; font-weight: 700; color: var(--text-dark); margin-bottom: 3px; }
+  .step-desc  { font-size: 10px; color: #555; line-height: 1.4; }
+
+  .two-col-p2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 18px; }
+
+  .highlight-box {
+    background: linear-gradient(135deg, var(--sea-green), #076b3d);
+    border-radius: 10px;
+    padding: 16px 20px;
+    color: var(--white);
+  }
+  .highlight-box .hb-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--green-light); margin-bottom: 6px; }
+  .highlight-box .hb-text  { font-size: 13px; line-height: 1.5; }
+
+  .integration-list { list-style: none; padding: 0; }
+  .integration-list li {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; padding: 7px 0;
+    border-bottom: 1px solid var(--eggshell);
+    color: var(--text-dark);
+  }
+  .integration-list li:last-child { border-bottom: none; }
+  .int-dot { width: 8px; height: 8px; background: var(--sea-green); border-radius: 50%; flex-shrink: 0; }
+
+  /* PAGE 3 — PRICING */
+  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 18px; }
+  .pricing-card {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 18px 16px;
+    border: 2px solid transparent;
+    position: relative;
+  }
+  .pricing-card.highlighted {
+    border-color: var(--sea-green);
+    background: #f0faf5;
+  }
+  .recommended-badge {
+    position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+    background: var(--sea-green); color: var(--white);
+    font-size: 9px; font-weight: 700; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 20px; letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  .plan-name  { font-size: 13px; font-weight: 700; color: var(--text-dark); margin-bottom: 4px; }
+  .plan-price { font-size: 22px; font-weight: 700; color: var(--sea-green); }
+  .plan-price span { font-size: 12px; color: #777; font-weight: 400; }
+  .plan-desc  { font-size: 11px; color: #666; margin: 8px 0 10px; line-height: 1.4; }
+  .plan-features { list-style: none; }
+  .plan-features li { font-size: 11px; color: #444; padding: 4px 0; display: flex; gap: 6px; align-items: flex-start; }
+  .plan-features li::before { content: '✓'; color: var(--sea-green); font-weight: 700; flex-shrink: 0; }
+
+  .included-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+  .included-card {
+    background: var(--white);
+    border-radius: 8px;
+    padding: 12px 14px;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .inc-icon { font-size: 18px; flex-shrink: 0; }
+  .inc-title { font-size: 12px; font-weight: 700; color: var(--text-dark); }
+  .inc-desc  { font-size: 11px; color: #555; margin-top: 2px; }
+
+  .timeline { position: relative; padding-left: 20px; }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 6px; top: 8px; bottom: 8px;
+    width: 2px; background: linear-gradient(to bottom, var(--sea-green), var(--green-light));
+    border-radius: 2px;
+  }
+  .tl-item { position: relative; margin-bottom: 14px; }
+  .tl-item:last-child { margin-bottom: 0; }
+  .tl-dot {
+    position: absolute; left: -17px; top: 4px;
+    width: 12px; height: 12px;
+    background: var(--sea-green); border-radius: 50%;
+    border: 2px solid var(--eggshell);
+  }
+  .tl-date  { font-size: 10px; font-weight: 700; color: var(--sea-green); text-transform: uppercase; letter-spacing: 0.5px; }
+  .tl-title { font-size: 13px; font-weight: 700; color: var(--text-dark); margin: 2px 0; }
+  .tl-desc  { font-size: 11px; color: #555; line-height: 1.4; }
+
+  .section-mb { margin-bottom: 20px; }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .page { box-shadow: none; margin-bottom: 0; page-break-after: always; }
+    .page:last-child { page-break-after: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== PAGE 1 ===================== -->
+<div class="page">
+  <div class="page-header">
+    <div class="logo-row">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">venn<span>.ca</span></span>
+    </div>
+    <span class="page-badge">Page 1 of 3</span>
+  </div>
+
+  <div class="hero">
+    <div class="hero-label">Prepared for Pavement Solutions Inc.</div>
+    <div class="hero-headline">A Better Way to Handle Field Expense Management</div>
+    <div class="hero-sub">Replace paper receipts and month-end chaos with automatic sync — from the job site to QuickBooks.</div>
+  </div>
+
+  <div class="stat-bar">
+    <div class="stat-item">
+      <div class="stat-value">2%</div>
+      <div class="stat-label">Interest on Balance</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">0.25%</div>
+      <div class="stat-label">FX Rate (vs. 2–3% at banks)</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">$0</div>
+      <div class="stat-label">EFT / E-Transfer Cost</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">$6</div>
+      <div class="stat-label">Wire Transfers (flat)</div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title red">✕ What You Told Us</div>
+
+        <div class="pain-item">
+          <div class="item-row">
+            <span class="bullet-red">✕</span>
+            <div>
+              <div class="item-title">Receipt Chaos at Month-End</div>
+              <div class="item-desc">Foremen drop physical receipts at the office. Michelle spends hours hunting down missing ones — "hunting us down like dogs" — before she can close the books.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pain-item">
+          <div class="item-row">
+            <span class="bullet-red">✕</span>
+            <div>
+              <div class="item-title">No Limits or Controls on Cards</div>
+              <div class="item-desc">4 foremen carry corporate Visas with no spending caps, no vendor restrictions. Running entirely on an honour system across the GTA.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pain-item">
+          <div class="item-row">
+            <span class="bullet-red">✕</span>
+            <div>
+              <div class="item-title">Manual QuickBooks Reconciliation</div>
+              <div class="item-desc">Every transaction is entered manually. Michelle spends 2+ hours minimum each month matching receipts to transactions — likely more.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pain-item">
+          <div class="item-row">
+            <span class="bullet-red">✕</span>
+            <div>
+              <div class="item-title">Customers Pay Late — Every Time</div>
+              <div class="item-desc">"Net 30 means net 60 or 90." Michelle manually calls and emails customers. The bookkeeper is chasing payments instead of managing books.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title green">✓ What Venn Does Differently</div>
+
+        <div class="solution-item">
+          <div class="item-row">
+            <span class="bullet-green">✓</span>
+            <div>
+              <div class="item-title">Auto Receipt Matching</div>
+              <div class="item-desc">Foremen text or email a photo of any receipt. Venn automatically matches it to the transaction — and attaches it directly in QuickBooks.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="solution-item">
+          <div class="item-row">
+            <span class="bullet-green">✓</span>
+            <div>
+              <div class="item-title">Cards with Limits &amp; Controls</div>
+              <div class="item-desc">Set monthly spend caps per foreman. Optionally auto-lock cards if receipts go missing. Full visibility into who's spending what and where.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="solution-item">
+          <div class="item-row">
+            <span class="bullet-green">✓</span>
+            <div>
+              <div class="item-title">One-Click QuickBooks Sync</div>
+              <div class="item-desc">Receipts attach to transactions in QBO automatically. Michelle clicks sync — reconciliation drops from hours to about 10 minutes a month.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="solution-item">
+          <div class="item-row">
+            <span class="bullet-green">✓</span>
+            <div>
+              <div class="item-title">Invoice Links + Auto-Reminders</div>
+              <div class="item-desc">Send customers a payment link. They pay by e-transfer, EFT, or card on the spot. Automated reminders follow up — so the bookkeeper doesn't have to.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <div class="quote-section">
+        <div class="quote-mark">"</div>
+        <div class="quote-text">We switched from our old corporate card setup and cut our month-end close from two days to a few hours. The QuickBooks sync alone was worth it.</div>
+        <div class="quote-attr">— Controller, Canadian Construction Company</div>
+      </div>
+      <div class="quote-section">
+        <div class="quote-mark">"</div>
+        <div class="quote-text">Our guys in the field just text a photo of the receipt. It shows up in QuickBooks before they're back at the yard. No more chasing anyone down.</div>
+        <div class="quote-attr">— Owner, Field Services Company, Ontario</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <div class="footer-left">Ready to learn more? <a href="https://venn.ca">venn.ca</a> · <a href="https://venn.ca/pricing">venn.ca/pricing</a></div>
+    <div class="footer-right"><strong>Leo Katz</strong> · Senior Account Executive<br>leo@tryvault.com · meetings.hubspot.com/leo-katz/venn-demo</div>
+  </div>
+</div>
+
+
+<!-- ===================== PAGE 2 ===================== -->
+<div class="page">
+  <div class="page-header">
+    <div class="logo-row">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">venn<span>.ca</span></span>
+    </div>
+    <span class="page-badge">Page 2 of 3</span>
+  </div>
+
+  <div class="hero">
+    <div class="hero-label">Pavement Solutions Inc. — How It Works</div>
+    <div class="hero-headline">From Paper Receipts to Automatic Sync — Without the Manual Steps</div>
+    <div class="hero-sub">Here's exactly how Pavement Solutions would run on Venn day-to-day.</div>
+  </div>
+
+  <div class="main">
+
+    <div class="section-mb">
+      <div class="section-title">Corporate Cards — Field Crew Expense Flow</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">1</div>
+          <div class="step-title">Foreman Makes Purchase</div>
+          <div class="step-desc">Pays with Venn card (physical or virtual) — works everywhere Visa is accepted.</div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">2</div>
+          <div class="step-title">Texts or Emails Receipt</div>
+          <div class="step-desc">Takes a photo of the receipt and forwards it to Venn — from the job site, before they even drive back.</div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">3</div>
+          <div class="step-title">Auto-Matched in Venn</div>
+          <div class="step-desc">Receipt is automatically matched to the transaction. No manual entry.</div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">4</div>
+          <div class="step-title">Synced to QuickBooks</div>
+          <div class="step-desc">Transaction + receipt appear directly in QBO. Michelle clicks sync — done.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-mb">
+      <div class="section-title">Vendor Payments — EFT &amp; E-Transfer Flow</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">1</div>
+          <div class="step-title">Upload Invoice or PO</div>
+          <div class="step-desc">Upload the vendor invoice or PO — Venn auto-populates the payment fields.</div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">2</div>
+          <div class="step-title">Team Reviews &amp; Approves</div>
+          <div class="step-desc">James, partner, or ops manager approves in bulk — replaces the group email chain.</div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">3</div>
+          <div class="step-title">Payment Sent Free</div>
+          <div class="step-desc">EFT and e-transfer are $0. Payment goes out same day.</div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">4</div>
+          <div class="step-title">Auto-Logged in QBO</div>
+          <div class="step-desc">Payment tagged to the invoice and synced to QuickBooks automatically.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="two-col-p2">
+      <div class="card">
+        <div class="section-title">QuickBooks Integration</div>
+        <ul class="integration-list">
+          <li><span class="int-dot"></span><strong>Native QuickBooks Online sync</strong> — transactions, receipts, and payments all connected</li>
+          <li><span class="int-dot"></span><strong>One-click reconciliation</strong> — Michelle syncs with a single click, no manual matching</li>
+          <li><span class="int-dot"></span><strong>Receipt attachments</strong> — every card transaction arrives in QBO with the receipt already attached</li>
+          <li><span class="int-dot"></span><strong>Real-time visibility</strong> — books stay current throughout the month, not just at close</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="section-title">Customer Collections — Invoice Links</div>
+        <ul class="integration-list">
+          <li><span class="int-dot"></span><strong>Send a payment link</strong> — customers get an email with options to pay by e-transfer, EFT, or credit card</li>
+          <li><span class="int-dot"></span><strong>Automated reminders</strong> — Venn follows up automatically so Michelle doesn't have to call</li>
+          <li><span class="int-dot"></span><strong>Replace Square</strong> — credit card payments supported at 2.7%; push customers toward free e-transfer to eliminate processing fees</li>
+          <li><span class="int-dot"></span><strong>Faster collections</strong> — give customers a one-tap way to pay right now instead of waiting for a cheque</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <div class="hb-label">The Bottom Line for Michelle</div>
+      <div class="hb-text">Right now, reconciliation takes 2+ hours every month — and that's a conservative estimate. With Venn, receipts arrive pre-matched and pre-attached in QuickBooks before month-end even starts. The bookkeeper's job goes from chasing receipts and chasing customers to reviewing a clean sync and clicking approve.</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    <div class="footer-left">Ready to learn more? <a href="https://venn.ca">venn.ca</a> · <a href="https://venn.ca/pricing">venn.ca/pricing</a></div>
+    <div class="footer-right"><strong>Leo Katz</strong> · Senior Account Executive<br>leo@tryvault.com · meetings.hubspot.com/leo-katz/venn-demo</div>
+  </div>
+</div>
+
+
+<!-- ===================== PAGE 3 ===================== -->
+<div class="page">
+  <div class="page-header">
+    <div class="logo-row">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">venn<span>.ca</span></span>
+    </div>
+    <span class="page-badge">Page 3 of 3</span>
+  </div>
+
+  <div class="hero">
+    <div class="hero-label">Pavement Solutions Inc. — Pricing &amp; Next Steps</div>
+    <div class="hero-headline">Simple Pricing. No Hidden Fees. Cancel Anytime.</div>
+    <div class="hero-sub">One flat monthly fee covers everything — cards, payments, integrations, and unlimited users.</div>
+  </div>
+
+  <div class="main">
+
+    <div class="section-mb">
+      <div class="section-title">Choose Your Plan</div>
+      <div class="pricing-grid">
+
+        <div class="pricing-card">
+          <div class="plan-name">Free</div>
+          <div class="plan-price">$0 <span>/ mo CAD</span></div>
+          <div class="plan-desc">Get started with a Canadian business account and virtual card.</div>
+          <ul class="plan-features">
+            <li>CAD business bank account</li>
+            <li>Unlimited free e-transfers</li>
+            <li>1 virtual card</li>
+            <li>2% interest on balance</li>
+          </ul>
+        </div>
+
+        <div class="pricing-card highlighted">
+          <div class="recommended-badge">✓ Recommended for Pavement Solutions</div>
+          <div class="plan-name">Plus</div>
+          <div class="plan-price">$40 <span>/ mo CAD</span></div>
+          <div class="plan-desc">Corporate cards + QuickBooks sync — everything needed to replace your current setup.</div>
+          <ul class="plan-features">
+            <li>Everything in Free</li>
+            <li>Physical + virtual cards (unlimited)</li>
+            <li>Per-card spending limits</li>
+            <li>Receipt auto-match + card locking</li>
+            <li>QuickBooks &amp; Xero integration</li>
+            <li>Invoice links + payment reminders</li>
+            <li>Employee card roles</li>
+          </ul>
+        </div>
+
+        <div class="pricing-card">
+          <div class="plan-name">Business</div>
+          <div class="plan-price">$100 <span>/ mo CAD</span></div>
+          <div class="plan-desc">Full multi-user expense management with approval workflows and ERP export.</div>
+          <ul class="plan-features">
+            <li>Everything in Plus</li>
+            <li>USD bank account + free ACH</li>
+            <li>FX at 0.25–0.45%</li>
+            <li>Multi-user approval workflows</li>
+            <li>Advanced reporting + GL export</li>
+            <li>Priority support</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section-mb">
+      <div class="section-title">What's Included Regardless of Plan</div>
+      <div class="included-grid">
+        <div class="included-card">
+          <div class="inc-icon">⚡</div>
+          <div>
+            <div class="inc-title">Unlimited Free E-Transfers &amp; EFTs</div>
+            <div class="inc-desc">Send to any vendor or supplier in Canada at no cost — no per-transaction fees.</div>
+          </div>
+        </div>
+        <div class="included-card">
+          <div class="inc-icon">📈</div>
+          <div>
+            <div class="inc-title">2% Interest on Your Balance</div>
+            <div class="inc-desc">Your float earns while it sits. The money works for you even between payroll runs.</div>
+          </div>
+        </div>
+        <div class="included-card">
+          <div class="inc-icon">🌍</div>
+          <div>
+            <div class="inc-title">Wire Transfers from $6 CAD</div>
+            <div class="inc-desc">International payments at a fraction of what banks charge. Flat fee, no surprises.</div>
+          </div>
+        </div>
+        <div class="included-card">
+          <div class="inc-icon">🏦</div>
+          <div>
+            <div class="inc-title">CAD + USD Multi-Currency Accounts</div>
+            <div class="inc-desc">Hold and move both currencies. Your money is held securely with our banking partner, BEMO — CDIC eligible.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title">Our Plan Together</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">Today — Mar 13</div>
+          <div class="tl-title">Leo sends recap + resources</div>
+          <div class="tl-desc">Full email with everything covered today — deck, pricing, sign-up link. James shares with business partner and bookkeeper (Michelle).</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">This Weekend</div>
+          <div class="tl-title">Internal discussion</div>
+          <div class="tl-desc">James, business partner, and Michelle review together. "It won't take long to sit down and talk about this."</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">Mid-Week — ~Mar 18</div>
+          <div class="tl-title">Leo follows up</div>
+          <div class="tl-desc">Check in on internal feedback, answer any questions from the bookkeeper, confirm next steps toward sign-up.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">Anytime</div>
+          <div class="tl-title">Questions? Reach out directly.</div>
+          <div class="tl-desc">Reply to Leo's email or book time at meetings.hubspot.com/leo-katz/venn-demo — I'm your account manager from day one.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    <div class="footer-left">Ready to learn more? <a href="https://venn.ca">venn.ca</a> · <a href="https://venn.ca/pricing">venn.ca/pricing</a></div>
+    <div class="footer-right"><strong>Leo Katz</strong> · Senior Account Executive<br>leo@tryvault.com · meetings.hubspot.com/leo-katz/venn-demo</div>
+  </div>
+</div>
+
+</body>
+</html>
