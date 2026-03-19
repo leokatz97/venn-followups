@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BDR Dashboard — Venn</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sea-green: #099250;
+    --dark-green: #002400;
+    --green-light: #41C981;
+    --eggshell: #F4F1DE;
+    --white: #FFFFFF;
+    --text-dark: #002400;
+    --text-muted: #0A6336;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--eggshell); color: var(--text-dark); min-height: 100vh; }
+
+  header {
+    background: var(--dark-green);
+    padding: 24px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .header-left { display: flex; align-items: center; gap: 16px; }
+  .logo-text { color: var(--white); font-size: 22px; font-weight: 700; }
+  .header-tagline { color: var(--green-light); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+
+  .month-bar {
+    background: var(--sea-green);
+    padding: 16px 32px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--white);
+  }
+  .month-nav { display: flex; align-items: center; gap: 16px; }
+  .month-nav button {
+    background: rgba(255,255,255,0.2); border: none; color: var(--white);
+    width: 32px; height: 32px; border-radius: 8px; font-size: 16px;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+  }
+  .month-nav button:hover { background: rgba(255,255,255,0.3); }
+  .month-label { font-size: 18px; font-weight: 700; min-width: 180px; text-align: center; }
+
+  .loading-bar {
+    height: 3px; background: var(--green-light);
+    position: fixed; top: 0; left: 0; z-index: 999;
+    animation: loadPulse 1s ease-in-out infinite;
+    display: none;
+  }
+  .loading-bar.active { display: block; }
+  @keyframes loadPulse {
+    0% { width: 0; }
+    50% { width: 70%; }
+    100% { width: 100%; }
+  }
+
+  .content { max-width: 1100px; margin: 0 auto; padding: 32px; }
+
+  .team-totals { display: flex; gap: 16px; margin-bottom: 32px; }
+  .total-box {
+    flex: 1; background: var(--white); border-radius: 12px;
+    border-top: 4px solid var(--sea-green); padding: 24px; text-align: center;
+  }
+  .total-box .num { font-size: 40px; font-weight: 700; color: var(--sea-green); line-height: 1; }
+  .total-box .label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-top: 6px; }
+  .total-box.highlight { background: var(--dark-green); border-top-color: var(--green-light); }
+  .total-box.highlight .num { color: var(--green-light); }
+  .total-box.highlight .label { color: rgba(255,255,255,0.6); }
+
+  .bdr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+
+  .bdr-card {
+    background: var(--white); border-radius: 12px;
+    border-top: 4px solid var(--sea-green); overflow: hidden;
+    text-decoration: none; color: inherit;
+    transition: box-shadow 0.2s, transform 0.15s; display: block;
+  }
+  .bdr-card:hover { box-shadow: 0 4px 20px rgba(0,36,0,0.1); transform: translateY(-2px); }
+
+  .bdr-card-header {
+    padding: 24px 24px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .bdr-card-name { font-size: 20px; font-weight: 700; }
+  .open-link { font-size: 12px; font-weight: 600; color: var(--sea-green); }
+
+  .bdr-stats { display: flex; gap: 0; border-top: 1px solid #e8e5d8; }
+  .bdr-stat {
+    flex: 1; padding: 16px; text-align: center;
+    border-right: 1px solid #e8e5d8;
+  }
+  .bdr-stat:last-child { border-right: none; }
+  .bdr-stat .num { font-size: 28px; font-weight: 700; color: var(--sea-green); }
+  .bdr-stat .label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); margin-top: 2px; }
+
+  .bdr-meetings-preview { padding: 12px 24px 16px; border-top: 1px solid #e8e5d8; }
+  .bdr-meetings-preview .preview-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 8px; }
+  .preview-item { display: flex; align-items: center; gap: 8px; padding: 4px 0; font-size: 13px; }
+  .preview-item .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .dot.held { background: var(--sea-green); }
+  .dot.pending { background: #ddd; }
+  .preview-more { font-size: 12px; color: #999; padding: 4px 0; }
+
+  .averages-card {
+    background: var(--white); border-radius: 12px;
+    border-top: 4px solid var(--sea-green); overflow: hidden;
+  }
+  .averages-header {
+    padding: 20px 24px; border-bottom: 1px solid #e8e5d8;
+    font-size: 16px; font-weight: 700;
+  }
+  .averages-table { width: 100%; border-collapse: collapse; }
+  .averages-table th {
+    padding: 12px 24px; text-align: left;
+    font-size: 11px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 1px; color: var(--text-muted);
+    background: #faf9f4; border-bottom: 1px solid #e8e5d8;
+  }
+  .averages-table td {
+    padding: 14px 24px; font-size: 15px;
+    border-bottom: 1px solid #f0ede2;
+  }
+  .averages-table tr:last-child td { border-bottom: none; }
+  .averages-table .name-cell { font-weight: 600; }
+  .averages-table .num-cell { font-weight: 700; color: var(--sea-green); text-align: center; }
+  .averages-table th.num-header { text-align: center; }
+  .team-row td { background: #faf9f4; font-weight: 700; }
+
+  @media (max-width: 768px) {
+    .team-totals { flex-direction: column; }
+    .bdr-grid { grid-template-columns: 1fr; }
+    .content { padding: 16px; }
+    header { padding: 16px; }
+    .month-bar { padding: 12px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="loading-bar" id="loading"></div>
+
+<header>
+  <div class="header-left">
+    <span class="logo-text">Venn</span>
+    <span class="header-tagline">BDR Dashboard</span>
+  </div>
+</header>
+
+<div class="month-bar">
+  <div class="month-nav">
+    <button onclick="changeMonth(-1)">‹</button>
+    <span class="month-label" id="month-label"></span>
+    <button onclick="changeMonth(1)">›</button>
+  </div>
+</div>
+
+<div class="content">
+  <div class="team-totals">
+    <div class="total-box"><div class="num" id="team-booked">—</div><div class="label">Meetings Booked</div></div>
+    <div class="total-box"><div class="num" id="team-held">—</div><div class="label">Meetings Held</div></div>
+    <div class="total-box"><div class="num" id="team-rate">—</div><div class="label">Show Rate</div></div>
+    <div class="total-box highlight"><div class="num" id="team-calls">—</div><div class="label">Total Calls</div></div>
+  </div>
+
+  <div class="bdr-grid">
+    <a class="bdr-card" href="bdr-tracker-hazem.html">
+      <div class="bdr-card-header">
+        <span class="bdr-card-name">Hazem</span>
+        <span class="open-link">Open Tracker →</span>
+      </div>
+      <div class="bdr-stats">
+        <div class="bdr-stat"><div class="num" id="hazem-booked">—</div><div class="label">Booked</div></div>
+        <div class="bdr-stat"><div class="num" id="hazem-held">—</div><div class="label">Held</div></div>
+        <div class="bdr-stat"><div class="num" id="hazem-rate">—</div><div class="label">Show Rate</div></div>
+        <div class="bdr-stat"><div class="num" id="hazem-calls">—</div><div class="label">Calls</div></div>
+      </div>
+      <div class="bdr-meetings-preview" id="hazem-preview"></div>
+    </a>
+
+    <a class="bdr-card" href="bdr-tracker-nourine.html">
+      <div class="bdr-card-header">
+        <span class="bdr-card-name">Nourine</span>
+        <span class="open-link">Open Tracker →</span>
+      </div>
+      <div class="bdr-stats">
+        <div class="bdr-stat"><div class="num" id="nourine-booked">—</div><div class="label">Booked</div></div>
+        <div class="bdr-stat"><div class="num" id="nourine-held">—</div><div class="label">Held</div></div>
+        <div class="bdr-stat"><div class="num" id="nourine-rate">—</div><div class="label">Show Rate</div></div>
+        <div class="bdr-stat"><div class="num" id="nourine-calls">—</div><div class="label">Calls</div></div>
+      </div>
+      <div class="bdr-meetings-preview" id="nourine-preview"></div>
+    </a>
+  </div>
+
+  <div class="averages-card">
+    <div class="averages-header">Call Activity Averages</div>
+    <table class="averages-table">
+      <thead>
+        <tr>
+          <th>BDR</th>
+          <th class="num-header">Calls / Day</th>
+          <th class="num-header">Calls / Week</th>
+          <th class="num-header">Calls / Month</th>
+          <th class="num-header">Days Logged</th>
+        </tr>
+      </thead>
+      <tbody id="averages-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+// ⚠️ PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE
+const API_URL = 'https://script.google.com/macros/s/AKfycbw_kodHOfZtIPJoFIXxC6zy5wMqJ1FZCh_4uRiesDGdMUhOebJJop64_m6yUjoYThHmnA/exec';
+
+const BDRS = [
+  { key: 'hazem', name: 'Hazem' },
+  { key: 'nourine', name: 'Nourine' }
+];
+
+let currentMonth = new Date().getMonth();
+let currentYear = new Date().getFullYear();
+
+function monthKey() { return `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}`; }
+
+function showLoading(on) { document.getElementById('loading').classList.toggle('active', on); }
+
+async function api(params) {
+  showLoading(true);
+  try {
+    const qs = new URLSearchParams(params).toString();
+    const res = await fetch(`${API_URL}?${qs}`, { redirect: 'follow' });
+    return await res.json();
+  } catch (err) {
+    console.error('API error:', err);
+    return { error: err.message };
+  } finally {
+    showLoading(false);
+  }
+}
+
+function changeMonth(dir) {
+  currentMonth += dir;
+  if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+  if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+  render();
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function calcAverages(calls) {
+  if (!calls || calls.length === 0) return { perDay: 0, perWeek: 0, perMonth: 0, daysLogged: 0 };
+  const totalCalls = calls.reduce((s, c) => s + c.count, 0);
+  const daysLogged = calls.length;
+  const perDay = totalCalls / daysLogged;
+
+  const weeks = new Set(calls.map(c => {
+    const d = new Date(c.date + 'T12:00:00');
+    const jan1 = new Date(d.getFullYear(), 0, 1);
+    return Math.ceil(((d - jan1) / 86400000 + jan1.getDay() + 1) / 7);
+  }));
+  const perWeek = totalCalls / Math.max(weeks.size, 1);
+
+  return { perDay, perWeek, perMonth: totalCalls, daysLogged };
+}
+
+async function render() {
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('month-label').textContent = `${months[currentMonth]} ${currentYear}`;
+
+  const allData = await api({ action: 'getAllData', month: monthKey() });
+  if (allData.error) return;
+
+  let teamBooked = 0, teamHeld = 0, teamCalls = 0;
+  const avgRows = [];
+
+  BDRS.forEach(bdr => {
+    const data = allData[bdr.key] || { meetings: [], calls: [] };
+    const meetings = data.meetings || [];
+    const calls = data.calls || [];
+
+    const booked = meetings.length;
+    const held = meetings.filter(x => x.held).length;
+    const rate = booked > 0 ? Math.round((held / booked) * 100) : 0;
+    const totalCalls = calls.reduce((s, c) => s + c.count, 0);
+
+    teamBooked += booked;
+    teamHeld += held;
+    teamCalls += totalCalls;
+
+    document.getElementById(`${bdr.key}-booked`).textContent = booked;
+    document.getElementById(`${bdr.key}-held`).textContent = held;
+    document.getElementById(`${bdr.key}-rate`).textContent = rate + '%';
+    document.getElementById(`${bdr.key}-calls`).textContent = totalCalls;
+
+    // Meeting preview
+    const preview = document.getElementById(`${bdr.key}-preview`);
+    if (meetings.length === 0) {
+      preview.innerHTML = '<div style="padding:4px 0;font-size:13px;color:#aaa;">No meetings this month</div>';
+    } else {
+      const recent = meetings.slice(-5).reverse();
+      const remaining = meetings.length - recent.length;
+      preview.innerHTML =
+        '<div class="preview-title">Recent Meetings</div>' +
+        recent.map(mtg =>
+          `<div class="preview-item"><span class="dot ${mtg.held ? 'held' : 'pending'}"></span>${escapeHtml(mtg.company)}</div>`
+        ).join('') +
+        (remaining > 0 ? `<div class="preview-more">+ ${remaining} more</div>` : '');
+    }
+
+    avgRows.push({ name: bdr.name, ...calcAverages(calls) });
+  });
+
+  // Team totals
+  const teamRate = teamBooked > 0 ? Math.round((teamHeld / teamBooked) * 100) : 0;
+  document.getElementById('team-booked').textContent = teamBooked;
+  document.getElementById('team-held').textContent = teamHeld;
+  document.getElementById('team-rate').textContent = teamRate + '%';
+  document.getElementById('team-calls').textContent = teamCalls;
+
+  // Averages table
+  const teamAvgWeek = avgRows.reduce((s, r) => s + r.perWeek, 0);
+  const tbody = document.getElementById('averages-body');
+  tbody.innerHTML = avgRows.map(r => `
+    <tr>
+      <td class="name-cell">${r.name}</td>
+      <td class="num-cell">${r.perDay.toFixed(1)}</td>
+      <td class="num-cell">${r.perWeek.toFixed(1)}</td>
+      <td class="num-cell">${r.perMonth}</td>
+      <td class="num-cell">${r.daysLogged}</td>
+    </tr>
+  `).join('') + `
+    <tr class="team-row">
+      <td class="name-cell">Team Avg</td>
+      <td class="num-cell">${avgRows.length > 0 ? (avgRows.reduce((s,r) => s + r.perDay, 0) / avgRows.length).toFixed(1) : '0.0'}</td>
+      <td class="num-cell">${avgRows.length > 0 ? (teamAvgWeek / avgRows.length).toFixed(1) : '0.0'}</td>
+      <td class="num-cell">${avgRows.length > 0 ? Math.round(teamCalls / avgRows.length) : 0}</td>
+      <td class="num-cell">${avgRows.length > 0 ? Math.round(avgRows.reduce((s,r) => s + r.daysLogged, 0) / avgRows.length) : 0}</td>
+    </tr>
+  `;
+}
+
+render();
+</script>
+</body>
+</html>

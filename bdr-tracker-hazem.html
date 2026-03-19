@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hazem — Meeting Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sea-green: #099250;
+    --dark-green: #002400;
+    --green-light: #41C981;
+    --eggshell: #F4F1DE;
+    --white: #FFFFFF;
+    --text-dark: #002400;
+    --text-muted: #0A6336;
+    --red: #c0392b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--eggshell); color: var(--text-dark); min-height: 100vh; }
+
+  header {
+    background: var(--dark-green);
+    padding: 20px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .header-left { display: flex; align-items: center; gap: 16px; }
+  .logo-text { color: var(--white); font-size: 22px; font-weight: 700; }
+  .header-tagline { color: var(--green-light); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+  .back-link { color: var(--green-light); text-decoration: none; font-size: 13px; font-weight: 600; }
+  .back-link:hover { text-decoration: underline; }
+
+  .month-bar {
+    background: var(--sea-green);
+    padding: 16px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    color: var(--white);
+  }
+  .month-nav { display: flex; align-items: center; gap: 16px; }
+  .month-nav button {
+    background: rgba(255,255,255,0.2); border: none; color: var(--white);
+    width: 32px; height: 32px; border-radius: 8px; font-size: 16px;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+  }
+  .month-nav button:hover { background: rgba(255,255,255,0.3); }
+  .month-label { font-size: 18px; font-weight: 700; min-width: 180px; text-align: center; }
+
+  .loading-bar {
+    height: 3px; background: var(--green-light);
+    position: fixed; top: 0; left: 0; z-index: 999;
+    animation: loadPulse 1s ease-in-out infinite;
+    display: none;
+  }
+  .loading-bar.active { display: block; }
+  @keyframes loadPulse {
+    0% { width: 0; }
+    50% { width: 70%; }
+    100% { width: 100%; }
+  }
+
+  .stats-row {
+    display: flex; gap: 16px; padding: 24px 32px;
+    max-width: 900px; margin: 0 auto;
+  }
+  .stat-box {
+    flex: 1; background: var(--white); border-radius: 12px;
+    border-top: 4px solid var(--sea-green); padding: 20px; text-align: center;
+  }
+  .stat-box .num { font-size: 36px; font-weight: 700; color: var(--sea-green); }
+  .stat-box .label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-top: 4px; }
+
+  .content { max-width: 900px; margin: 0 auto; padding: 0 32px 32px; }
+
+  .section-card {
+    background: var(--white); border-radius: 12px;
+    border-top: 4px solid var(--sea-green); margin-bottom: 24px; overflow: hidden;
+  }
+  .section-header {
+    padding: 20px 24px 16px; border-bottom: 1px solid #e8e5d8;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .section-title { font-size: 16px; font-weight: 700; }
+
+  .calls-form { display: flex; align-items: center; gap: 12px; padding: 16px 24px; border-bottom: 1px solid #f0ede2; }
+  .calls-form label { font-size: 14px; font-weight: 600; white-space: nowrap; }
+  .calls-form input[type="date"] {
+    padding: 8px 12px; border: 2px solid #e8e5d8; border-radius: 8px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none;
+  }
+  .calls-form input[type="date"]:focus { border-color: var(--sea-green); }
+  .calls-form input[type="number"] {
+    width: 80px; padding: 8px 12px; border: 2px solid #e8e5d8; border-radius: 8px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; text-align: center; outline: none;
+  }
+  .calls-form input[type="number"]:focus { border-color: var(--sea-green); }
+
+  .btn {
+    padding: 8px 16px; border: none; border-radius: 8px;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: opacity 0.2s;
+  }
+  .btn:hover { opacity: 0.85; }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-add { background: var(--sea-green); color: var(--white); }
+  .btn-sm { padding: 6px 12px; font-size: 12px; }
+
+  .calls-log { padding: 8px 0; max-height: 200px; overflow-y: auto; }
+  .call-row {
+    display: flex; align-items: center; padding: 10px 24px; gap: 12px;
+    border-bottom: 1px solid #f0ede2; font-size: 14px;
+  }
+  .call-row:last-child { border-bottom: none; }
+  .call-date { font-weight: 600; min-width: 100px; }
+  .call-count { flex: 1; color: var(--text-muted); }
+  .delete-btn {
+    width: 26px; height: 26px; border-radius: 6px;
+    border: none; background: transparent; color: #ccc;
+    font-size: 15px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .delete-btn:hover { background: #fde8e8; color: var(--red); }
+
+  .add-form { display: flex; gap: 8px; padding: 16px 24px; border-bottom: 1px solid #f0ede2; }
+  .add-form input[type="text"] {
+    flex: 1; padding: 10px 14px; border: 2px solid #e8e5d8; border-radius: 8px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none;
+  }
+  .add-form input[type="text"]:focus { border-color: var(--sea-green); }
+  .add-form input::placeholder { color: #aaa; }
+
+  .meeting-list { padding: 8px 0; max-height: 400px; overflow-y: auto; }
+  .empty-state {
+    padding: 32px 24px; text-align: center; color: #aaa; font-size: 14px;
+  }
+  .meeting-row {
+    display: flex; align-items: center; padding: 12px 24px; gap: 12px;
+    border-bottom: 1px solid #f0ede2;
+  }
+  .meeting-row:hover { background: #faf9f4; }
+  .meeting-row:last-child { border-bottom: none; }
+  .company-name { flex: 1; font-size: 15px; font-weight: 500; }
+  .meeting-date { font-size: 12px; color: #999; min-width: 70px; }
+
+  .held-toggle {
+    display: flex; align-items: center; gap: 6px;
+    padding: 6px 12px; border-radius: 20px;
+    border: 2px solid #e0ddd0; background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px; font-weight: 600; color: #999;
+    cursor: pointer; white-space: nowrap;
+  }
+  .held-toggle.held { border-color: var(--sea-green); background: rgba(9,146,80,0.08); color: var(--sea-green); }
+
+  .section-footer {
+    padding: 12px 24px; background: #faf9f4;
+    display: flex; justify-content: space-between;
+    font-size: 13px; font-weight: 600; color: var(--text-muted);
+  }
+  .rate { color: var(--sea-green); }
+
+  @media (max-width: 600px) {
+    .stats-row { flex-direction: column; padding: 16px; }
+    .content { padding: 0 16px 16px; }
+    .calls-form { flex-wrap: wrap; }
+    header { padding: 16px; }
+    .month-bar { padding: 12px 16px; flex-wrap: wrap; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="loading-bar" id="loading"></div>
+
+<header>
+  <div class="header-left">
+    <span class="logo-text">Venn</span>
+    <span class="header-tagline">Hazem — Meeting Tracker</span>
+  </div>
+  <a href="bdr-tracker.html" class="back-link">← Dashboard</a>
+</header>
+
+<div class="month-bar">
+  <div class="month-nav">
+    <button onclick="changeMonth(-1)">‹</button>
+    <span class="month-label" id="month-label"></span>
+    <button onclick="changeMonth(1)">›</button>
+  </div>
+</div>
+
+<div class="stats-row">
+  <div class="stat-box"><div class="num" id="stat-booked">—</div><div class="label">Meetings Booked</div></div>
+  <div class="stat-box"><div class="num" id="stat-held">—</div><div class="label">Meetings Held</div></div>
+  <div class="stat-box"><div class="num" id="stat-rate">—</div><div class="label">Show Rate</div></div>
+  <div class="stat-box"><div class="num" id="stat-calls">—</div><div class="label">Total Calls</div></div>
+</div>
+
+<div class="content">
+  <div class="section-card">
+    <div class="section-header"><span class="section-title">Daily Calls</span></div>
+    <div class="calls-form">
+      <label>Date</label>
+      <input type="date" id="call-date">
+      <label>Calls</label>
+      <input type="number" id="call-count" min="0" placeholder="0">
+      <button class="btn btn-add btn-sm" id="btn-log-calls" onclick="logCalls()">Log</button>
+    </div>
+    <div class="calls-log" id="calls-log"></div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header"><span class="section-title">Meetings Booked</span></div>
+    <div class="add-form">
+      <input type="text" id="company-input" placeholder="Company name..." onkeydown="if(event.key==='Enter')addMeeting()">
+      <button class="btn btn-add" id="btn-add-meeting" onclick="addMeeting()">+ Add</button>
+    </div>
+    <div class="meeting-list" id="meeting-list"></div>
+    <div class="section-footer">
+      <span id="footer-booked">0 booked</span>
+      <span class="rate" id="footer-rate">0% show rate</span>
+    </div>
+  </div>
+</div>
+
+<script>
+// ⚠️ PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE
+const API_URL = 'https://script.google.com/macros/s/AKfycbw_kodHOfZtIPJoFIXxC6zy5wMqJ1FZCh_4uRiesDGdMUhOebJJop64_m6yUjoYThHmnA/exec';
+
+const BDR = 'hazem';
+let currentMonth = new Date().getMonth();
+let currentYear = new Date().getFullYear();
+let cachedData = { meetings: [], calls: [] };
+
+function monthKey() { return `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}`; }
+
+function showLoading(on) { document.getElementById('loading').classList.toggle('active', on); }
+
+async function api(method, params) {
+  showLoading(true);
+  try {
+    if (method === 'GET') {
+      const qs = new URLSearchParams(params).toString();
+      const res = await fetch(`${API_URL}?${qs}`, { redirect: 'follow' });
+      return await res.json();
+    } else {
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(params),
+        redirect: 'follow'
+      });
+      return await res.json();
+    }
+  } catch (err) {
+    console.error('API error:', err);
+    return { error: err.message };
+  } finally {
+    showLoading(false);
+  }
+}
+
+async function loadData() {
+  const data = await api('GET', { action: 'getData', bdr: BDR, month: monthKey() });
+  if (!data.error) cachedData = data;
+  return cachedData;
+}
+
+function changeMonth(dir) {
+  currentMonth += dir;
+  if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+  if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+  render();
+}
+
+async function addMeeting() {
+  const input = document.getElementById('company-input');
+  const name = input.value.trim();
+  if (!name) return;
+  document.getElementById('btn-add-meeting').disabled = true;
+  const id = Date.now();
+  await api('POST', { action: 'addMeeting', bdr: BDR, company: name, date: new Date().toISOString().slice(0, 10), month: monthKey(), id: id });
+  input.value = '';
+  document.getElementById('btn-add-meeting').disabled = false;
+  render();
+}
+
+async function toggleHeld(id) {
+  await api('POST', { action: 'toggleHeld', id: id });
+  render();
+}
+
+async function deleteMeeting(id) {
+  await api('POST', { action: 'deleteMeeting', id: id });
+  render();
+}
+
+async function logCalls() {
+  const dateInput = document.getElementById('call-date');
+  const countInput = document.getElementById('call-count');
+  const date = dateInput.value;
+  const count = parseInt(countInput.value);
+  if (!date || isNaN(count) || count < 0) return;
+  document.getElementById('btn-log-calls').disabled = true;
+  await api('POST', { action: 'logCalls', bdr: BDR, date: date, count: count, month: monthKey() });
+  countInput.value = '';
+  document.getElementById('btn-log-calls').disabled = false;
+  render();
+}
+
+async function deleteCall(date) {
+  await api('POST', { action: 'deleteCall', bdr: BDR, date: date, month: monthKey() });
+  render();
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function formatDate(dateStr) {
+  const d = new Date(dateStr + 'T12:00:00');
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+async function render() {
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('month-label').textContent = `${months[currentMonth]} ${currentYear}`;
+  document.getElementById('call-date').value = new Date().toISOString().slice(0, 10);
+
+  const data = await loadData();
+  const meetings = data.meetings || [];
+  const calls = data.calls || [];
+
+  const booked = meetings.length;
+  const held = meetings.filter(x => x.held).length;
+  const rate = booked > 0 ? Math.round((held / booked) * 100) : 0;
+  const totalCalls = calls.reduce((sum, c) => sum + c.count, 0);
+
+  document.getElementById('stat-booked').textContent = booked;
+  document.getElementById('stat-held').textContent = held;
+  document.getElementById('stat-rate').textContent = rate + '%';
+  document.getElementById('stat-calls').textContent = totalCalls;
+
+  const callsLog = document.getElementById('calls-log');
+  if (calls.length === 0) {
+    callsLog.innerHTML = '<div class="empty-state">No calls logged this month</div>';
+  } else {
+    callsLog.innerHTML = calls.map(c => `
+      <div class="call-row">
+        <span class="call-date">${formatDate(c.date)}</span>
+        <span class="call-count">${c.count} call${c.count !== 1 ? 's' : ''}</span>
+        <button class="delete-btn" onclick="deleteCall('${c.date}')" title="Remove">×</button>
+      </div>
+    `).join('');
+  }
+
+  const list = document.getElementById('meeting-list');
+  if (meetings.length === 0) {
+    list.innerHTML = '<div class="empty-state">No meetings booked this month</div>';
+  } else {
+    list.innerHTML = meetings.map(mtg => `
+      <div class="meeting-row">
+        <span class="company-name">${escapeHtml(mtg.company)}</span>
+        <span class="meeting-date">${mtg.date ? formatDate(mtg.date) : ''}</span>
+        <button class="held-toggle ${mtg.held ? 'held' : ''}" onclick="toggleHeld(${mtg.id})">
+          ${mtg.held ? '✓ Held' : '○ No-show'}
+        </button>
+        <button class="delete-btn" onclick="deleteMeeting(${mtg.id})" title="Remove">×</button>
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('footer-booked').textContent = `${booked} booked`;
+  document.getElementById('footer-rate').textContent = `${rate}% show rate`;
+}
+
+render();
+</script>
+</body>
+</html>
