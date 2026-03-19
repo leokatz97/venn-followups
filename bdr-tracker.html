@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BDR Dashboard — Venn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://script.google.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -211,46 +214,26 @@
 </div>
 
 <script>
-// ⚠️ PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE
 const API_URL = 'https://script.google.com/macros/s/AKfycbw_kodHOfZtIPJoFIXxC6zy5wMqJ1FZCh_4uRiesDGdMUhOebJJop64_m6yUjoYThHmnA/exec';
-
-const BDRS = [
-  { key: 'hazem', name: 'Hazem' },
-  { key: 'nourine', name: 'Nourine' }
-];
-
+const BDRS = [{ key: 'hazem', name: 'Hazem' }, { key: 'nourine', name: 'Nourine' }];
 let currentMonth = new Date().getMonth();
 let currentYear = new Date().getFullYear();
 
 function monthKey() { return `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}`; }
-
 function showLoading(on) { document.getElementById('loading').classList.toggle('active', on); }
+function escapeHtml(text) { const d = document.createElement('div'); d.textContent = text; return d.innerHTML; }
 
-async function api(params) {
-  showLoading(true);
-  try {
-    const qs = new URLSearchParams(params).toString();
-    const res = await fetch(`${API_URL}?${qs}`, { redirect: 'follow' });
-    return await res.json();
-  } catch (err) {
-    console.error('API error:', err);
-    return { error: err.message };
-  } finally {
-    showLoading(false);
-  }
+function updateMonthLabel() {
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('month-label').textContent = `${months[currentMonth]} ${currentYear}`;
 }
 
 function changeMonth(dir) {
   currentMonth += dir;
   if (currentMonth > 11) { currentMonth = 0; currentYear++; }
   if (currentMonth < 0) { currentMonth = 11; currentYear--; }
-  render();
-}
-
-function escapeHtml(text) {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
+  updateMonthLabel();
+  fetchAndRender();
 }
 
 function calcAverages(calls) {
@@ -258,94 +241,70 @@ function calcAverages(calls) {
   const totalCalls = calls.reduce((s, c) => s + c.count, 0);
   const daysLogged = calls.length;
   const perDay = totalCalls / daysLogged;
-
   const weeks = new Set(calls.map(c => {
     const d = new Date(c.date + 'T12:00:00');
     const jan1 = new Date(d.getFullYear(), 0, 1);
     return Math.ceil(((d - jan1) / 86400000 + jan1.getDay() + 1) / 7);
   }));
-  const perWeek = totalCalls / Math.max(weeks.size, 1);
-
-  return { perDay, perWeek, perMonth: totalCalls, daysLogged };
+  return { perDay, perWeek: totalCalls / Math.max(weeks.size, 1), perMonth: totalCalls, daysLogged };
 }
 
-async function render() {
-  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  document.getElementById('month-label').textContent = `${months[currentMonth]} ${currentYear}`;
+async function fetchAndRender() {
+  showLoading(true);
+  try {
+    const qs = new URLSearchParams({ action: 'getAllData', month: monthKey() }).toString();
+    const res = await fetch(`${API_URL}?${qs}`, { redirect: 'follow' });
+    const allData = await res.json();
+    if (allData.error) return;
 
-  const allData = await api({ action: 'getAllData', month: monthKey() });
-  if (allData.error) return;
+    let teamBooked = 0, teamHeld = 0, teamCalls = 0;
+    const avgRows = [];
 
-  let teamBooked = 0, teamHeld = 0, teamCalls = 0;
-  const avgRows = [];
+    BDRS.forEach(bdr => {
+      const data = allData[bdr.key] || { meetings: [], calls: [] };
+      const meetings = data.meetings || [];
+      const calls = data.calls || [];
+      const booked = meetings.length, held = meetings.filter(x => x.held).length;
+      const rate = booked > 0 ? Math.round((held / booked) * 100) : 0;
+      const totalCalls = calls.reduce((s, c) => s + c.count, 0);
+      teamBooked += booked; teamHeld += held; teamCalls += totalCalls;
 
-  BDRS.forEach(bdr => {
-    const data = allData[bdr.key] || { meetings: [], calls: [] };
-    const meetings = data.meetings || [];
-    const calls = data.calls || [];
+      document.getElementById(`${bdr.key}-booked`).textContent = booked;
+      document.getElementById(`${bdr.key}-held`).textContent = held;
+      document.getElementById(`${bdr.key}-rate`).textContent = rate + '%';
+      document.getElementById(`${bdr.key}-calls`).textContent = totalCalls;
 
-    const booked = meetings.length;
-    const held = meetings.filter(x => x.held).length;
-    const rate = booked > 0 ? Math.round((held / booked) * 100) : 0;
-    const totalCalls = calls.reduce((s, c) => s + c.count, 0);
+      const preview = document.getElementById(`${bdr.key}-preview`);
+      if (meetings.length === 0) {
+        preview.innerHTML = '<div style="padding:4px 0;font-size:13px;color:#aaa;">No meetings this month</div>';
+      } else {
+        const recent = meetings.slice(-5).reverse();
+        const remaining = meetings.length - recent.length;
+        preview.innerHTML = '<div class="preview-title">Recent Meetings</div>' +
+          recent.map(mtg => `<div class="preview-item"><span class="dot ${mtg.held ? 'held' : 'pending'}"></span>${escapeHtml(mtg.company)}</div>`).join('') +
+          (remaining > 0 ? `<div class="preview-more">+ ${remaining} more</div>` : '');
+      }
+      avgRows.push({ name: bdr.name, ...calcAverages(calls) });
+    });
 
-    teamBooked += booked;
-    teamHeld += held;
-    teamCalls += totalCalls;
+    const teamRate = teamBooked > 0 ? Math.round((teamHeld / teamBooked) * 100) : 0;
+    document.getElementById('team-booked').textContent = teamBooked;
+    document.getElementById('team-held').textContent = teamHeld;
+    document.getElementById('team-rate').textContent = teamRate + '%';
+    document.getElementById('team-calls').textContent = teamCalls;
 
-    document.getElementById(`${bdr.key}-booked`).textContent = booked;
-    document.getElementById(`${bdr.key}-held`).textContent = held;
-    document.getElementById(`${bdr.key}-rate`).textContent = rate + '%';
-    document.getElementById(`${bdr.key}-calls`).textContent = totalCalls;
-
-    // Meeting preview
-    const preview = document.getElementById(`${bdr.key}-preview`);
-    if (meetings.length === 0) {
-      preview.innerHTML = '<div style="padding:4px 0;font-size:13px;color:#aaa;">No meetings this month</div>';
-    } else {
-      const recent = meetings.slice(-5).reverse();
-      const remaining = meetings.length - recent.length;
-      preview.innerHTML =
-        '<div class="preview-title">Recent Meetings</div>' +
-        recent.map(mtg =>
-          `<div class="preview-item"><span class="dot ${mtg.held ? 'held' : 'pending'}"></span>${escapeHtml(mtg.company)}</div>`
-        ).join('') +
-        (remaining > 0 ? `<div class="preview-more">+ ${remaining} more</div>` : '');
-    }
-
-    avgRows.push({ name: bdr.name, ...calcAverages(calls) });
-  });
-
-  // Team totals
-  const teamRate = teamBooked > 0 ? Math.round((teamHeld / teamBooked) * 100) : 0;
-  document.getElementById('team-booked').textContent = teamBooked;
-  document.getElementById('team-held').textContent = teamHeld;
-  document.getElementById('team-rate').textContent = teamRate + '%';
-  document.getElementById('team-calls').textContent = teamCalls;
-
-  // Averages table
-  const teamAvgWeek = avgRows.reduce((s, r) => s + r.perWeek, 0);
-  const tbody = document.getElementById('averages-body');
-  tbody.innerHTML = avgRows.map(r => `
-    <tr>
-      <td class="name-cell">${r.name}</td>
-      <td class="num-cell">${r.perDay.toFixed(1)}</td>
-      <td class="num-cell">${r.perWeek.toFixed(1)}</td>
-      <td class="num-cell">${r.perMonth}</td>
-      <td class="num-cell">${r.daysLogged}</td>
-    </tr>
-  `).join('') + `
-    <tr class="team-row">
-      <td class="name-cell">Team Avg</td>
-      <td class="num-cell">${avgRows.length > 0 ? (avgRows.reduce((s,r) => s + r.perDay, 0) / avgRows.length).toFixed(1) : '0.0'}</td>
-      <td class="num-cell">${avgRows.length > 0 ? (teamAvgWeek / avgRows.length).toFixed(1) : '0.0'}</td>
-      <td class="num-cell">${avgRows.length > 0 ? Math.round(teamCalls / avgRows.length) : 0}</td>
-      <td class="num-cell">${avgRows.length > 0 ? Math.round(avgRows.reduce((s,r) => s + r.daysLogged, 0) / avgRows.length) : 0}</td>
-    </tr>
-  `;
+    const teamAvgWeek = avgRows.reduce((s, r) => s + r.perWeek, 0);
+    document.getElementById('averages-body').innerHTML = avgRows.map(r => `
+      <tr><td class="name-cell">${r.name}</td><td class="num-cell">${r.perDay.toFixed(1)}</td><td class="num-cell">${r.perWeek.toFixed(1)}</td><td class="num-cell">${r.perMonth}</td><td class="num-cell">${r.daysLogged}</td></tr>
+    `).join('') + `
+      <tr class="team-row"><td class="name-cell">Team Avg</td><td class="num-cell">${avgRows.length > 0 ? (avgRows.reduce((s,r) => s + r.perDay, 0) / avgRows.length).toFixed(1) : '0.0'}</td><td class="num-cell">${avgRows.length > 0 ? (teamAvgWeek / avgRows.length).toFixed(1) : '0.0'}</td><td class="num-cell">${avgRows.length > 0 ? Math.round(teamCalls / avgRows.length) : 0}</td><td class="num-cell">${avgRows.length > 0 ? Math.round(avgRows.reduce((s,r) => s + r.daysLogged, 0) / avgRows.length) : 0}</td></tr>
+    `;
+  } catch (e) { console.error('API error:', e); }
+  showLoading(false);
 }
 
-render();
+updateMonthLabel();
+fetchAndRender();
 </script>
 </body>
 </html>

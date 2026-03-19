@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hazem — Meeting Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://script.google.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -222,115 +225,98 @@
 </div>
 
 <script>
-// ⚠️ PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE
 const API_URL = 'https://script.google.com/macros/s/AKfycbw_kodHOfZtIPJoFIXxC6zy5wMqJ1FZCh_4uRiesDGdMUhOebJJop64_m6yUjoYThHmnA/exec';
-
 const BDR = 'hazem';
 let currentMonth = new Date().getMonth();
 let currentYear = new Date().getFullYear();
 let cachedData = { meetings: [], calls: [] };
 
 function monthKey() { return `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}`; }
-
 function showLoading(on) { document.getElementById('loading').classList.toggle('active', on); }
 
-async function api(method, params) {
+function postAPI(params) {
   showLoading(true);
-  try {
-    if (method === 'GET') {
-      const qs = new URLSearchParams(params).toString();
-      const res = await fetch(`${API_URL}?${qs}`, { redirect: 'follow' });
-      return await res.json();
-    } else {
-      const res = await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify(params),
-        redirect: 'follow'
-      });
-      return await res.json();
-    }
-  } catch (err) {
-    console.error('API error:', err);
-    return { error: err.message };
-  } finally {
-    showLoading(false);
-  }
+  return fetch(API_URL, {
+    method: 'POST', headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify(params), redirect: 'follow'
+  }).then(r => r.json()).catch(e => ({ error: e.message })).finally(() => showLoading(false));
 }
 
-async function loadData() {
-  const data = await api('GET', { action: 'getData', bdr: BDR, month: monthKey() });
-  if (!data.error) cachedData = data;
-  return cachedData;
+async function fetchData() {
+  showLoading(true);
+  try {
+    const qs = new URLSearchParams({ action: 'getData', bdr: BDR, month: monthKey() }).toString();
+    const res = await fetch(`${API_URL}?${qs}`, { redirect: 'follow' });
+    const data = await res.json();
+    if (!data.error) cachedData = data;
+  } catch (e) { console.error('API error:', e); }
+  showLoading(false);
+  renderUI();
 }
 
 function changeMonth(dir) {
   currentMonth += dir;
   if (currentMonth > 11) { currentMonth = 0; currentYear++; }
   if (currentMonth < 0) { currentMonth = 11; currentYear--; }
-  render();
+  cachedData = { meetings: [], calls: [] };
+  renderUI();
+  fetchData();
 }
 
-async function addMeeting() {
+function addMeeting() {
   const input = document.getElementById('company-input');
   const name = input.value.trim();
   if (!name) return;
-  document.getElementById('btn-add-meeting').disabled = true;
   const id = Date.now();
-  await api('POST', { action: 'addMeeting', bdr: BDR, company: name, date: new Date().toISOString().slice(0, 10), month: monthKey(), id: id });
+  const date = new Date().toISOString().slice(0, 10);
+  cachedData.meetings.push({ company: name, held: false, date, id });
   input.value = '';
-  document.getElementById('btn-add-meeting').disabled = false;
-  render();
+  renderUI();
+  postAPI({ action: 'addMeeting', bdr: BDR, company: name, date, month: monthKey(), id });
 }
 
-async function toggleHeld(id) {
-  await api('POST', { action: 'toggleHeld', id: id });
-  render();
+function toggleHeld(id) {
+  const mtg = cachedData.meetings.find(m => m.id === id);
+  if (mtg) mtg.held = !mtg.held;
+  renderUI();
+  postAPI({ action: 'toggleHeld', id });
 }
 
-async function deleteMeeting(id) {
-  await api('POST', { action: 'deleteMeeting', id: id });
-  render();
+function deleteMeeting(id) {
+  cachedData.meetings = cachedData.meetings.filter(m => m.id !== id);
+  renderUI();
+  postAPI({ action: 'deleteMeeting', id });
 }
 
-async function logCalls() {
+function logCalls() {
   const dateInput = document.getElementById('call-date');
   const countInput = document.getElementById('call-count');
   const date = dateInput.value;
   const count = parseInt(countInput.value);
   if (!date || isNaN(count) || count < 0) return;
-  document.getElementById('btn-log-calls').disabled = true;
-  await api('POST', { action: 'logCalls', bdr: BDR, date: date, count: count, month: monthKey() });
+  const existing = cachedData.calls.find(c => c.date === date);
+  if (existing) { existing.count = count; } else { cachedData.calls.unshift({ date, count }); }
   countInput.value = '';
-  document.getElementById('btn-log-calls').disabled = false;
-  render();
+  renderUI();
+  postAPI({ action: 'logCalls', bdr: BDR, date, count, month: monthKey() });
 }
 
-async function deleteCall(date) {
-  await api('POST', { action: 'deleteCall', bdr: BDR, date: date, month: monthKey() });
-  render();
+function deleteCall(date) {
+  cachedData.calls = cachedData.calls.filter(c => c.date !== date);
+  renderUI();
+  postAPI({ action: 'deleteCall', bdr: BDR, date, month: monthKey() });
 }
 
-function escapeHtml(text) {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
-}
+function escapeHtml(text) { const d = document.createElement('div'); d.textContent = text; return d.innerHTML; }
+function formatDate(s) { return new Date(s + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' }); }
 
-function formatDate(dateStr) {
-  const d = new Date(dateStr + 'T12:00:00');
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-}
-
-async function render() {
+function renderUI() {
   const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   document.getElementById('month-label').textContent = `${months[currentMonth]} ${currentYear}`;
   document.getElementById('call-date').value = new Date().toISOString().slice(0, 10);
 
-  const data = await loadData();
-  const meetings = data.meetings || [];
-  const calls = data.calls || [];
-
+  const meetings = cachedData.meetings || [];
+  const calls = cachedData.calls || [];
   const booked = meetings.length;
   const held = meetings.filter(x => x.held).length;
   const rate = booked > 0 ? Math.round((held / booked) * 100) : 0;
@@ -342,39 +328,21 @@ async function render() {
   document.getElementById('stat-calls').textContent = totalCalls;
 
   const callsLog = document.getElementById('calls-log');
-  if (calls.length === 0) {
-    callsLog.innerHTML = '<div class="empty-state">No calls logged this month</div>';
-  } else {
-    callsLog.innerHTML = calls.map(c => `
-      <div class="call-row">
-        <span class="call-date">${formatDate(c.date)}</span>
-        <span class="call-count">${c.count} call${c.count !== 1 ? 's' : ''}</span>
-        <button class="delete-btn" onclick="deleteCall('${c.date}')" title="Remove">×</button>
-      </div>
-    `).join('');
-  }
+  callsLog.innerHTML = calls.length === 0
+    ? '<div class="empty-state">No calls logged this month</div>'
+    : calls.map(c => `<div class="call-row"><span class="call-date">${formatDate(c.date)}</span><span class="call-count">${c.count} call${c.count !== 1 ? 's' : ''}</span><button class="delete-btn" onclick="deleteCall('${c.date}')" title="Remove">×</button></div>`).join('');
 
   const list = document.getElementById('meeting-list');
-  if (meetings.length === 0) {
-    list.innerHTML = '<div class="empty-state">No meetings booked this month</div>';
-  } else {
-    list.innerHTML = meetings.map(mtg => `
-      <div class="meeting-row">
-        <span class="company-name">${escapeHtml(mtg.company)}</span>
-        <span class="meeting-date">${mtg.date ? formatDate(mtg.date) : ''}</span>
-        <button class="held-toggle ${mtg.held ? 'held' : ''}" onclick="toggleHeld(${mtg.id})">
-          ${mtg.held ? '✓ Held' : '○ No-show'}
-        </button>
-        <button class="delete-btn" onclick="deleteMeeting(${mtg.id})" title="Remove">×</button>
-      </div>
-    `).join('');
-  }
+  list.innerHTML = meetings.length === 0
+    ? '<div class="empty-state">No meetings booked this month</div>'
+    : meetings.map(mtg => `<div class="meeting-row"><span class="company-name">${escapeHtml(mtg.company)}</span><span class="meeting-date">${mtg.date ? formatDate(mtg.date) : ''}</span><button class="held-toggle ${mtg.held ? 'held' : ''}" onclick="toggleHeld(${mtg.id})">${mtg.held ? '✓ Held' : '○ No-show'}</button><button class="delete-btn" onclick="deleteMeeting(${mtg.id})" title="Remove">×</button></div>`).join('');
 
   document.getElementById('footer-booked').textContent = `${booked} booked`;
   document.getElementById('footer-rate').textContent = `${rate}% show rate`;
 }
 
-render();
+renderUI();
+fetchData();
 </script>
 </body>
 </html>
