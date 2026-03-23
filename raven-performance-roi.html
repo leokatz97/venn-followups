@@ -63,6 +63,8 @@
     .solution-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
     .solution-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; line-height: 1.5; }
     .solution-list li::before { content: '✓'; color: var(--sea-green); font-weight: 600; font-size: 14px; flex-shrink: 0; margin-top: 0px; }
+    .solution-list li .pop { color: var(--sea-green); font-weight: 700; }
+    .pain-list li .pop { color: #c0392b; font-weight: 700; }
 
     /* ROI SECTION */
     .roi-section { padding: 0 48px 10px; }
@@ -90,16 +92,17 @@
 
     /* TABLE */
     .table-section { padding: 14px 48px 10px; }
-    .roi-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-    .roi-table th { text-align: left; padding: 8px 12px; font-size: 10px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-muted); border-bottom: 2px solid var(--dark-green); }
+    .roi-table { width: 100%; border-collapse: collapse; font-size: 12px; background: var(--white); border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,36,0,0.06); }
+    .roi-table th { text-align: left; padding: 10px 14px; font-size: 10px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; color: var(--white); background: var(--dark-green); border-bottom: none; }
     .roi-table th:not(:first-child) { text-align: right; }
-    .roi-table td { padding: 7px 12px; border-bottom: 1px solid rgba(0,36,0,0.08); }
+    .roi-table td { padding: 9px 14px; border-bottom: 1px solid rgba(0,36,0,0.08); }
     .roi-table td:not(:first-child) { text-align: right; font-variant-numeric: tabular-nums; }
-    .roi-table .total-row td { font-weight: 700; border-top: 2px solid var(--dark-green); border-bottom: none; padding-top: 10px; }
+    .roi-table .total-row td { font-weight: 700; font-size: 14px; border-top: 2px solid var(--dark-green); border-bottom: none; padding-top: 12px; padding-bottom: 12px; background: rgba(9,146,80,0.06); }
     .roi-table .total-row td:not(:first-child) { color: var(--sea-green); }
     .roi-table .total-row .scotia-col { color: var(--scotia-red); }
     .roi-table .gross-row td { font-weight: 600; }
     .roi-table .question-mark { color: #999; font-style: italic; }
+    .roi-table .interest-row td:not(:first-child) { color: var(--sea-green); font-weight: 600; }
 
     /* HIGHLIGHT BOX */
     .highlight-box {
@@ -181,9 +184,8 @@
     <div class="card">
       <h2>Current Challenges</h2>
       <ul class="pain-list">
-        <li>1% cashback with Scotia but $0 interest on your $140K chequing balance</li>
-        <li>Float's cashback only kicks in after $25K/mo spend — a dealbreaker for you</li>
-        <li>Bank fees and poor service (you left Scotia personally for a reason)</li>
+        <li>1% cashback with Scotia but <span class="pop">$0 interest</span> on your $140K chequing balance</li>
+        <li>Float's cashback only kicks in after $25K/mo spend — a dealbreaker</li>
         <li>QuickBooks integration with Scotia's bank feed is unreliable and breaks</li>
       </ul>
     </div>
@@ -193,17 +195,34 @@
       <h2>How Venn Solves It</h2>
       <ul class="solution-list">
         <li>1% cashback from dollar one — no $25K threshold like Float</li>
-        <li>2% interest on your chequing balance — that's $2,806/yr you're leaving on the table today</li>
+        <li><span class="pop">2% interest</span> on your chequing balance — that's <span class="pop">$2,806/yr</span> you're leaving on the table today</li>
         <li>QuickBooks integration that doesn't break — syncs reliably every time</li>
-        <li>Unlimited virtual cards — issue one per client or campaign with spend controls built in</li>
       </ul>
     </div>
 
   </div>
 
-  <!-- ROI CHART -->
+  <!-- TABLE -->
   <div class="roi-section">
     <h2>Annual ROI Comparison</h2>
+  </div>
+  <div class="table-section">
+    <table class="roi-table">
+      <thead>
+        <tr><th></th><th>Scotiabank</th><th>Venn $100/mo</th><th>Venn 25% off</th><th>Venn 50% off</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1% Cashback</td><td>$5,914</td><td>$5,914</td><td>$5,914</td><td>$5,914</td></tr>
+        <tr class="interest-row"><td>2% Interest</td><td>$0</td><td>$2,806</td><td>$2,806</td><td>$2,806</td></tr>
+        <tr class="gross-row"><td>Gross Earnings</td><td>$5,914</td><td>$8,720</td><td>$8,720</td><td>$8,720</td></tr>
+        <tr><td>Plan Cost</td><td class="question-mark">?</td><td>−$1,200</td><td>−$900</td><td>−$600</td></tr>
+        <tr class="total-row"><td>Net Earnings</td><td class="scotia-col question-mark">?</td><td>$7,520</td><td>$7,820</td><td>$8,120</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- BAR CHART -->
+  <div class="roi-section" style="padding-top: 16px;">
     <div class="chart-container">
       <div class="chart-row">
         <div class="chart-label">Scotiabank<div class="sublabel">Current</div></div>
@@ -241,22 +260,6 @@
     </div>
   </div>
 
-  <!-- TABLE -->
-  <div class="table-section">
-    <table class="roi-table">
-      <thead>
-        <tr><th></th><th>Scotiabank</th><th>Venn $100/mo</th><th>Venn 25% off</th><th>Venn 50% off</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>1% Cashback</td><td>$5,914</td><td>$5,914</td><td>$5,914</td><td>$5,914</td></tr>
-        <tr><td>2% Interest</td><td>$0</td><td>$2,806</td><td>$2,806</td><td>$2,806</td></tr>
-        <tr class="gross-row"><td>Gross Earnings</td><td>$5,914</td><td>$8,720</td><td>$8,720</td><td>$8,720</td></tr>
-        <tr><td>Plan Cost</td><td class="question-mark">?</td><td>−$1,200</td><td>−$900</td><td>−$600</td></tr>
-        <tr class="total-row"><td>Net Earnings</td><td class="scotia-col question-mark">?</td><td>$7,520</td><td>$7,820</td><td>$8,120</td></tr>
-      </tbody>
-    </table>
-  </div>
-
   <!-- HIGHLIGHT -->
   <div class="highlight-box">
     <div class="highlight-icon">💰</div>
@@ -268,7 +271,7 @@
 
   <!-- PROMO -->
   <div class="promo-box">
-    <strong>📣 Promotional pricing available</strong> — Once we have a commitment to move forward and $50K deposited into the account, I'm confident I can get a promotional rate on the plan fee. Let's talk about what that looks like for you.
+    <strong>📣 Promotional pricing available</strong> — If you can commit to moving forward by Friday this week while also committing to sending a deposit of $50K into the account, I'm confident I can get a promotional rate on the plan fee. Let me know what you think about the timeline and we can align from there.
   </div>
 
   <!-- NEXT STEPS -->
@@ -277,15 +280,15 @@
     <div class="steps">
       <div class="step">
         <div class="step-num">1</div>
-        <div class="step-text"><strong>Review the numbers with Joy</strong> — Walk through this ROI together and see if the math makes sense for Raven.</div>
+        <div class="step-text"><strong>Review the numbers together</strong> — Walk through this ROI with Joy and Sophie and let me know if it checks out.</div>
       </div>
       <div class="step">
         <div class="step-num">2</div>
-        <div class="step-text"><strong>Sign up at venn.ca</strong> — Takes 5–7 minutes. You'll need your articles of incorporation and photo ID.</div>
+        <div class="step-text"><strong>Confirm by Friday</strong> — Let me know you're ready to move forward and I'll get the promo pricing locked in.</div>
       </div>
       <div class="step">
         <div class="step-num">3</div>
-        <div class="step-text"><strong>Deposit $50K and I'll work on pricing</strong> — Once funds are in and you're committed, I'll push for a reduced plan fee.</div>
+        <div class="step-text"><strong>Sign up + deposit $50K</strong> — Takes 5–7 min at <a href="https://www.venn.ca" style="color:var(--sea-green); font-weight:600;">venn.ca</a>. Once the deposit lands, the promotional rate kicks in.</div>
       </div>
     </div>
   </div>
