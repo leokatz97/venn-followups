@@ -63,8 +63,8 @@
     .solution-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
     .solution-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; line-height: 1.5; }
     .solution-list li::before { content: '✓'; color: var(--sea-green); font-weight: 600; font-size: 14px; flex-shrink: 0; margin-top: 0px; }
-    .solution-list li .pop { color: var(--sea-green); font-weight: 700; }
-    .pain-list li .pop { color: #c0392b; font-weight: 700; }
+    .pain-list li.highlight-item { background: rgba(192,57,43,0.06); border-radius: 6px; padding: 8px 10px; margin: -8px -10px; font-weight: 600; }
+    .solution-list li.highlight-item { background: rgba(9,146,80,0.08); border-radius: 6px; padding: 8px 10px; margin: -8px -10px; font-weight: 600; }
 
     /* ROI SECTION */
     .roi-section { padding: 0 48px 10px; }
@@ -184,7 +184,7 @@
     <div class="card">
       <h2>Current Challenges</h2>
       <ul class="pain-list">
-        <li>1% cashback with Scotia but <strong style="color:#c0392b">$0 interest</strong> on your $140K chequing balance</li>
+        <li class="highlight-item">1% cashback with Scotia but $0 interest on your $140K chequing balance</li>
         <li>Float's cashback only kicks in after $25K/mo spend — a dealbreaker</li>
         <li>QuickBooks integration with Scotia's bank feed is unreliable and breaks</li>
       </ul>
@@ -195,7 +195,7 @@
       <h2>How Venn Solves It</h2>
       <ul class="solution-list">
         <li>1% cashback from dollar one — no $25K threshold like Float</li>
-        <li><strong style="color:#099250">2% interest</strong> on your chequing balance — that's <strong style="color:#099250">$2,806/yr</strong> you're leaving on the table today</li>
+        <li class="highlight-item">2% interest on your chequing balance — that's $2,806/yr you're leaving on the table today</li>
         <li>QuickBooks integration that doesn't break — syncs reliably every time</li>
       </ul>
     </div>
