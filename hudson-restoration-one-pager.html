@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Venn for Hudson Restoration</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --dark:#002400; --green:#099250; --green-mid:#25AE69; --green-light:#41C981;
+      --eggshell:#F4F1DE; --white:#FFFFFF;
+      --g50:#F8F9FA; --g100:#F1F3F5; --g200:#DEE2E6; --g400:#9BA3B5; --g600:#5A6277; --g800:#2D3348;
+      --green-bg:#E8F7F0; --red:#D64545; --amber:#D4870E; --amber-bg:#FFF8EB;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--eggshell);color:var(--g800);line-height:1.55}
+    .container{max-width:900px;margin:0 auto}
+
+    /* HEADER */
+    header{background:var(--dark);padding:22px 40px;display:flex;align-items:center;justify-content:space-between}
+    .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .logo-mark{width:26px;height:26px}
+    .logo-text{font-size:21px;font-weight:600;color:var(--eggshell);letter-spacing:-0.5px}
+    .header-right{font-size:10px;font-weight:600;color:var(--green-light);letter-spacing:1.8px;text-transform:uppercase}
+
+    /* HERO */
+    .hero{background:linear-gradient(135deg,var(--green) 0%,#0a7a42 100%);padding:44px 40px 40px;color:var(--white)}
+    .hero-label{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--green-light);margin-bottom:10px}
+    .hero h1{font-size:28px;font-weight:700;line-height:1.2;margin-bottom:10px}
+    .hero p{font-size:14px;line-height:1.7;color:rgba(255,255,255,0.85);max-width:700px}
+
+    /* CONTENT */
+    .content{padding:32px 40px 40px}
+
+    /* STAT STRIP */
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
+    .stat{background:var(--white);border-radius:10px;padding:18px 20px;border:1px solid var(--g200);text-align:center}
+    .stat-number{font-size:26px;font-weight:700;color:var(--green);line-height:1.2}
+    .stat-label{font-size:11px;font-weight:500;color:var(--g400);letter-spacing:0.5px;margin-top:4px}
+
+    /* SECTION TITLE */
+    .section-title{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:14px;margin-top:8px}
+
+    /* PROBLEM / SOLUTION GRID */
+    .ps-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px}
+    .ps-card{background:var(--white);border-radius:10px;padding:24px;border:1px solid var(--g200)}
+    .ps-card.problem{border-top:3px solid var(--red)}
+    .ps-card.solution{border-top:3px solid var(--green)}
+    .ps-card h3{font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:14px}
+    .ps-card.problem h3{color:var(--red)}
+    .ps-card.solution h3{color:var(--green)}
+    .ps-card ul{list-style:none;padding:0}
+    .ps-card li{font-size:13px;color:var(--g600);padding:7px 0;border-top:1px solid var(--g100);line-height:1.5}
+    .ps-card li:first-child{border-top:none;padding-top:0}
+    .ps-card li strong{color:var(--g800)}
+
+    /* USE CASE CARDS */
+    .uc-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px}
+    .uc-card{background:var(--white);border-radius:10px;padding:24px;border:1px solid var(--g200);border-left:4px solid var(--green)}
+    .uc-card h4{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:6px}
+    .uc-card .uc-tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:var(--green-bg);color:var(--green);padding:3px 8px;border-radius:4px;margin-bottom:12px}
+    .uc-card p{font-size:13px;color:var(--g600);line-height:1.6;margin-bottom:10px}
+    .uc-card ul{list-style:none;padding:0}
+    .uc-card li{font-size:12px;color:var(--g600);padding:4px 0;padding-left:16px;position:relative;line-height:1.5}
+    .uc-card li::before{content:"";position:absolute;left:0;top:10px;width:6px;height:6px;border-radius:50%;background:var(--green-mid)}
+
+    /* HOW IT WORKS */
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+    .step{background:var(--white);border-radius:10px;padding:20px 18px;border:1px solid var(--g200);text-align:center}
+    .step-num{width:32px;height:32px;border-radius:50%;background:var(--green);color:var(--white);font-size:14px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;margin-bottom:10px}
+    .step h4{font-size:12px;font-weight:700;color:var(--dark);margin-bottom:6px}
+    .step p{font-size:11px;color:var(--g600);line-height:1.5}
+
+    /* PRICING CALLOUT */
+    .pricing{background:var(--dark);border-radius:10px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;gap:24px}
+    .pricing-left h3{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--green-light);margin-bottom:6px}
+    .pricing-left .price{font-size:32px;font-weight:700;color:var(--white);line-height:1}
+    .pricing-left .price span{font-size:14px;font-weight:400;color:var(--g400)}
+    .pricing-pills{display:flex;gap:10px;flex-wrap:wrap}
+    .pill{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:10px 16px;text-align:center;min-width:120px}
+    .pill-label{font-size:10px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;color:var(--g400);margin-bottom:2px}
+    .pill-value{font-size:14px;font-weight:700;color:var(--green-light)}
+
+    /* BRAND FIT */
+    .brand-fit{background:var(--green-bg);border-radius:10px;padding:22px 28px;border:1px solid #C8E6D6;margin-bottom:0}
+    .brand-fit h3{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--green);margin-bottom:8px}
+    .brand-fit p{font-size:13px;color:var(--g800);line-height:1.6}
+    .brand-fit p strong{color:var(--green)}
+
+    /* FOOTER */
+    footer{background:var(--dark);padding:18px 40px;display:flex;justify-content:space-between;align-items:center;margin-top:40px}
+    footer .foot-left{font-size:11px;color:var(--g400)}
+    footer .foot-left strong{color:var(--green-light);font-weight:500}
+    footer .foot-right{font-size:11px;color:var(--g400)}
+
+    /* PAGE BREAK */
+    .page-break{break-before:page;padding-top:8px}
+
+    @media(max-width:700px){
+      header,.hero,.content,footer{padding-left:20px;padding-right:20px}
+      .hero h1{font-size:22px}
+      .stats,.ps-grid,.uc-grid,.steps{grid-template-columns:1fr}
+      .pricing{flex-direction:column;text-align:center}
+      .pricing-pills{justify-content:center}
+    }
+    @media print{
+      body{background:white}
+      .container{max-width:100%}
+      header,.hero,.pricing,.step-num{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+      .ps-card,.uc-card,.stat,.step,.pricing,.brand-fit{break-inside:avoid}
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="logo">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2" x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2" y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5" y1="5" x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5" x2="5" y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">venn</span>
+    </div>
+    <span class="header-right">Prepared for Hudson Restoration</span>
+  </header>
+
+  <div class="hero">
+    <div class="hero-label">Employee Incentive Cards + Expense Management</div>
+    <h1>One platform to reward your team, eliminate receipt-chasing, and sync everything to QuickBooks.</h1>
+    <p>Purpose-built for multi-location restoration companies. Distribute prepaid cards across all 8 locations, control spending instantly, and automate the admin that's eating a full-time role.</p>
+  </div>
+
+  <div class="content">
+
+    <!-- STATS -->
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-number">8</div>
+        <div class="stat-label">Locations across Ontario</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">50+</div>
+        <div class="stat-label">Cardholders to manage</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">1</div>
+        <div class="stat-label">FTE doing manual entry</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">$40</div>
+        <div class="stat-label">Per month, all-in</div>
+      </div>
+    </div>
+
+    <!-- PROBLEM vs SOLUTION -->
+    <div class="ps-grid">
+      <div class="ps-card problem">
+        <h3>Today's Challenges</h3>
+        <ul>
+          <li><strong>Full-time staff member</strong> dedicated to chasing receipts and manually inputting into QuickBooks</li>
+          <li><strong>Thousands in undocumented spend</strong> — transactions with minimal detail across all locations</li>
+          <li><strong>Current Visa Incentive program</strong> works for bonuses but requires 100% manual entry</li>
+          <li><strong>No spending controls</strong> — can't set limits, lock cards, or enforce receipt uploads</li>
+          <li><strong>50+ cardholders, 8 locations</strong> — zero visibility or automation</li>
+        </ul>
+      </div>
+      <div class="ps-card solution">
+        <h3>With Venn</h3>
+        <ul>
+          <li><strong>Auto QuickBooks sync</strong> — every transaction flows in with merchant, amount, and receipt attached</li>
+          <li><strong>SMS receipt capture</strong> — staff get a text after every purchase, reply with a photo, done</li>
+          <li><strong>Receipt lockout</strong> — auto-lock cards after X missed receipts until they comply</li>
+          <li><strong>Lifetime spending limits</strong> — set, edit, or lock any card instantly from the dashboard</li>
+          <li><strong>Custom user roles</strong> — employees see only their own card, nothing else</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- TWO USE CASES -->
+    <div class="section-title">Two workflows, one platform</div>
+    <div class="uc-grid">
+      <div class="uc-card">
+        <div class="uc-tag">Use Case 1</div>
+        <h4>Google Review Bonus Program</h4>
+        <p>Pre-distribute cards to PMs and technicians. When an employee earns a 5-star Google review, increase their card limit by $50–$100. They spend it however they want.</p>
+        <ul>
+          <li>Cards start at $0–$1 lifetime limit</li>
+          <li>Increase limit per bonus event — takes 3 seconds</li>
+          <li>Lock or reset the card anytime</li>
+          <li><strong>No QBO sync needed</strong> — pull CSV statements for documentation instead</li>
+        </ul>
+      </div>
+      <div class="uc-card">
+        <div class="uc-tag">Use Case 2</div>
+        <h4>Operational Expense Cards</h4>
+        <p>Replace your existing corporate Visa program. Give every cardholder a Venn card with real-time controls, auto receipt collection, and direct QuickBooks sync.</p>
+        <ul>
+          <li>SMS receipt capture after every purchase</li>
+          <li>Auto-lock cards for missed receipts</li>
+          <li><strong>Push transactions + receipts to QBO</strong> automatically</li>
+          <li>Eliminate the full-time manual entry role</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div class="page-break"></div>
+
+    <!-- HOW IT WORKS -->
+    <div class="section-title">How it works</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h4>Fund the account</h4>
+        <p>Link your bank via pre-authorized debit or send an e-transfer. Funds land in your Venn balance.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h4>Create cards instantly</h4>
+        <p>Issue cards to any employee in seconds. Set a lifetime spending limit — $1, $50, $500, whatever you need.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h4>Control spend in real time</h4>
+        <p>Edit limits, lock cards, or enforce receipt uploads. Cards pull directly from your company balance.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h4>Sync or export</h4>
+        <p>Push to QuickBooks for operational cards. Pull statements or CSVs for incentive cards. Your choice per card.</p>
+      </div>
+    </div>
+
+    <!-- PRICING -->
+    <div class="pricing">
+      <div class="pricing-left">
+        <h3>Plus Plan — everything you need</h3>
+        <div class="price">$40<span> /month</span></div>
+      </div>
+      <div class="pricing-pills">
+        <div class="pill">
+          <div class="pill-label">Cards included</div>
+          <div class="pill-value">50</div>
+        </div>
+        <div class="pill">
+          <div class="pill-label">Per-card fee</div>
+          <div class="pill-value">$0</div>
+        </div>
+        <div class="pill">
+          <div class="pill-label">User roles</div>
+          <div class="pill-value">Custom</div>
+        </div>
+        <div class="pill">
+          <div class="pill-label">QBO sync</div>
+          <div class="pill-value">Included</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BRAND FIT -->
+    <div style="margin-top:24px"></div>
+    <div class="brand-fit">
+      <h3>Why this fits Hudson Restoration</h3>
+      <p>Hudson is <strong>Canada's first Built Green-certified restorer</strong> — paperless operations and sustainability are already part of your DNA. Venn replaces the manual receipt-chasing and QuickBooks entry with a fully digital, automated workflow. Your Google review bonus program becomes seamless. Your operational cards become self-documenting. And the full-time admin role currently bottlenecked on data entry? <strong>That person gets freed up for higher-value work across your 8 locations.</strong></p>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="foot-left">Prepared for <strong>Sarah Love</strong> &nbsp;·&nbsp; Hudson Restoration &nbsp;·&nbsp; March 2026</div>
+    <div class="foot-right"><strong>Leo Katz</strong> &nbsp;·&nbsp; leo@tryvault.com &nbsp;·&nbsp; venn.ca</div>
+  </footer>
+
+</div>
+</body>
+</html>
