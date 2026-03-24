@@ -200,6 +200,15 @@
     font-style: italic;
   }
 
+  /* Win highlight */
+  .slide-3 .check.win-highlight {
+    background: rgba(255, 165, 0, 0.1);
+    border: 1px solid rgba(255, 165, 0, 0.3);
+  }
+  .slide-3 .check.win-highlight .text {
+    color: #ffb347;
+  }
+
   /* ---- SLIDE 4: The Missing Piece ---- */
   .slide-4 {
     background: linear-gradient(135deg, #1a0a0a 0%, #0a0a1a 100%);
@@ -251,6 +260,49 @@
     margin-bottom: 10px;
     padding-left: 20px;
     border-left: 3px solid rgba(0, 180, 216, 0.3);
+  }
+  .slide-4 .before-after {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+    width: 100%;
+  }
+  .slide-4 .ba-card {
+    flex: 1;
+    border-radius: 12px;
+    padding: 18px 24px;
+    text-align: left;
+  }
+  .slide-4 .ba-card.before {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .slide-4 .ba-card.after {
+    background: rgba(0, 180, 216, 0.08);
+    border: 1px solid rgba(0, 180, 216, 0.25);
+  }
+  .slide-4 .ba-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 8px;
+  }
+  .slide-4 .ba-card.after .ba-label { color: #00b4d8; }
+  .slide-4 .ba-text {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.4;
+    font-style: italic;
+    color: rgba(255,255,255,0.6);
+  }
+  .slide-4 .ba-card.after .ba-text { color: #48cae4; }
+  .slide-4 .ba-arrow-right {
+    font-size: 28px;
+    color: rgba(255,255,255,0.25);
+    flex-shrink: 0;
   }
   .slide-4 .key-line {
     font-size: 24px;
@@ -380,13 +432,14 @@
       <div class="icon">&#x2705;</div>
       <div class="text">Getting process and pain out of prospects</div>
     </div>
-    <div class="check">
-      <div class="icon">&#x2705;</div>
-      <div class="text">Building a real foundation for the conversation</div>
+    <div class="check win-highlight">
+      <div class="icon">&#x1F525;</div>
+      <div class="text">Yesterday &mdash; could've packed it in, but both of you stayed on the phone late afternoon and booked awesome meetings. That's the mentality.</div>
     </div>
   </div>
   <div class="foundation">This is the base. You can't skip it. Now let's build on it.</div>
 </div>
+
 
 <!-- SLIDE 4: The Missing Piece -->
 <div class="slide slide-4" data-slide="4">
@@ -405,6 +458,17 @@
     <div class="example">"How much time does that take you each month?"</div>
     <div class="example">"What does that cost you per quarter?"</div>
     <div class="example">"How many people touch that process?"</div>
+  </div>
+  <div class="before-after">
+    <div class="ba-card before">
+      <div class="ba-label">Week 1</div>
+      <div class="ba-text">"Hey, um, do you handle your own expenses?"</div>
+    </div>
+    <div class="ba-arrow-right">&rarr;</div>
+    <div class="ba-card after">
+      <div class="ba-label">Now</div>
+      <div class="ba-text">"Most finance teams spend 5+ hours a month chasing receipts &mdash; is that what you're seeing?"</div>
+    </div>
   </div>
   <div class="key-line">"The more info you get, the more likely they are to book &mdash; and then to actually show up."</div>
 </div>
