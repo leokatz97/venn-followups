@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BDR Pump-Up — Back on the Saddle</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0a0a1a;
+    color: #fff;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .slide {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    padding: 60px 80px;
+    text-align: center;
+    position: relative;
+  }
+
+  .slide.active { display: flex; }
+
+  /* Slide counter */
+  .slide-counter {
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.3);
+    font-weight: 600;
+    z-index: 100;
+  }
+
+  /* Venn badge */
+  .venn-badge {
+    position: fixed;
+    bottom: 20px;
+    left: 30px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.25);
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    z-index: 100;
+  }
+
+  /* ---- SLIDE 1: Quote ---- */
+  .slide-1 {
+    background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 50%, #0a0a1a 100%);
+  }
+  .slide-1 .horse {
+    font-size: 80px;
+    margin-bottom: 30px;
+    animation: bounce 2s ease-in-out infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  .slide-1 .quote {
+    font-size: 42px;
+    font-weight: 900;
+    line-height: 1.3;
+    max-width: 800px;
+    background: linear-gradient(90deg, #00b4d8, #48cae4, #00b4d8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .slide-1 .attribution {
+    margin-top: 20px;
+    font-size: 18px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 600;
+  }
+  .slide-1 .reminder {
+    position: absolute;
+    bottom: 60px;
+    background: rgba(0, 180, 216, 0.15);
+    border: 1px solid rgba(0, 180, 216, 0.3);
+    border-radius: 12px;
+    padding: 12px 24px;
+    font-size: 16px;
+    color: #48cae4;
+    font-weight: 600;
+  }
+
+  /* ---- SLIDE 2: Challenger Sale ---- */
+  .slide-2 {
+    background: linear-gradient(135deg, #0a0a1a 0%, #12122a 100%);
+    text-align: left;
+    align-items: flex-start;
+    padding: 60px 100px;
+  }
+  .slide-2 .tag {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #00b4d8;
+    margin-bottom: 16px;
+  }
+  .slide-2 h1 {
+    font-size: 48px;
+    font-weight: 900;
+    margin-bottom: 40px;
+    line-height: 1.1;
+  }
+  .slide-2 .subtitle {
+    font-size: 20px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 40px;
+    max-width: 700px;
+    line-height: 1.5;
+  }
+  .slide-2 .pillars {
+    display: flex;
+    gap: 28px;
+    width: 100%;
+  }
+  .slide-2 .pillar {
+    background: rgba(0, 180, 216, 0.06);
+    border: 1px solid rgba(0, 180, 216, 0.15);
+    border-radius: 16px;
+    padding: 32px 36px;
+    flex: 1;
+  }
+  .slide-2 .pillar .icon { font-size: 36px; margin-bottom: 14px; }
+  .slide-2 .pillar .title {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: #00b4d8;
+  }
+  .slide-2 .pillar .desc {
+    font-size: 16px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.6;
+  }
+
+  /* ---- SLIDE 3: What You're Doing Well ---- */
+  .slide-3 {
+    background: linear-gradient(135deg, #0a1a0a 0%, #0a0a1a 100%);
+  }
+  .slide-3 .tag {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #2ecc71;
+    margin-bottom: 16px;
+  }
+  .slide-3 h1 {
+    font-size: 48px;
+    font-weight: 900;
+    margin-bottom: 40px;
+  }
+  .slide-3 .checks {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 700px;
+    width: 100%;
+  }
+  .slide-3 .check {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(46, 204, 113, 0.08);
+    border: 1px solid rgba(46, 204, 113, 0.2);
+    border-radius: 14px;
+    padding: 20px 28px;
+    text-align: left;
+  }
+  .slide-3 .check .icon {
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+  .slide-3 .check .text {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  .slide-3 .foundation {
+    margin-top: 36px;
+    font-size: 18px;
+    color: rgba(255,255,255,0.5);
+    font-style: italic;
+  }
+
+  /* ---- SLIDE 4: The Missing Piece ---- */
+  .slide-4 {
+    background: linear-gradient(135deg, #1a0a0a 0%, #0a0a1a 100%);
+    text-align: left;
+    align-items: flex-start;
+    padding: 60px 100px;
+  }
+  .slide-4 .tag {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #e74c3c;
+    margin-bottom: 16px;
+  }
+  .slide-4 h1 {
+    font-size: 44px;
+    font-weight: 900;
+    margin-bottom: 36px;
+    line-height: 1.1;
+  }
+  .slide-4 h1 span { color: #00b4d8; }
+  .slide-4 .flow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 36px;
+    flex-wrap: wrap;
+  }
+  .slide-4 .flow-step {
+    background: rgba(0, 180, 216, 0.1);
+    border: 1px solid rgba(0, 180, 216, 0.25);
+    border-radius: 12px;
+    padding: 16px 24px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #48cae4;
+  }
+  .slide-4 .flow-arrow {
+    font-size: 24px;
+    color: rgba(255,255,255,0.3);
+  }
+  .slide-4 .examples {
+    margin-bottom: 36px;
+  }
+  .slide-4 .example {
+    font-size: 18px;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 10px;
+    padding-left: 20px;
+    border-left: 3px solid rgba(0, 180, 216, 0.3);
+  }
+  .slide-4 .key-line {
+    font-size: 24px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #00b4d8, #48cae4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    max-width: 700px;
+    line-height: 1.4;
+  }
+
+  /* ---- SLIDE 5: This Week's Challenge ---- */
+  .slide-5 {
+    background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 50%, #0a0a1a 100%);
+  }
+  .slide-5 .horse { font-size: 64px; margin-bottom: 24px; }
+  .slide-5 .tag {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #00b4d8;
+    margin-bottom: 16px;
+  }
+  .slide-5 h1 {
+    font-size: 44px;
+    font-weight: 900;
+    margin-bottom: 36px;
+    max-width: 700px;
+    line-height: 1.2;
+  }
+  .slide-5 .missions {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 650px;
+    width: 100%;
+    margin-bottom: 40px;
+  }
+  .slide-5 .mission {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    padding: 18px 24px;
+    text-align: left;
+  }
+  .slide-5 .mission .num {
+    font-size: 24px;
+    font-weight: 900;
+    color: #00b4d8;
+    flex-shrink: 0;
+    width: 36px;
+  }
+  .slide-5 .mission .text {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .slide-5 .closer {
+    font-size: 32px;
+    font-weight: 900;
+    background: linear-gradient(90deg, #00b4d8, #48cae4, #00b4d8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-top: 10px;
+  }
+
+  /* Navigation hint */
+  .nav-hint {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: rgba(255,255,255,0.2);
+    z-index: 100;
+  }
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: Quote of the Day -->
+<div class="slide slide-1 active" data-slide="1">
+  <div class="horse">&#x1F40E;</div>
+  <div class="quote">"A champion gets back on the horse.<br>A Challenger never got off."</div>
+  <div class="attribution">Back on the Saddle &mdash; Week of March 25</div>
+  <div class="reminder">&#x1F3B5; REMINDER: Open with pump-up song</div>
+</div>
+
+<!-- SLIDE 2: The Challenger Sale -->
+<div class="slide slide-2" data-slide="2">
+  <div class="tag">The Framework</div>
+  <h1>The Challenger Sale</h1>
+  <div class="subtitle">The best reps don't just build relationships &mdash; they push prospects to think differently. Here's the playbook.</div>
+  <div class="pillars">
+    <div class="pillar">
+      <div class="icon">&#x1F4A1;</div>
+      <div class="title">Teach</div>
+      <div class="desc">Show prospects something they didn't know about their own business. Bring insights they can't Google &mdash; that's what earns the meeting.</div>
+    </div>
+    <div class="pillar">
+      <div class="icon">&#x1F3AF;</div>
+      <div class="title">Tailor</div>
+      <div class="desc">Make every conversation specific to their world. Reference their industry, their role, their pain &mdash; not a generic pitch.</div>
+    </div>
+    <div class="pillar">
+      <div class="icon">&#x1F3C7;</div>
+      <div class="title">Take Control</div>
+      <div class="desc">Don't be an order-taker. Guide the conversation, push back when needed, and lead them toward the next step.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3: What You're Doing Well -->
+<div class="slide slide-3" data-slide="3">
+  <div class="tag">Keep This Up</div>
+  <h1>You're on the Right Track</h1>
+  <div class="checks">
+    <div class="check">
+      <div class="icon">&#x2705;</div>
+      <div class="text">Calling on expense management pain &mdash; great instinct</div>
+    </div>
+    <div class="check">
+      <div class="icon">&#x2705;</div>
+      <div class="text">Getting process and pain out of prospects</div>
+    </div>
+    <div class="check">
+      <div class="icon">&#x2705;</div>
+      <div class="text">Building a real foundation for the conversation</div>
+    </div>
+  </div>
+  <div class="foundation">This is the base. You can't skip it. Now let's build on it.</div>
+</div>
+
+<!-- SLIDE 4: The Missing Piece -->
+<div class="slide slide-4" data-slide="4">
+  <div class="tag">The Unlock</div>
+  <h1>Pain is good.<br><span>Quantified pain is unstoppable.</span></h1>
+  <div class="flow">
+    <div class="flow-step">Extract a Number</div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">Share Savings</div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">Capture Interest</div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-step">Book the Meeting</div>
+  </div>
+  <div class="examples">
+    <div class="example">"How much time does that take you each month?"</div>
+    <div class="example">"What does that cost you per quarter?"</div>
+    <div class="example">"How many people touch that process?"</div>
+  </div>
+  <div class="key-line">"The more info you get, the more likely they are to book &mdash; and then to actually show up."</div>
+</div>
+
+<!-- SLIDE 5: This Week's Challenge -->
+<div class="slide slide-5" data-slide="5">
+  <div class="horse">&#x1F3C7;</div>
+  <div class="tag">This Week's Mission</div>
+  <h1>Be the Challenger</h1>
+  <div class="missions">
+    <div class="mission">
+      <div class="num">01</div>
+      <div class="text">Every call &mdash; extract at least <strong>one number</strong> (time or cost)</div>
+    </div>
+    <div class="mission">
+      <div class="num">02</div>
+      <div class="text">Use it to frame Venn's value <strong>in their language</strong></div>
+    </div>
+    <div class="mission">
+      <div class="num">03</div>
+      <div class="text">Don't just listen &mdash; <strong>teach them what they're losing</strong></div>
+    </div>
+  </div>
+  <div class="closer">Back on the saddle &mdash; let's ride. &#x1F40E;</div>
+</div>
+
+<div class="venn-badge">VENN</div>
+<div class="slide-counter"><span id="current">1</span> / <span id="total">5</span></div>
+<div class="nav-hint">&#x2190; &#x2192; arrow keys to navigate</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  let current = 0;
+
+  document.getElementById('total').textContent = total;
+
+  function showSlide(n) {
+    slides[current].classList.remove('active');
+    current = (n + total) % total;
+    slides[current].classList.add('active');
+    document.getElementById('current').textContent = current + 1;
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); showSlide(current + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); showSlide(current - 1); }
+    if (e.key === 'f' || e.key === 'F') {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+  });
+
+  document.addEventListener('click', () => showSlide(current + 1));
+</script>
+
+</body>
+</html>
