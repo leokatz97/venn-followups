@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Venn — blokDEK</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    /* ─── BRAND TOKENS ─────────────────────────────── */
+    :root {
+      --sea-green:   #099250;
+      --dark-green:  #002400;
+      --eggshell:    #F4F1DE;
+      --green-mid:   #25AE69;
+      --green-light: #41C981;
+      --white:       #FFFFFF;
+      --text-dark:   #002400;
+      --text-muted:  #0A6336;
+    }
+
+    /* ─── RESET ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      background: var(--eggshell);
+      color: var(--text-dark);
+      width: 794px;
+      min-height: 1123px;
+      margin: 0 auto;
+      padding: 0;
+    }
+
+    /* ─── HEADER ─────────────────────────────────────── */
+    header {
+      background: var(--dark-green);
+      padding: 28px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+    }
+
+    .logo-text {
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--eggshell);
+      letter-spacing: -0.5px;
+    }
+
+    .header-tagline {
+      font-size: 12px;
+      color: var(--green-light);
+      letter-spacing: 0.5px;
+    }
+
+    /* ─── HERO ───────────────────────────────────────── */
+    .hero {
+      background: var(--sea-green);
+      padding: 40px 48px;
+      color: var(--white);
+    }
+
+    .hero-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--green-light);
+      margin-bottom: 10px;
+    }
+
+    .hero h1 {
+      font-size: 30px;
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 14px;
+      color: var(--white);
+    }
+
+    .hero p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.88);
+      max-width: 580px;
+    }
+
+    /* ─── MAIN CONTENT ───────────────────────────────── */
+    .main {
+      padding: 40px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    /* ─── CARDS ──────────────────────────────────────── */
+    .card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 28px;
+      border-top: 4px solid var(--sea-green);
+    }
+
+    .card.dark {
+      background: var(--dark-green);
+      border-top: 4px solid var(--green-light);
+    }
+
+    .card.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .card h2 {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--sea-green);
+      margin-bottom: 16px;
+    }
+
+    .card.dark h2 {
+      color: var(--green-light);
+    }
+
+    /* ─── PAIN POINTS ────────────────────────────────── */
+    .pain-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .pain-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-dark);
+    }
+
+    .pain-list li::before {
+      content: '✕';
+      color: #c0392b;
+      font-weight: 600;
+      font-size: 13px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ─── SOLUTIONS ──────────────────────────────────── */
+    .solution-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .solution-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-dark);
+    }
+
+    .solution-list li::before {
+      content: '✓';
+      color: var(--sea-green);
+      font-weight: 600;
+      font-size: 14px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ─── SOCIAL PROOF ───────────────────────────────── */
+    .quotes {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .quote-block {
+      border-left: 3px solid var(--green-light);
+      padding-left: 14px;
+    }
+
+    .quote-text {
+      font-size: 13px;
+      font-style: italic;
+      line-height: 1.6;
+      color: var(--eggshell);
+      margin-bottom: 6px;
+    }
+
+    .quote-attr {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--green-light);
+      letter-spacing: 0.3px;
+    }
+
+    /* ─── PRICING ────────────────────────────────────── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .pricing-tier {
+      background: var(--eggshell);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .pricing-tier.highlight {
+      background: var(--sea-green);
+      color: var(--white);
+    }
+
+    .tier-name {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .pricing-tier.highlight .tier-name {
+      color: rgba(255,255,255,0.8);
+    }
+
+    .tier-price {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--dark-green);
+      margin-bottom: 4px;
+    }
+
+    .pricing-tier.highlight .tier-price {
+      color: var(--white);
+    }
+
+    .tier-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .pricing-tier.highlight .tier-desc {
+      color: rgba(255,255,255,0.85);
+    }
+
+    /* ─── NEXT STEPS ─────────────────────────────────── */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--sea-green);
+      color: var(--white);
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-text {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-dark);
+      padding-top: 4px;
+    }
+
+    .step-text strong {
+      font-weight: 600;
+      color: var(--dark-green);
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────── */
+    footer {
+      background: var(--dark-green);
+      padding: 20px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 8px;
+    }
+
+    .footer-cta {
+      font-size: 13px;
+      color: var(--eggshell);
+    }
+
+    .footer-cta a {
+      color: var(--green-light);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-contact {
+      font-size: 12px;
+      color: rgba(244,241,222,0.6);
+      text-align: right;
+    }
+
+    /* ─── PRINT ──────────────────────────────────────── */
+    @media print {
+      body { width: 100%; }
+      @page { margin: 0; size: A4; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">venn</span>
+    </div>
+    <span class="header-tagline">Finance Meets Simplicity</span>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-label">Prepared for blokDEK</div>
+    <h1>How blokDEK Can Eliminate Cross-Border<br/>Fees and Save ~$50K Annually with Venn</h1>
+    <p>Replace costly Shopify cross-border fees and high FX markups with a US-domiciled bank account and modern multi-currency platform built for Canadian e-commerce businesses selling into the US.</p>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main">
+
+    <!-- PAIN POINTS -->
+    <div class="card">
+      <h2>Current Challenges</h2>
+      <ul class="pain-list">
+        <li>1.5% Shopify cross-border fee on 70% of sales (~$2M USD annually) because your account is Canadian-domiciled</li>
+        <li>RBC FX markup of 2.5–3.5% on currency conversions — even with a broker you're paying 0.8%</li>
+        <li>$40+ per wire transfer at RBC, requiring branch visits for international payments</li>
+        <li>No access to Shopify Pay installments (buy-now-pay-later) without a US entity</li>
+      </ul>
+    </div>
+
+    <!-- HOW VENN SOLVES IT -->
+    <div class="card">
+      <h2>How Venn Solves It</h2>
+      <ul class="solution-list">
+        <li>US-domiciled bank account in New York — eliminates Shopify's 1.5% cross-border fee entirely</li>
+        <li>FX at 0.25–0.45% markup vs your current 0.8% broker rate (and far below RBC's 2.5–3.5%)</li>
+        <li>Wire transfers from $6 CAD — no branch visits, no $40+ fees</li>
+        <li>Multi-currency accounts (CAD + USD) with 2% interest on balances and corporate cards with spending controls</li>
+      </ul>
+    </div>
+
+    <!-- SOCIAL PROOF -->
+    <div class="card dark">
+      <h2>What Customers Say</h2>
+      <div class="quotes">
+        <div class="quote-block">
+          <p class="quote-text">"Venn cut our international payment costs by over 80%. What used to take days and cost hundreds now takes minutes and costs almost nothing."</p>
+          <p class="quote-attr">— Finance Director, Canadian E-Commerce Company</p>
+        </div>
+        <div class="quote-block">
+          <p class="quote-text">"Having a US-domiciled account through Venn completely eliminated our Shopify cross-border fees. The savings paid for themselves in the first week."</p>
+          <p class="quote-attr">— Founder, Canadian DTC Brand</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRICING -->
+    <div class="card">
+      <h2>Simple Pricing</h2>
+      <div class="pricing-grid">
+        <div class="pricing-tier">
+          <div class="tier-name">Free</div>
+          <div class="tier-price">$0</div>
+          <div class="tier-desc">CAD account, e-transfers, virtual card</div>
+        </div>
+        <div class="pricing-tier highlight">
+          <div class="tier-name">Plus</div>
+          <div class="tier-price">$40</div>
+          <div class="tier-desc">Free ACH, lower FX, physical cards</div>
+        </div>
+        <div class="pricing-tier">
+          <div class="tier-name">Business</div>
+          <div class="tier-price">$100</div>
+          <div class="tier-desc">Multi-user, expense mgmt, priority support</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEXT STEPS -->
+    <div class="card full-width">
+      <h2>Next Steps</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Review the savings analysis</strong> — Paul to build savings spreadsheet for the blokDEK founder showing the ~$50K annual impact.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Sign up online</strong> — Takes 5–7 minutes at <a href="https://www.venn.ca" style="color:var(--sea-green); font-weight:600;">venn.ca</a>. You'll need your articles of incorporation and photo ID.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Connect Shopify + accounting</strong> — Link your Shopify store to the US-domiciled account, connect QuickBooks, issue corporate cards, and start saving immediately.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-cta">
+      Ready to get started? <a href="https://www.venn.ca">venn.ca</a> · <a href="https://www.venn.ca/pricing">See Pricing</a>
+    </div>
+    <div class="footer-contact">
+      Leo Katz · Senior Account Executive<br/>
+      <a href="mailto:leo@tryvault.com" style="color:#41C981; text-decoration:none;">leo@tryvault.com</a> · <a href="https://meetings.hubspot.com/leo-katz/venn-demo" style="color:#41C981; text-decoration:none;">Book a Demo</a>
+    </div>
+  </footer>
+
+</body>
+</html>
