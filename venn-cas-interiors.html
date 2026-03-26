@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Venn — CAS Interiors</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    /* ─── BRAND TOKENS ─────────────────────────────── */
+    :root {
+      --sea-green:   #099250;
+      --dark-green:  #002400;
+      --eggshell:    #F4F1DE;
+      --green-mid:   #25AE69;
+      --green-light: #41C981;
+      --white:       #FFFFFF;
+      --text-dark:   #002400;
+      --text-muted:  #0A6336;
+    }
+
+    /* ─── RESET ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      background: var(--eggshell);
+      color: var(--text-dark);
+      width: 794px;
+      min-height: 1123px;
+      margin: 0 auto;
+      padding: 0;
+    }
+
+    /* ─── HEADER ─────────────────────────────────────── */
+    header {
+      background: var(--dark-green);
+      padding: 28px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+    }
+
+    .logo-text {
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--eggshell);
+      letter-spacing: -0.5px;
+    }
+
+    .header-tagline {
+      font-size: 12px;
+      color: var(--green-light);
+      letter-spacing: 0.5px;
+    }
+
+    /* ─── HERO ───────────────────────────────────────── */
+    .hero {
+      background: var(--sea-green);
+      padding: 40px 48px;
+      color: var(--white);
+    }
+
+    .hero-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--green-light);
+      margin-bottom: 10px;
+    }
+
+    .hero h1 {
+      font-size: 30px;
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 14px;
+      color: var(--white);
+    }
+
+    .hero p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.88);
+      max-width: 580px;
+    }
+
+    /* ─── MAIN CONTENT ───────────────────────────────── */
+    .main {
+      padding: 40px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    /* ─── CARDS ──────────────────────────────────────── */
+    .card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 28px;
+      border-top: 4px solid var(--sea-green);
+    }
+
+    .card.dark {
+      background: var(--dark-green);
+      border-top: 4px solid var(--green-light);
+    }
+
+    .card.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .card h2 {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--sea-green);
+      margin-bottom: 16px;
+    }
+
+    .card.dark h2 {
+      color: var(--green-light);
+    }
+
+    /* ─── PAIN POINTS ────────────────────────────────── */
+    .pain-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .pain-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-dark);
+    }
+
+    .pain-list li::before {
+      content: '✕';
+      color: #c0392b;
+      font-weight: 600;
+      font-size: 13px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ─── SOLUTIONS ──────────────────────────────────── */
+    .solution-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .solution-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-dark);
+    }
+
+    .solution-list li::before {
+      content: '✓';
+      color: var(--sea-green);
+      font-weight: 600;
+      font-size: 14px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ─── SOCIAL PROOF ───────────────────────────────── */
+    .quotes {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .quote-block {
+      border-left: 3px solid var(--green-light);
+      padding-left: 14px;
+    }
+
+    .quote-text {
+      font-size: 13px;
+      font-style: italic;
+      line-height: 1.6;
+      color: var(--eggshell);
+      margin-bottom: 6px;
+    }
+
+    .quote-attr {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--green-light);
+      letter-spacing: 0.3px;
+    }
+
+    /* ─── PRICING ────────────────────────────────────── */
+    .pricing-single {
+      background: var(--sea-green);
+      border-radius: 10px;
+      padding: 24px 28px;
+      text-align: center;
+      color: var(--white);
+    }
+
+    .pricing-single .tier-name {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 6px;
+    }
+
+    .pricing-single .tier-price {
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .pricing-single .tier-desc {
+      font-size: 12px;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.5;
+    }
+
+    /* ─── NEXT STEPS ─────────────────────────────────── */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--sea-green);
+      color: var(--white);
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-text {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-dark);
+      padding-top: 4px;
+    }
+
+    .step-text strong {
+      font-weight: 600;
+      color: var(--dark-green);
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────── */
+    footer {
+      background: var(--dark-green);
+      padding: 20px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 8px;
+    }
+
+    .footer-cta {
+      font-size: 13px;
+      color: var(--eggshell);
+    }
+
+    .footer-cta a {
+      color: var(--green-light);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-contact {
+      font-size: 12px;
+      color: rgba(244,241,222,0.6);
+      text-align: right;
+    }
+
+    /* ─── PRINT ──────────────────────────────────────── */
+    @media print {
+      body { width: 100%; }
+      @page { margin: 0; size: A4; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">venn</span>
+    </div>
+    <span class="header-tagline">Finance Meets Simplicity</span>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-label">Prepared for CAS Interiors</div>
+    <h1>How CAS Interiors Can Eliminate Expense<br/>Reimbursements and Manual Reconciliation</h1>
+    <p>Replace Excel tracking, personal-card reimbursements, and manual receipt collection with corporate cards for every employee — auto-synced to QuickBooks.</p>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main">
+
+    <!-- PAIN POINTS -->
+    <div class="card">
+      <h2>Current Challenges</h2>
+      <ul class="pain-list">
+        <li>14 of 20 employees use personal cards and submit reimbursements — slow, error-prone, and frustrating for everyone</li>
+        <li>Expense tracking lives in Excel spreadsheets with manual receipt collection via paper and photos</li>
+        <li>Accounting team manually reconciles every transaction across multiple bank statements each month</li>
+        <li>Only 6 physical expense cards issued — most of the team has no company card at all</li>
+      </ul>
+    </div>
+
+    <!-- HOW VENN SOLVES IT -->
+    <div class="card">
+      <h2>How Venn Solves It</h2>
+      <ul class="solution-list">
+        <li>Issue unlimited virtual + physical cards to every employee — no per-user fees, no reimbursements</li>
+        <li>Receipts auto-captured via mobile app and attached to each transaction instantly — no more chasing paper</li>
+        <li>Direct QuickBooks integration — expenses auto-categorized and synced to your GL and project codes in real time</li>
+        <li>Set spend limits and controls per card — full visibility into team spending with no end-of-month surprises</li>
+      </ul>
+    </div>
+
+    <!-- SOCIAL PROOF -->
+    <div class="card dark">
+      <h2>What Customers Say</h2>
+      <div class="quotes">
+        <div class="quote-block">
+          <p class="quote-text">"We used to spend hours every month chasing receipts and reconciling expenses in Excel. With Venn, everything syncs to QuickBooks automatically — it's eliminated our entire reimbursement process."</p>
+          <p class="quote-attr">— Office Manager, Canadian Construction Firm</p>
+        </div>
+        <div class="quote-block">
+          <p class="quote-text">"Giving every team member their own card was a game-changer. No more personal expenses mixed with business, and the receipt capture alone saves our bookkeeper hours every week."</p>
+          <p class="quote-attr">— Controller, GTA General Contractor</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRICING -->
+    <div class="card">
+      <h2>Simple Pricing</h2>
+      <div class="pricing-single">
+        <div class="tier-name">Venn Plus</div>
+        <div class="tier-price">$40 CAD/mo</div>
+        <div class="tier-desc">Flat rate — not per user. Unlimited cards, unlimited users.<br/>Includes QBO integration, receipt capture, spend controls, and 2% interest on balances.</div>
+      </div>
+    </div>
+
+    <!-- NEXT STEPS -->
+    <div class="card full-width">
+      <h2>Next Steps</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Share with your accounting team</strong> — Michael to forward Venn materials and demo videos to accounting personnel for review.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Follow-up demo</strong> — Leo to schedule a walkthrough with your accounting team in the next 1–2 weeks to show the QBO integration live.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Sign up online</strong> — Takes 5–7 minutes at <a href="https://www.venn.ca" style="color:var(--sea-green); font-weight:600;">venn.ca</a>. You'll need your articles of incorporation and photo ID.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-cta">
+      Ready to get started? <a href="https://www.venn.ca">venn.ca</a> · <a href="https://www.venn.ca/pricing">See Pricing</a>
+    </div>
+    <div class="footer-contact">
+      Leo Katz · Senior Account Executive<br/>
+      <a href="mailto:leo@tryvault.com" style="color:#41C981; text-decoration:none;">leo@tryvault.com</a> · <a href="https://meetings.hubspot.com/leo-katz/venn-demo" style="color:#41C981; text-decoration:none;">Book a Demo</a>
+    </div>
+  </footer>
+
+</body>
+</html>
