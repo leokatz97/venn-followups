@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ops-Driven Prospect List — Venn</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: #1a1a2e;
+    background: #fff;
+    line-height: 1.5;
+    padding: 48px 56px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  header {
+    margin-bottom: 40px;
+    border-bottom: 3px solid #1a1a2e;
+    padding-bottom: 24px;
+  }
+
+  header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 6px;
+  }
+
+  header p {
+    font-size: 14px;
+    color: #666;
+  }
+
+  .summary {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 36px;
+  }
+
+  .stat-card {
+    background: #f5f7fa;
+    border-radius: 8px;
+    padding: 16px 24px;
+    flex: 1;
+  }
+
+  .stat-card .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #888;
+    font-weight: 600;
+  }
+
+  .stat-card .value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-top: 4px;
+  }
+
+  .prospect-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin-bottom: 16px;
+    page-break-inside: avoid;
+    transition: box-shadow 0.15s;
+  }
+
+  .prospect-card:hover {
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+
+  .company-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a2e;
+  }
+
+  .company-name a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px dashed #aaa;
+  }
+
+  .company-name a:hover {
+    border-bottom-color: #1a1a2e;
+  }
+
+  .badges {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+
+  .badge-industry {
+    background: #e8f0fe;
+    color: #1967d2;
+  }
+
+  .badge-size {
+    background: #e6f4ea;
+    color: #137333;
+  }
+
+  .card-meta {
+    display: flex;
+    gap: 28px;
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 12px;
+  }
+
+  .card-meta strong {
+    color: #1a1a2e;
+    font-weight: 600;
+  }
+
+  .trigger {
+    font-size: 13px;
+    color: #444;
+    background: #fafbfc;
+    border-left: 3px solid #1a1a2e;
+    padding: 10px 16px;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .trigger-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #888;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .section-divider {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #999;
+    margin: 32px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  footer {
+    margin-top: 48px;
+    padding-top: 16px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+  }
+
+  /* Section 2 — Tables */
+  .section-header {
+    margin-top: 64px;
+    margin-bottom: 8px;
+    padding-bottom: 24px;
+    border-bottom: 3px solid #1a1a2e;
+  }
+
+  .section-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 6px;
+  }
+
+  .section-header p {
+    font-size: 14px;
+    color: #666;
+  }
+
+  .subsection-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 32px 0 12px;
+    padding: 10px 16px;
+    background: #f5f7fa;
+    border-radius: 6px;
+  }
+
+  .subsection-title .count {
+    font-weight: 400;
+    color: #888;
+    font-size: 13px;
+    margin-left: 8px;
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+
+  .data-table thead th {
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #888;
+    font-weight: 600;
+    border-bottom: 2px solid #e2e8f0;
+    white-space: nowrap;
+  }
+
+  .data-table tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #f0f2f5;
+    vertical-align: top;
+  }
+
+  .data-table tbody tr:hover {
+    background: #fafbfc;
+  }
+
+  .data-table .company-col {
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .data-table .company-col a {
+    color: #1a1a2e;
+    text-decoration: none;
+    border-bottom: 1px dashed #bbb;
+  }
+
+  .data-table .company-col a:hover {
+    border-bottom-color: #1a1a2e;
+  }
+
+  .data-table .notes-col {
+    color: #555;
+    font-size: 12px;
+  }
+
+  .data-table .flagged {
+    background: #fffbeb;
+  }
+
+  .match-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: #1a1a2e;
+    color: #fff;
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+
+  .match-table .data-table tbody td {
+    padding: 12px;
+  }
+
+  @media print {
+    body { padding: 24px 32px; }
+    .prospect-card:hover { box-shadow: none; }
+    .prospect-card { border-color: #ccc; }
+    .data-table tbody tr:hover { background: none; }
+    .section-header { margin-top: 48px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Ops-Driven Prospects</h1>
+  <p>B2B field-service & construction companies where an ops manager or finance lead is driving the banking decision — owner stepping back or absent from the process.</p>
+</header>
+
+<div class="summary">
+  <div class="stat-card">
+    <div class="label">Total Prospects</div>
+    <div class="value">21</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Construction / Trades</div>
+    <div class="value">13</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Field Services / Other</div>
+    <div class="value">8</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Avg. Est. Revenue</div>
+    <div class="value">$3M–$7M</div>
+  </div>
+</div>
+
+<!-- CONSTRUCTION & TRADES -->
+<div class="section-divider">Construction & Trades</div>
+
+<div class="prospect-card">
+  <div class="card-header">
+    <div class="company-name"><a href="https://jblines.com" target="_blank">JB Lines</a></div>
+    <div class="badges">
+      <span class="badge badge-industry">Asphalt Maintenance</span>
+      <span class="badge badge-size">~$3M–$5M / 18 emp</span>
+    </div>
+  </div>
+  <div class="card-meta">
+    <div><strong>Key Contact:</strong> Ben Hernandez, Head of Finance</div>
+  </div>
+  <div class="trigger">
+    <div class="trigger-label">Trigger</div>
+    Ben presented Venn to the board independently and is driving the banking decision, with the owner not directly involved in the process.
+  </div>
+</div>
+
+<div class="prospect-card">
+  <div class="card-header">
+    <div class="company-name"><a href="https://wisl.ca" target="_blank">Western Industrial Services</a></div>
+    <div class="badges">
+      <span class="badge badge-industry">Industrial Coatings</span>
+      <span class="badge badge-size">Est. $5M–$10M+ / 60+ yr</span>
+    </div>
+  </div>
+  <div class="card-meta">
+    <div><strong>Key Contact:</strong> Julie Sari, Corporate Controller</div>
+  </div>
+  <div class="trigger">
+    <div class="trigger-label">Trigger</div>
+    Julie, Greg (GM), and Monique (Executive Director) all attended with owner Luc Turenne absent — ops leadership driving the evaluation.
+  </div>
+</div>
+
+<div class="prospect-card">
+  <div class="card-header">
+    <div class="company-name"><a href="https://pavementsolutions.ca" target="_blank">Pavement Solutions</a></div>
+    <div class="badges">
+      <span class="badge badge-industry">Pavement Maintenance</span>
+      <span class="badge badge-size">Est. $1M–$3M / 4 crews</span>
+    </div>
+  </div>
+  <div class="card-meta">
+    <div><strong>Key Contact:</strong> James Huffman, Owner/Director of Operations</div>
+  </div>
+  <div class="trigger">
+    <div class="trigger-label">Trigger</div>
+    James stays out of day-to-day bookkeeping and explicitly deferred to his business partner and bookkeeper Michelle for the decision.
+  </div>
+</div>
+
+<div class="prospect-card">
+  <div class="card-header">
+    <div class="company-name"><a href="https://riversonscaffold.com" target="_blank">Riverson Scaffold</a></div>
+    <div class="badges">
+      <span class="badge badge-industry">Scaffolding</span>
+      <span class="badge badge-size">Est. $5M–$10M / ~50–70 emp</span>
+    </div>
+  </div>
+  <div class="card-meta">
+    <div><strong>Key Contact:</strong> Brian Pearson, President</div>
+  </div>
+  <div class="trigger">
+    <div class="trigger-label">Trigger</div>
+    Brian has a software background and is personally managing all financial operations, but flagged that only he can move money — a single-point-of-failure he wants to fix.
+  </div>
+</div>
+
+<div class="prospect-card">
+  <div class="card-header">
+    <div class="company-name"><a href="https://casinteriors.com" target="_blank">CAS Interiors</a></div>
+    <div class="badges">
+      <span class="badge badge-industry">Construction Management</span>
+      <span class="badge badge-size">Est. $6.3M / 11–50 emp</span>
+    </div>
+  </div>
+  <div class="card-meta">
+    <div><strong>Key Contact:</strong> Michael McMahon, CEO</div>
+  </div>
+  <div class="trigger">
+    <div class="trigger-label">Trigger</div>
+    Michael explicitly said the accounting team runs day-to-day and he needed to loop them in before any decision, deferring the process entirely to them.
+  </div>
+</div>
+
+<div class="prospect-card">
+  <div class="card-header">
+    <div class="company-name">Derrick Concrete <span style="font-weight:400;font-size:13px;color:#888;">(Edmonton, AB)</span></div>
+    <div class="badges">
+      <span class="badge badge-industry">Concrete Cutting</span>
+      <span class="badge badge-size">Est. $3M–$7M / 30–40 vendors</span>
+    </div>
+  </div>
+  <div class="card-meta">
+    <div><strong>Key Contact:</strong> Kevin Fichtner, Controller</div>
+  </div>
+  <div class="trigger">
+    <div class="trigger-label">Trigger</div>
+    Kevin sets up all payments but every transaction requires owner approval — Kevin is clearly running operations while the owner holds sign-off authority.
+  </div>
+</div>
+
+<div class="prospect-card">
+  <div class="card-header">
+    <div class="company-name"><a href="https://bowiecontracting.com" target="_blank">Bowie Contracting</a></div>
+    <div class="badges">
+      <span class="badge badge-industry">Building Envelope</span>
+      <span class="badge badge-size">Est. $5M–$10M / 10–19 emp</span>
+    </div>
+  </div>
+  <div class="card-meta">
+    <div><strong>Key Contact:</strong> Julie Stuart, Controller</div>
+  </div>
+  <div class="trigger">
+    <div class="trigger-label">Trigger</div>
+    Julie manages all AP solo and described wanting an "assistant" so she can take time off — she is the single operational point of failure with owners Craig and Larry Bowie disengaged from day-to-day.
+  </div>
+</div>
+
+<div class="prospect-card">
+  <div class="card-header">
+    <div class="company-name">Loesen <span style="font-weight:400;font-size:13px;color:#888;">(Greenhouse Construction, ON)</span></div>
+    <div class="badges">
+      <span class="badge badge-industry">Greenhouse Construction</span>
+      <span class="badge badge-size">Est. $2M–$5M / 11 emp</span>
+    </div>
+  </div>
+  <div class="card-meta">
+    <div><strong>Key Contact:</strong> Garret Pratt</div>
+  </div>
+  <div class="trigger">
+    <div class="trigger-label">Trigger</div>
+    Garret attended the demo and said he needed to discuss with "the owners" before deciding, indicating he is the ops/finance layer below the ownership group.
+  </div>
+</div>
+
+<div class="prospect-card">
+  <div class="card-header">
+    <div class="company-name"><a href="https://vei.ca" target="_blank">VEI Contracting</a></div>
+    <div class="badges">
+      <span class="badge badge-industry">Environmental Remediation</span>
+      <span class="badge badge-size">Est. $5M–$15M / Kitchener ON</span>
+    </div>
+  </div>
+  <div class="card-meta">
+    <div><strong>Key Contact:</strong> Adrian Vlugt, CPA (Controller)</div>
+  </div>
+  <div class="trigger">
+    <div class="trigger-label">Trigger</div>
+    Adrian is a CPA running finance independently, evaluating a switch from Monaru due to integration pain — the owner is not involved in the evaluation.
+  </div>
+</div>
+
+<div class="prospect-card">
+  <div class="card-header">
+    <div class="company-name"><a href="https://gnbworks.com" target="_blank">Great Northern Bridgeworks</a></div>
+    <div class="badges">
+      <span class="badge badge-industry">Bridge & Construction</span>
+      <span class="badge badge-size">Est. $3M–$8M / 4 cards</span>
+    </div>
+  </div>
+  <div class="card-meta">
+    <div><strong>Key Contact:</strong> Myron Snyder</div>
+  </div>
+  <div class="trigger">
+    <div class="trigger-label">Trigger</div>
+    Myron attended with interest but said he needed to show the AP team separately, indicating a finance/ops layer driving the decision below ownership.
+  </div>
+</div>
+
+<div class="prospect-card">
+  <div class="card-header">
+    <div class="company-name"><a href="https://macklan.ca" target="_blank">Macklan (DORA Construction)</a></div>
+    <div class="badges">
+      <span class="badge badge-industry">Construction & Real Estate</span>
+      <span class="badge badge-size">Est. $5M–$10M / ~20 emp</span>
+    </div>
+  </div>
+  <div class="card-meta">
+    <div><strong>Key Contact:</strong> Gareth Winsor, CFO</div>
+  </div>
+  <div class="trigger">
+    <div class="trigger-label">Trigger</div>
+    Gareth is CFO across three subsidiaries and was cold-called by Hazem — a multi-entity family business where the CFO is clearly running financial operations independently of the ownership group.
+  </div>
+</div>
+
+<!-- FIELD SERVICES & OTHER B2B -->
+<div class="section-divider">Field Services & Other B2B</div>
+
+<div class="prospect-card">
+  <div class="card-header">
+    <div class="company-name"><a href="https://renegadesafety.ca" target="_blank">Renegade Fleet Safety</a></div>
+    <div class="badges">
+      <span class="badge badge-industry">Fleet Safety Equipment</span>
+      <span class="badge badge-size">$1M–$5M / small team</span>
+    </div>
+  </div>
+  <div class="card-meta">
+    <div><strong>Key Contact:</strong> Crystal Lucier, COO & Acting CFO</div>
+  </div>
+  <div class="trigger">
+    <div class="trigger-label">Trigger</div>
+    Crystal is acting CFO in addition to COO, running day-to-day finance while the founder/CEO is difficult to pin down due to rapid growth.
+  </div>
+</div>
+
+<div class="prospect-card">
+  <div class="card-header">
+    <div class="company-name"><a href="https://ttr-i.ca" target="_blank">M&R Total Transport and Rigging</a></div>
+    <div class="badges">
+      <span class="badge badge-industry">Transportation & Rigging</span>
+      <span class="badge badge-size">Est. $2M–$5M / ~20 emp</span>
+    </div>
+  </div>
+  <div class="card-meta">
+    <div><strong>Key Contact:</strong> Martin Taiani</div>
+  </div>
+  <div class="trigger">
+    <div class="trigger-label">Trigger</div>
+    Martin noted upcoming expansion and planned to share the demo with company executives, indicating he is the ops layer below ownership.
+  </div>
+</div>
+
+<div class="prospect-card">
+  <div class="card-header">
+    <div class="company-name"><a href="https://canarypm.ca" target="_blank">Canary Property Management</a></div>
+    <div class="badges">
+      <span class="badge badge-industry">Property Management</span>
+      <span class="badge badge-size">Est. $500K–$600K / 4 emp</span>
+    </div>
+  </div>
+  <div class="card-meta">
+    <div><strong>Key Contact:</strong> Aaron Terry, Owner</div>
+  </div>
+  <div class="trigger">
+    <div class="trigger-label">Trigger</div>
+    Aaron has been managing all tenant/landlord payments operationally himself and tried to set up the account multiple times without support.
+  </div>
+</div>
+
+<div class="prospect-card">
+  <div class="card-header">
+    <div class="company-name"><a href="https://singlekey.com" target="_blank">Single Key</a></div>
+    <div class="badges">
+      <span class="badge badge-industry">PropTech</span>
+      <span class="badge badge-size">~15 emp / $1.16M raised</span>
+    </div>
+  </div>
+  <div class="card-meta">
+    <div><strong>Key Contact:</strong> Dan Kostruba</div>
+  </div>
+  <div class="trigger">
+    <div class="trigger-label">Trigger</div>
+    Dan runs day-to-day banking and is driving the Venn evaluation, spending ~1hr/week manually processing payments through CIBC.
+  </div>
+</div>
+
+<div class="prospect-card">
+  <div class="card-header">
+    <div class="company-name"><a href="https://powerwest.ca" target="_blank">Power-West Industries</a></div>
+    <div class="badges">
+      <span class="badge badge-industry">Generator Sales & Service</span>
+      <span class="badge badge-size">Est. $5M–$10M / Surrey BC</span>
+    </div>
+  </div>
+  <div class="card-meta">
+    <div><strong>Key Contact:</strong> Sunny Sareon, Controller</div>
+  </div>
+  <div class="trigger">
+    <div class="trigger-label">Trigger</div>
+    Sunny is managing all financial operations across four systems while the owner focuses on revenue — he described wanting automation so he can stop "putting his head down" on manual reporting.
+  </div>
+</div>
+
+<div class="prospect-card">
+  <div class="card-header">
+    <div class="company-name"><a href="https://oriolelandscaping.com" target="_blank">Oriole Landscaping</a></div>
+    <div class="badges">
+      <span class="badge badge-industry">Landscaping</span>
+      <span class="badge badge-size">Est. $1M–$5M / multi-entity</span>
+    </div>
+  </div>
+  <div class="card-meta">
+    <div><strong>Key Contact:</strong> Jeremy Gunnes</div>
+  </div>
+  <div class="trigger">
+    <div class="trigger-label">Trigger</div>
+    Jeremy described managing multiple business entities under CIBC for 40 years with inherited banking relationships, and is now personally re-evaluating all financial infrastructure.
+  </div>
+</div>
+
+<div class="prospect-card">
+  <div class="card-header">
+    <div class="company-name">Ginkgo Landscape Management</div>
+    <div class="badges">
+      <span class="badge badge-industry">Landscape Management</span>
+      <span class="badge badge-size">Unknown</span>
+    </div>
+  </div>
+  <div class="card-meta">
+    <div><strong>Key Contact:</strong> Chris Budrow</div>
+  </div>
+  <div class="trigger">
+    <div class="trigger-label">Trigger</div>
+    Upcoming demo booked — field-based landscaping business fitting the route-based services profile with owner as direct contact.
+  </div>
+</div>
+
+<div class="prospect-card">
+  <div class="card-header">
+    <div class="company-name"><a href="https://friesenhauling.ca" target="_blank">Friesen Hauling</a></div>
+    <div class="badges">
+      <span class="badge badge-industry">Trucking & Hauling</span>
+      <span class="badge badge-size">Est. $2M–$5M</span>
+    </div>
+  </div>
+  <div class="card-meta">
+    <div><strong>Key Contact:</strong> Gilbert Rempel</div>
+  </div>
+  <div class="trigger">
+    <div class="trigger-label">Trigger</div>
+    Gilbert had prior awareness of Venn and is personally managing payment operations, hitting bank limits on e-transfers — a classic owner-operator modernizing financial infrastructure.
+  </div>
+</div>
+
+<!-- ======================================================== -->
+<!-- SECTION 2: FINANCIALS & HEADCOUNT                        -->
+<!-- ======================================================== -->
+
+<div class="section-header">
+  <h2>Section 2 — Revenue & Headcount Signals</h2>
+  <p>Companies from meeting data that explicitly mentioned financials or headcount within target ranges ($3M–$10M revenue, 15–50 FTE).</p>
+</div>
+
+<!-- 2A: Revenue $3M–$10M -->
+<div class="subsection-title">Revenue $3M–$10M Annually <span class="count">(or $250K–$800K/month) — 22 companies</span></div>
+
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Company</th>
+      <th>Revenue Signal</th>
+      <th>Key Contact</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="company-col"><a href="https://jblines.com" target="_blank">JB Lines</a></td>
+      <td>$60–100K/mo card spend peak season</td>
+      <td>Ben Hernandez</td>
+      <td class="notes-col">Implied $3M–$5M+ based on seasonal spend and national ops (Costco, RioCan, JLL)</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://bowiecontracting.com" target="_blank">Bowie Contracting</a></td>
+      <td>$5M–$10M (explicit)</td>
+      <td>Julie Stuart, Controller</td>
+      <td class="notes-col">Explicitly stated in pre-call notes</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://riversonscaffold.com" target="_blank">Riverson Scaffold</a></td>
+      <td>~$70K/mo card spend ($50K office, $20K field)</td>
+      <td>Brian Pearson, President</td>
+      <td class="notes-col">Implied $5M–$10M based on spend volume and 50–70 employees</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://casinteriors.com" target="_blank">CAS Interiors</a></td>
+      <td>$6.3M (explicit)</td>
+      <td>Michael McMahon, CEO</td>
+      <td class="notes-col">Explicitly stated in pre-call notes</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://hicroft.com" target="_blank">Hicroft Enterprises</a></td>
+      <td>$5M–$7M (explicit)</td>
+      <td>Scott Sibley, CEO</td>
+      <td class="notes-col">Explicitly stated during demo; multiple brands under holding company</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://duplium.com" target="_blank">Duplium</a></td>
+      <td>$250K–$500K/mo implied</td>
+      <td>Marina Sorokina, Controller</td>
+      <td class="notes-col">35–50 employees; 30–35 vendors; $50 wire fees; $200/mo TD account fee</td>
+    </tr>
+    <tr class="flagged">
+      <td class="company-col"><a href="https://lightform.ca" target="_blank">Lightform Canada</a> <span class="match-badge">ABOVE RANGE</span></td>
+      <td>~$22M revenue</td>
+      <td>Meagan Krauss, CFO</td>
+      <td class="notes-col">$20M annually to US/Europe vendors; $300K/mo payment runs</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://wisl.ca" target="_blank">Western Industrial Services</a></td>
+      <td>Implied $5M–$10M</td>
+      <td>Julie Sari, Corporate Controller</td>
+      <td class="notes-col">60+ year company; ~100 EFT payments/month; multi-province ops</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://powerwest.ca" target="_blank">Power-West Industries</a></td>
+      <td>$150K/mo AP volume</td>
+      <td>Sunny Sareon, Controller</td>
+      <td class="notes-col">95% EFTs; one US supplier; Surrey BC generator company</td>
+    </tr>
+    <tr>
+      <td class="company-col">Centanni Tile (Burnaby BC)</td>
+      <td>Just under $3M (explicit)</td>
+      <td>Donny Centanni</td>
+      <td class="notes-col">Imports from Italy, Spain, Portugal</td>
+    </tr>
+    <tr class="flagged">
+      <td class="company-col"><a href="https://rydel.ca" target="_blank">Rydel</a> <span class="match-badge">ABOVE RANGE</span></td>
+      <td>$50M annual sales</td>
+      <td>Adel Jawhary</td>
+      <td class="notes-col">41 franchises; $30–32.5M AP annually; head office ops relevant</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://macklan.ca" target="_blank">Macklan / DORA Construction</a></td>
+      <td>Est. $5M–$10M</td>
+      <td>Gareth Winsor, CFO</td>
+      <td class="notes-col">Three subsidiaries; ~20 employees; CFO-led evaluation</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://payzant.com" target="_blank">Payzant Building Products</a></td>
+      <td>~$90K/mo card spend; 9 stores + HQ</td>
+      <td>Michael Doucet</td>
+      <td class="notes-col">Implied $5M–$10M+ based on Home Hardware co-op structure</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://genpro.ca" target="_blank">GEN-PRO</a></td>
+      <td>Implied $3M–$7M</td>
+      <td>Shaun Dawson</td>
+      <td class="notes-col">4 project managers; recently switched payroll; construction/trades</td>
+    </tr>
+    <tr>
+      <td class="company-col">Derrick Concrete (Edmonton AB)</td>
+      <td>Implied $3M–$7M</td>
+      <td>Kevin Fichtner, Controller</td>
+      <td class="notes-col">30–40 vendors; owner approves every payment; concrete cutting</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://submanagementgroup.com" target="_blank">Sub Management Group</a></td>
+      <td>$2M–$2.5M quarterly / $8M–$10M annually (explicit)</td>
+      <td>Gregg Terrence, President</td>
+      <td class="notes-col">200 clients; royalty collection; anticipating 10x growth</td>
+    </tr>
+    <tr class="flagged">
+      <td class="company-col"><a href="https://everestsolutionsgroup.ca" target="_blank">Everest Solutions</a> <span class="match-badge">ABOVE RANGE</span></td>
+      <td>$2.5M pre → $42M post-acquisition</td>
+      <td>Arley MacKinnon, VP Ops</td>
+      <td class="notes-col">Acquired LifeTouch Feb 2; 490 employees post-acquisition</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://fluidisometrics.com" target="_blank">Block Therapy / Fluid Isometrics</a></td>
+      <td>$1M–$5M; $25–50K/mo card spend</td>
+      <td>Sharra Hinton</td>
+      <td class="notes-col">Digital health/wellness; international affiliates; implied $3M–$5M</td>
+    </tr>
+    <tr>
+      <td class="company-col">Loesen (ON)</td>
+      <td>Implied $2M–$5M</td>
+      <td>Garret Pratt</td>
+      <td class="notes-col">11 employees; greenhouse construction; $40/mo plan fit</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://ttr-i.ca" target="_blank">M&R Total Transport</a></td>
+      <td>Implied $3M–$6M</td>
+      <td>Martin Taiani</td>
+      <td class="notes-col">~20 employees; container depot; Halifax NS</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://canarypm.ca" target="_blank">Canary Property Management</a></td>
+      <td>$500K–$600K annually (explicit)</td>
+      <td>Aaron Terry, Owner</td>
+      <td class="notes-col">~$50K/mo spend; 150 rental units</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://renegadesafety.ca" target="_blank">Renegade Fleet Safety</a></td>
+      <td>$1M–$5M; $25–50K/mo card spend</td>
+      <td>Crystal Lucier, COO/CFO</td>
+      <td class="notes-col">$1,000+/mo in wire fees; rapid growth since 2022</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://stalwartelectric.com" target="_blank">Stalwart Electric</a></td>
+      <td>$5M–$10M; $50–100K/mo card spend (explicit)</td>
+      <td>Eva Visser / Reuben Visser</td>
+      <td class="notes-col">Explicitly stated in pre-call notes; electrical contractor</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://eleven-x.com" target="_blank">eleven-x</a></td>
+      <td>$100–250K/mo card spend</td>
+      <td>Lovejeet Gill</td>
+      <td class="notes-col">Implied $5M–$10M; 5 corporate cards; Plooto + RBC stack</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://norsat.com" target="_blank">Norsat International</a></td>
+      <td>~$10M/yr in payments</td>
+      <td>Windy Li, Divisional Controller</td>
+      <td class="notes-col">40 core vendors; heavy Asia/US ACH volume; re-engagement</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- 2B: Headcount 15–50 FTE -->
+<div class="subsection-title">15–50 Full-Time Employees <span class="count">(explicitly mentioned) — 22 companies</span></div>
+
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Company</th>
+      <th>Headcount</th>
+      <th>Key Contact</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="company-col"><a href="https://jblines.com" target="_blank">JB Lines</a></td>
+      <td>~18 employees</td>
+      <td>Ben Hernandez</td>
+      <td class="notes-col">6–15 cards depending on season</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://riversonscaffold.com" target="_blank">Riverson Scaffold</a></td>
+      <td>~50–70 employees; 15 foremen</td>
+      <td>Brian Pearson</td>
+      <td class="notes-col">Explicitly stated</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://casinteriors.com" target="_blank">CAS Interiors</a></td>
+      <td>~20 employees</td>
+      <td>Michael McMahon</td>
+      <td class="notes-col">11–50 range confirmed</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://duplium.com" target="_blank">Duplium</a></td>
+      <td>35–50 employees</td>
+      <td>Marina Sorokina</td>
+      <td class="notes-col">Thornhill ON; founded 1988</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://hicroft.com" target="_blank">Hicroft Enterprises</a></td>
+      <td>Implied 15–30 across brands</td>
+      <td>Scott Sibley</td>
+      <td class="notes-col">Multiple brands; wholesale/distribution/ecommerce</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://renegadesafety.ca" target="_blank">Renegade Fleet Safety</a></td>
+      <td>Small team; rapid growth</td>
+      <td>Crystal Lucier</td>
+      <td class="notes-col">Implied under 20</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://wisl.ca" target="_blank">Western Industrial Services</a></td>
+      <td>Implied 20–40</td>
+      <td>Julie Sari</td>
+      <td class="notes-col">10 Scotia Visa cards; remote workforce across Canada</td>
+    </tr>
+    <tr>
+      <td class="company-col">Loesen (ON)</td>
+      <td>11 employees with cards</td>
+      <td>Garret Pratt</td>
+      <td class="notes-col">Greenhouse construction</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://ttr-i.ca" target="_blank">M&R Total Transport</a></td>
+      <td>~20 employees</td>
+      <td>Martin Taiani</td>
+      <td class="notes-col">Explicitly stated</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://canarypm.ca" target="_blank">Canary Property Management</a></td>
+      <td>4 employees</td>
+      <td>Aaron Terry</td>
+      <td class="notes-col">Small but flagged — 150 units, $50K/mo spend</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://mycionics.com" target="_blank">Mycionics</a></td>
+      <td>Install teams of 5; rapid growth</td>
+      <td>Matthew Leader</td>
+      <td class="notes-col">Agri-robotics; international deployments</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://dyaco.ca" target="_blank">Dyaco Canada</a></td>
+      <td>~17–50 employees</td>
+      <td>Tristan Urquhart</td>
+      <td class="notes-col">Fitness equipment distributor</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://macklan.ca" target="_blank">Macklan / DORA Construction</a></td>
+      <td>~20 employees</td>
+      <td>Gareth Winsor, CFO</td>
+      <td class="notes-col">Across three subsidiaries</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://genpro.ca" target="_blank">GEN-PRO</a></td>
+      <td>4 PMs + support; implied 15–25</td>
+      <td>Shaun Dawson</td>
+      <td class="notes-col">Construction/trades; recently restructured</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://pavementsolutions.ca" target="_blank">Pavement Solutions</a></td>
+      <td>4 crews + foremen; implied 15–20</td>
+      <td>James Huffman</td>
+      <td class="notes-col">Explicitly described crew structure</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://qubridge.io" target="_blank">Quantum Bridge Technologies</a></td>
+      <td>20 → expanding to 35 mid-year</td>
+      <td>Mattia Montagna</td>
+      <td class="notes-col">Series A closing; cybersecurity</td>
+    </tr>
+    <tr class="flagged">
+      <td class="company-col"><a href="https://everestsolutionsgroup.ca" target="_blank">Everest Solutions</a> <span class="match-badge">ABOVE RANGE</span></td>
+      <td>490 post-acquisition; ~4 pre</td>
+      <td>Arley MacKinnon</td>
+      <td class="notes-col">Flagged for scale</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://homecoffeesolutions.com" target="_blank">Home Coffee Solutions</a></td>
+      <td>~48 employees</td>
+      <td>Claudio David</td>
+      <td class="notes-col">Two locations; B2B + B2C</td>
+    </tr>
+    <tr class="flagged">
+      <td class="company-col">Canadian SAM / CANSAM (Sarnia ON) <span class="match-badge">ABOVE RANGE</span></td>
+      <td>200 core; 700+ during shutdowns</td>
+      <td>Hari Rupawala</td>
+      <td class="notes-col">50 cards; $200K/mo spend on one company alone</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://stalwartelectric.com" target="_blank">Stalwart Electric</a></td>
+      <td>Implied 20–40</td>
+      <td>Reuben / Eva Visser</td>
+      <td class="notes-col">$50–100K/mo card spend; electrical contractor</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://eiosolutions.com" target="_blank">EIO Solutions</a></td>
+      <td>~20 employees</td>
+      <td>Tavia Perrault</td>
+      <td class="notes-col">Transitioning to TPA function</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://trybree.com" target="_blank">Bree Technologies</a></td>
+      <td>~27 employees</td>
+      <td>Gogy Kumanan</td>
+      <td class="notes-col">Fintech; $10M+ revenue</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://nblik.com" target="_blank">NbliK</a></td>
+      <td>140 total; ~30 planned for Canada</td>
+      <td>Abhishek Yadav</td>
+      <td class="notes-col">Above range globally; Canadian entity is 15–30</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://basetwo.ai" target="_blank">BaseTwo AI</a></td>
+      <td>~24 cardholders; implied 25–35</td>
+      <td>Waliza Ahmed</td>
+      <td class="notes-col">Series A; manufacturing optimization</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://friesenhauling.ca" target="_blank">Friesen Hauling</a></td>
+      <td>Implied 15–25</td>
+      <td>Gilbert Rempel</td>
+      <td class="notes-col">Trucking; route-based; hitting bank limits</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- 2C: BOTH Criteria -->
+<div class="subsection-title" style="background:#1a1a2e;color:#fff;">Companies Matching BOTH Criteria <span class="count" style="color:#ccc;">Revenue $3M–$10M AND 15–50 Employees — 11 companies</span></div>
+
+<div class="match-table">
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Company</th>
+      <th>Revenue Signal</th>
+      <th>Headcount Signal</th>
+      <th>Key Contact</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="company-col"><a href="https://jblines.com" target="_blank">JB Lines</a></td>
+      <td>$3M–$5M est.</td>
+      <td>18 employees</td>
+      <td>Ben Hernandez</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://riversonscaffold.com" target="_blank">Riverson Scaffold</a></td>
+      <td>$5M–$10M est.</td>
+      <td>50–70 employees / 15 foremen</td>
+      <td>Brian Pearson</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://casinteriors.com" target="_blank">CAS Interiors</a></td>
+      <td>$6.3M explicit</td>
+      <td>~20 employees</td>
+      <td>Michael McMahon</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://duplium.com" target="_blank">Duplium</a></td>
+      <td>$3M–$6M est.</td>
+      <td>35–50 employees</td>
+      <td>Marina Sorokina</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://wisl.ca" target="_blank">Western Industrial Services</a></td>
+      <td>$5M–$10M est.</td>
+      <td>20–40 employees</td>
+      <td>Julie Sari</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://ttr-i.ca" target="_blank">M&R Total Transport</a></td>
+      <td>$3M–$6M est.</td>
+      <td>~20 employees</td>
+      <td>Martin Taiani</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://macklan.ca" target="_blank">Macklan / DORA Construction</a></td>
+      <td>$5M–$10M est.</td>
+      <td>~20 employees</td>
+      <td>Gareth Winsor</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://stalwartelectric.com" target="_blank">Stalwart Electric</a></td>
+      <td>$5M–$10M est.</td>
+      <td>20–40 employees</td>
+      <td>Reuben / Eva Visser</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://pavementsolutions.ca" target="_blank">Pavement Solutions</a></td>
+      <td>$2M–$4M est.</td>
+      <td>15–20 employees</td>
+      <td>James Huffman</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://homecoffeesolutions.com" target="_blank">Home Coffee Solutions</a></td>
+      <td>$1.7M explicit (just below)</td>
+      <td>~48 employees</td>
+      <td>Claudio David</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://dyaco.ca" target="_blank">Dyaco Canada</a></td>
+      <td>$5.9M explicit</td>
+      <td>17–50 employees</td>
+      <td>Tristan Urquhart</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ======================================================== -->
+<!-- SECTION 3: OWNER DISENGAGEMENT / SUCCESSION SIGNALS      -->
+<!-- ======================================================== -->
+
+<div class="section-header">
+  <h2>Section 3 — Owner Disengagement Signals</h2>
+  <p>Indirect indicators of owner stepping back, delegation patterns, and single-point-of-failure awareness — soft succession signals from meeting transcripts.</p>
+</div>
+
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Company</th>
+      <th>Contact</th>
+      <th>Signal</th>
+      <th>Quote / Context</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="company-col"><a href="https://bowiecontracting.com" target="_blank">Bowie Contracting</a></td>
+      <td>Julie Stuart, Controller</td>
+      <td><strong>Owner disengaged from day-to-day</strong></td>
+      <td class="notes-col">Julie manages all AP solo and described needing an "assistant" so she can take time off — owners Craig and Larry Bowie not present and not involved in the evaluation</td>
+    </tr>
+    <tr>
+      <td class="company-col">Derrick Concrete</td>
+      <td>Kevin Fichtner, Controller</td>
+      <td><strong>Owner tired of approvals</strong></td>
+      <td class="notes-col">"Owner tired of approving small payments (even $50 requires approval)" and wants to delegate a $5,000 approval limit to Kevin</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://casinteriors.com" target="_blank">CAS Interiors</a></td>
+      <td>Michael McMahon, CEO</td>
+      <td><strong>Owner deferring to accounting team</strong></td>
+      <td class="notes-col">Michael explicitly deferred the entire decision to his accounting team, saying he needed their input before proceeding</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://renegadesafety.ca" target="_blank">Renegade Fleet Safety</a></td>
+      <td>Crystal Lucier, COO & Acting CFO</td>
+      <td><strong>Founder hard to reach</strong></td>
+      <td class="notes-col">Crystal described the CEO/founder as "difficult to pin down due to rapid growth" — Crystal is running finance independently</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://powerwest.ca" target="_blank">Power-West Industries</a></td>
+      <td>Sunny Sareon, Controller</td>
+      <td><strong>Owner focused elsewhere</strong></td>
+      <td class="notes-col">Owner maintaining personal RBC relationship while Sunny evaluates alternatives independently — owner not present or involved</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://wisl.ca" target="_blank">Western Industrial Services</a></td>
+      <td>Julie Sari, Corporate Controller</td>
+      <td><strong>Owner/President absent from evaluation</strong></td>
+      <td class="notes-col">President Luc Turenne not present; GM Greg Ginter, Controller Julie Sari, and Executive Director Monique Rajotte driving the decision</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://riversonscaffold.com" target="_blank">Riverson Scaffold</a></td>
+      <td>Brian Pearson, President</td>
+      <td><strong>Single point of failure concern</strong></td>
+      <td class="notes-col">Brian flagged that "only Brian can move money currently" and is actively trying to fix this dependency — suggests awareness of operational vulnerability</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://hicroft.com" target="_blank">Hicroft Enterprises</a></td>
+      <td>Scott Sibley, CEO</td>
+      <td><strong>Fraud management background driving controls</strong></td>
+      <td class="notes-col">Scott has a fraud management background and wants to delegate payment authority to team members — actively building infrastructure to reduce his own involvement</td>
+    </tr>
+    <tr>
+      <td class="company-col"><a href="https://submanagementgroup.com" target="_blank">Sub Management Group</a></td>
+      <td>Gregg Terrence, President</td>
+      <td><strong>Scaling concern</strong></td>
+      <td class="notes-col">Gregg flagged "vulnerability with single-person dependency at $10M+ scale" and is looking for automation to reduce personal involvement</td>
+    </tr>
+    <tr>
+      <td class="company-col">TimbeRich</td>
+      <td>Deep Duggal, Owner</td>
+      <td><strong>Bank holds causing cash flow stress</strong></td>
+      <td class="notes-col">Deep mentioned worsening bank holds since December 2025 — owner personally managing all banking under stress, no delegation structure</td>
+    </tr>
+  </tbody>
+</table>
+
+<div style="background:#f5f7fa;border-radius:8px;padding:20px 24px;margin-top:24px;font-size:13px;color:#444;line-height:1.7;">
+  <div style="font-weight:700;color:#1a1a2e;margin-bottom:8px;">Key Takeaway</div>
+  No transcripts contain explicit retirement or exit language — the sales demo context makes this unlikely to surface naturally. The closest real signals fall into three categories:
+  <ul style="margin:10px 0 0 20px;">
+    <li><strong>Operational delegation happening without the owner</strong> — Bowie, Western Industrial, CAS Interiors</li>
+    <li><strong>Owners actively trying to reduce their own involvement</strong> — Derrick Concrete, Hicroft, Sub Management Group</li>
+    <li><strong>Single points of failure being flagged as a problem</strong> — Riverson Scaffold, Sub Management Group</li>
+  </ul>
+  <div style="margin-top:10px;">These are worth flagging as <strong>soft succession signals</strong> — businesses where the owner is consciously or unconsciously building infrastructure to reduce personal dependency, which often precedes a formal transition conversation.</div>
+</div>
+
+<footer>
+  Prepared by Leo Katz, Senior AE — Venn &nbsp;|&nbsp; leo@tryvault.com &nbsp;|&nbsp; March 2026
+</footer>
+
+</body>
+</html>
