@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Venn — GEBIS Cardholder Onboarding Guide</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --sea-green:   #099250;
+      --dark-green:  #002400;
+      --eggshell:    #F4F1DE;
+      --green-mid:   #25AE69;
+      --green-light: #41C981;
+      --white:       #FFFFFF;
+      --text-dark:   #002400;
+      --text-muted:  #4a6a52;
+      --border:      #d4d0bd;
+      --card-bg:     #FFFFFF;
+      --light-green-bg: #e8f5ee;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      background: var(--eggshell);
+      color: var(--text-dark);
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0;
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      background: var(--dark-green);
+      padding: 24px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+    }
+
+    .logo-text {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--eggshell);
+      letter-spacing: -0.5px;
+    }
+
+    .header-tagline {
+      font-size: 11px;
+      color: var(--green-light);
+      letter-spacing: 0.5px;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: var(--sea-green);
+      padding: 36px 40px;
+      color: var(--white);
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 15px;
+      opacity: 0.9;
+      max-width: 600px;
+    }
+
+    /* ─── MAIN CONTENT ─── */
+    main {
+      padding: 32px 40px 48px;
+    }
+
+    /* ─── SECTION ─── */
+    .section {
+      margin-bottom: 32px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .section-number {
+      background: var(--sea-green);
+      color: var(--white);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--dark-green);
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 24px 28px;
+      border: 1px solid var(--border);
+    }
+
+    .card p, .card li {
+      font-size: 14px;
+      color: var(--text-dark);
+    }
+
+    .card p {
+      margin-bottom: 12px;
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ─── STEPS ─── */
+    .steps {
+      list-style: none;
+      counter-reset: step;
+    }
+
+    .steps li {
+      counter-increment: step;
+      padding: 8px 0 8px 36px;
+      position: relative;
+      font-size: 14px;
+      border-bottom: 1px solid #f0ede0;
+    }
+
+    .steps li:last-child {
+      border-bottom: none;
+    }
+
+    .steps li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 8px;
+      background: var(--light-green-bg);
+      color: var(--sea-green);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    /* ─── SUB-SECTIONS (Apple/Google) ─── */
+    .subsection {
+      margin-top: 20px;
+    }
+
+    .subsection-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--sea-green);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .subsection-title .icon {
+      font-size: 18px;
+    }
+
+    /* ─── RECEIPT OPTIONS GRID ─── */
+    .receipt-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .receipt-option {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 20px 22px;
+      border: 1px solid var(--border);
+    }
+
+    .receipt-option-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--dark-green);
+      margin-bottom: 4px;
+    }
+
+    .receipt-option-subtitle {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--sea-green);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+
+    .receipt-option p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ─── CALLOUT ─── */
+    .callout {
+      background: var(--light-green-bg);
+      border-left: 4px solid var(--sea-green);
+      border-radius: 0 8px 8px 0;
+      padding: 14px 20px;
+      margin-top: 16px;
+    }
+
+    .callout p {
+      font-size: 13px;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    .callout strong {
+      color: var(--sea-green);
+    }
+
+    /* ─── NOTE ─── */
+    .note {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-top: 8px;
+    }
+
+    /* ─── QUICK REF TABLE ─── */
+    .ref-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .ref-table th {
+      text-align: left;
+      background: var(--sea-green);
+      color: var(--white);
+      padding: 10px 16px;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .ref-table th:first-child { border-radius: 8px 0 0 0; }
+    .ref-table th:last-child { border-radius: 0 8px 0 0; }
+
+    .ref-table td {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ref-table tr:nth-child(even) td {
+      background: #faf9f2;
+    }
+
+    .ref-table tr:last-child td:first-child { border-radius: 0 0 0 8px; }
+    .ref-table tr:last-child td:last-child { border-radius: 0 0 8px 0; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--dark-green);
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--green-light);
+      font-size: 12px;
+    }
+
+    footer a {
+      color: var(--green-light);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    strong { font-weight: 600; }
+    b { font-weight: 700; }
+
+    @media print {
+      body { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <a class="logo" href="https://venn.ca" target="_blank">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="16" cy="16" r="16" fill="#099250"/>
+        <path d="M8 11h3.2l4.8 10.5L20.8 11H24l-7 15h-2L8 11z" fill="#F4F1DE"/>
+      </svg>
+      <span class="logo-text">venn</span>
+    </a>
+    <span class="header-tagline">Finance Meets Simplicity</span>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero">
+    <h1>GEBIS Cardholder Onboarding Guide</h1>
+    <p>Everything you need to accept your card, add it to your phone, and submit receipts — whether you're at the monastery, travelling, or at your desk.</p>
+  </div>
+
+  <!-- MAIN -->
+  <main>
+
+    <!-- SECTION 1: ACCEPT YOUR INVITE -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">1</div>
+        <div class="section-title">Accept Your Card Invite</div>
+      </div>
+      <div class="card">
+        <p>Your administrator will create a virtual card for you through the Venn dashboard — assigned to your department with a specific budget and validity period.</p>
+        <ol class="steps">
+          <li>You'll receive an <strong>email invite</strong> from Venn to join the GEBIS account</li>
+          <li>Click the link to <strong>create your Venn account</strong> (takes ~2 minutes)</li>
+          <li>Set your password and verify your email</li>
+          <li>Once logged in, your card will be in the <strong>Cards</strong> section of the dashboard</li>
+        </ol>
+        <div class="callout">
+          <p><strong>Virtual cards</strong> are available instantly — you can start making purchases right away. <strong>Physical cards</strong> arrive by mail in 5–7 business days.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: APPLE PAY / GOOGLE PAY -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">2</div>
+        <div class="section-title">Add Your Card to Apple Pay or Google Pay</div>
+      </div>
+      <div class="card">
+        <p>Add your Venn Mastercard to your phone's wallet to tap and pay in-store, in-app, and online. Works with both virtual and physical cards.</p>
+
+        <div class="subsection">
+          <div class="subsection-title"><span class="icon">&#63743;</span> Apple Pay (iPhone)</div>
+          <ol class="steps">
+            <li>Open the <strong>Wallet</strong> app on your iPhone</li>
+            <li>Tap the <strong>"+"</strong> button in the top right</li>
+            <li>Select <strong>"Debit or Credit Card"</strong></li>
+            <li>Enter your Venn card details manually or scan with your camera</li>
+            <li>Review and tap <strong>Continue</strong></li>
+            <li>Tap <strong>"Agree"</strong> to accept terms</li>
+            <li>Choose verification method: <strong>Email</strong> or <strong>SMS</strong></li>
+            <li>Enter the <strong>6-digit one-time passcode</strong> you receive</li>
+            <li>Done — your card is now in Apple Pay</li>
+          </ol>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-title"><span class="icon">▶</span> Google Pay (Android)</div>
+          <ol class="steps">
+            <li>Download <strong>Google Wallet</strong> from the Play Store</li>
+            <li>Open Google Wallet and tap the <strong>"+"</strong> button</li>
+            <li>Select <strong>"Payment card"</strong> → <strong>"New credit or debit card"</strong></li>
+            <li>Enter your Venn card details manually or scan</li>
+            <li>Tap <strong>"Accept"</strong> to agree to terms</li>
+            <li>Choose verification method: <strong>Email</strong> or <strong>SMS</strong></li>
+            <li>Enter the <strong>6-digit one-time passcode</strong> you receive</li>
+            <li>Done — your card is now in Google Pay</li>
+          </ol>
+        </div>
+
+        <p class="note">The verification passcode is sent to your own email or phone number, not the admin's.</p>
+      </div>
+    </div>
+
+    <!-- SECTION 3: USING YOUR CARD -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">3</div>
+        <div class="section-title">Using Your Card</div>
+      </div>
+      <div class="card">
+        <p>Your Venn Mastercard works everywhere Mastercard is accepted — online, in-store, and internationally.</p>
+        <ul style="list-style: none; padding: 0;">
+          <li style="padding: 6px 0; font-size: 14px;">✅ <strong>Tap to pay</strong> in-store using Apple Pay or Google Pay</li>
+          <li style="padding: 6px 0; font-size: 14px;">✅ <strong>Online purchases</strong> — use your card number, expiry, and CVV from the Venn dashboard</li>
+          <li style="padding: 6px 0; font-size: 14px;">✅ <strong>Multi-currency</strong> — your card automatically selects CAD or USD to avoid unnecessary conversions</li>
+          <li style="padding: 6px 0; font-size: 14px;">✅ <strong>Check your balance</strong> — log in anytime to see your remaining budget and transaction history</li>
+        </ul>
+        <div class="callout">
+          <p><strong>Spending limits:</strong> Your admin sets a budget on each card. If a purchase is declined, it likely means you've reached your card's limit — check your balance in the dashboard or contact your admin.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: UPLOAD RECEIPTS -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">4</div>
+        <div class="section-title">Upload Receipts</div>
+      </div>
+      <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px;">Every time you make a purchase, you'll be asked for a receipt. Pick whichever method is easiest for you.</p>
+
+      <div class="receipt-grid">
+        <div class="receipt-option">
+          <div class="receipt-option-subtitle">On Your Phone</div>
+          <div class="receipt-option-title">Reply to SMS</div>
+          <p>You'll get a <strong>text message</strong> after each purchase. Tap the link, snap a photo of the receipt, and submit. Takes 10 seconds.</p>
+        </div>
+
+        <div class="receipt-option">
+          <div class="receipt-option-subtitle">On Your Phone or Computer</div>
+          <div class="receipt-option-title">Reply to Email</div>
+          <p>You'll also get an <strong>email notification</strong>. Reply with the receipt image attached and it's automatically matched to the transaction.</p>
+        </div>
+
+        <div class="receipt-option">
+          <div class="receipt-option-subtitle">On Your Phone</div>
+          <div class="receipt-option-title">Snap in the Venn App</div>
+          <p>Open Venn → go to <strong>Tasks</strong> → tap the transaction → take a photo. Venn's AI extracts the details automatically.</p>
+        </div>
+
+        <div class="receipt-option">
+          <div class="receipt-option-subtitle">On Your Computer</div>
+          <div class="receipt-option-title">Upload on the Web</div>
+          <p>Log in at <strong>app.venn.ca</strong> → go to <strong>Tasks</strong> → find the transaction → upload the receipt file. Or use <strong>Auto Match</strong> to let Venn match it for you.</p>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top: 16px;">
+        <p><strong>Tip:</strong> Save the Venn receipt number in your phone as <strong>"Venn Receipts"</strong> so you always know where texts are coming from. Upload receipts right away — it takes seconds and saves everyone time at month-end.</p>
+      </div>
+
+      <div class="callout" style="margin-top: 12px; background: #fff3e0; border-left-color: #e67e22;">
+        <p><strong>Note for GEBIS team:</strong> Receipt uploads are important for your accounting team's records and QuickBooks sync. If you make 5 purchases without uploading a receipt, your card may be temporarily locked until receipts are submitted.</p>
+      </div>
+    </div>
+
+    <!-- QUICK REFERENCE -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">✓</div>
+        <div class="section-title">Quick Reference</div>
+      </div>
+      <table class="ref-table">
+        <thead>
+          <tr>
+            <th>What</th>
+            <th>How</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Access your account</td>
+            <td><strong>app.venn.ca</strong></td>
+          </tr>
+          <tr>
+            <td>View your card details</td>
+            <td>Dashboard → <strong>Cards</strong></td>
+          </tr>
+          <tr>
+            <td>Check remaining balance</td>
+            <td>Click into your card to see spend vs. limit</td>
+          </tr>
+          <tr>
+            <td>See pending receipts</td>
+            <td>Dashboard → <strong>Tasks</strong></td>
+          </tr>
+          <tr>
+            <td>Submit a receipt</td>
+            <td>Reply to SMS/email, snap in-app, or upload on web</td>
+          </tr>
+          <tr>
+            <td>Tap to pay</td>
+            <td>Add card to Apple Pay or Google Pay (see Section 2)</td>
+          </tr>
+          <tr>
+            <td>Card declined?</td>
+            <td>Check your balance or contact your admin</td>
+          </tr>
+          <tr>
+            <td>Need help?</td>
+            <td>Email <strong>leo@tryvault.com</strong> — I'm your account manager</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>Prepared for GEBIS by Leo Katz — <a href="mailto:leo@tryvault.com">leo@tryvault.com</a></span>
+    <span><a href="https://venn.ca">venn.ca</a></span>
+  </footer>
+
+</body>
+</html>
