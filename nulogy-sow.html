@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Venn — NuLogy Statement of Work</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --sea-green:   #099250;
+      --dark-green:  #002400;
+      --eggshell:    #F4F1DE;
+      --green-mid:   #25AE69;
+      --green-light: #41C981;
+      --white:       #FFFFFF;
+      --text-dark:   #002400;
+      --text-muted:  #0A6336;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      background: var(--eggshell);
+      color: var(--text-dark);
+      width: 794px;
+      margin: 0 auto;
+      padding: 0;
+    }
+
+    /* ─── HEADER ─────────────────────────────────────── */
+    header {
+      background: var(--dark-green);
+      padding: 28px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-mark { width: 32px; height: 32px; }
+
+    .logo-text {
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--eggshell);
+      letter-spacing: -0.5px;
+    }
+
+    .header-tagline {
+      font-size: 12px;
+      color: var(--green-light);
+      letter-spacing: 0.5px;
+    }
+
+    /* ─── HERO ───────────────────────────────────────── */
+    .hero {
+      background: var(--sea-green);
+      padding: 36px 48px;
+      color: var(--white);
+    }
+
+    .hero-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--green-light);
+      margin-bottom: 10px;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 10px;
+      color: var(--white);
+    }
+
+    .hero p {
+      font-size: 14px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.88);
+      max-width: 580px;
+    }
+
+    /* ─── MAIN CONTENT ───────────────────────────────── */
+    .main {
+      padding: 32px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    /* ─── CARDS ──────────────────────────────────────── */
+    .card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 24px;
+      border-top: 4px solid var(--sea-green);
+    }
+
+    .card.dark {
+      background: var(--dark-green);
+      border-top: 4px solid var(--green-light);
+    }
+
+    .card.full-width { grid-column: 1 / -1; }
+
+    .card h2 {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--sea-green);
+      margin-bottom: 14px;
+    }
+
+    .card.dark h2 { color: var(--green-light); }
+
+    /* ─── PLAN DETAILS ───────────────────────────────── */
+    .plan-highlight {
+      text-align: center;
+      padding: 16px 0 12px;
+    }
+
+    .plan-name {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .plan-price {
+      font-size: 36px;
+      font-weight: 600;
+      color: var(--sea-green);
+    }
+
+    .plan-price span {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .plan-term {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    .plan-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 16px;
+      border-top: 1px solid #e8e5d8;
+      padding-top: 16px;
+    }
+
+    .plan-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-dark);
+    }
+
+    .plan-features li::before {
+      content: '✓';
+      color: var(--sea-green);
+      font-weight: 600;
+      font-size: 13px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ─── INCLUDED LIST ──────────────────────────────── */
+    .included-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .included-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-dark);
+    }
+
+    .included-list li::before {
+      content: '✓';
+      color: var(--sea-green);
+      font-weight: 600;
+      font-size: 13px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ─── TIMELINE ───────────────────────────────────── */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--sea-green);
+      color: var(--white);
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-text {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-dark);
+      padding-top: 4px;
+    }
+
+    .step-text strong {
+      font-weight: 600;
+      color: var(--dark-green);
+    }
+
+    .step-text .detail {
+      display: block;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* ─── TEAM ───────────────────────────────────────── */
+    .team-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .team-member {
+      background: var(--eggshell);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .team-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--dark-green);
+      margin-bottom: 2px;
+    }
+
+    .team-role {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .team-email {
+      font-size: 12px;
+    }
+
+    .team-email a {
+      color: var(--sea-green);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────── */
+    footer {
+      background: var(--dark-green);
+      padding: 20px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 8px;
+    }
+
+    .footer-cta {
+      font-size: 13px;
+      color: var(--eggshell);
+    }
+
+    .footer-cta a {
+      color: var(--green-light);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-contact {
+      font-size: 12px;
+      color: rgba(244,241,222,0.6);
+      text-align: right;
+    }
+
+    .footer-contact a {
+      color: #41C981;
+      text-decoration: none;
+    }
+
+    /* ─── PRINT ──────────────────────────────────────── */
+    @media print {
+      body { width: 100%; }
+      @page { margin: 0; size: A4; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">venn</span>
+    </div>
+    <span class="header-tagline">Finance Meets Simplicity</span>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-label">Statement of Work</div>
+    <h1>NuLogy × Venn</h1>
+    <p>Custom Business plan with dedicated onboarding support, Sage integration, and unlimited corporate cards for your team.</p>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main">
+
+    <!-- YOUR PLAN -->
+    <div class="card">
+      <h2>Your Plan</h2>
+      <div class="plan-highlight">
+        <div class="plan-name">Business Plan</div>
+        <div class="plan-price">$100 <span>CAD/mo</span></div>
+        <div class="plan-term">Locked rate for 1 year. Billed monthly.<br/>Standard platform pricing applies after.</div>
+      </div>
+      <ul class="plan-features">
+        <li>Unlimited users and corporate cards</li>
+        <li>20+ users included from day one</li>
+        <li>Starting with 10 cards at launch</li>
+        <li>1% unlimited cashback on all card spend</li>
+        <li>Multi-currency accounts (CAD &amp; USD)</li>
+        <li>Priority support</li>
+      </ul>
+    </div>
+
+    <!-- WHAT'S INCLUDED -->
+    <div class="card">
+      <h2>Onboarding &amp; Setup</h2>
+      <ul class="included-list">
+        <li>Dedicated Slack channel for onboarding support</li>
+        <li>Approval rules and expense policy configuration</li>
+        <li>Employee invitations and administrator training</li>
+        <li>Sage integration with custom columns (including PO columns)</li>
+        <li>Corporate card issuance and spend controls</li>
+        <li>Ongoing support through your account manager</li>
+      </ul>
+    </div>
+
+    <!-- ONBOARDING TIMELINE -->
+    <div class="card full-width">
+      <h2>Onboarding Timeline</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text">
+            <strong>Account Setup Call — 15 minutes</strong>
+            <span class="detail">Sign up at venn.ca, walk through account activation, and get you approved. With Ahmed &amp; Alphaeus.</span>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text">
+            <strong>Full Onboarding Call — 1 hour</strong>
+            <span class="detail">Configure approval rules, set up Sage integration with custom columns, invite employees, issue cards, and train your administrators. With Ahmed &amp; Alphaeus.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- YOUR TEAM -->
+    <div class="card full-width">
+      <h2>Your Venn Team</h2>
+      <div class="team-grid">
+        <div class="team-member">
+          <div class="team-name">Ahmed</div>
+          <div class="team-role">Co-Founder</div>
+          <div class="team-email"><a href="mailto:ahmed@venn.ca">ahmed@venn.ca</a></div>
+        </div>
+        <div class="team-member">
+          <div class="team-name">Alphaeus</div>
+          <div class="team-role">Account Manager</div>
+          <div class="team-email"><a href="mailto:alphaeus@venn.ca">alphaeus@venn.ca</a></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-cta">
+      Ready to get started? <a href="https://app.venn.ca/signup">Sign up at venn.ca</a>
+    </div>
+    <div class="footer-contact">
+      Leo Katz · Senior Account Executive<br/>
+      <a href="mailto:leo@tryvault.com">leo@tryvault.com</a> · <a href="https://meetings.hubspot.com/leo-katz/venn-demo">Book a Call</a>
+    </div>
+  </footer>
+
+</body>
+</html>
