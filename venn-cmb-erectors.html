@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Venn — CMB Erectors</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    /* ─── BRAND TOKENS ─────────────────────────────── */
+    :root {
+      --sea-green:   #099250;
+      --dark-green:  #002400;
+      --eggshell:    #F4F1DE;
+      --green-mid:   #25AE69;
+      --green-light: #41C981;
+      --white:       #FFFFFF;
+      --text-dark:   #002400;
+      --text-muted:  #0A6336;
+    }
+
+    /* ─── RESET ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      background: var(--eggshell);
+      color: var(--text-dark);
+      width: 794px;
+      min-height: 1123px;
+      margin: 0 auto;
+      padding: 0;
+    }
+
+    /* ─── HEADER ─────────────────────────────────────── */
+    header {
+      background: var(--dark-green);
+      padding: 28px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+    }
+
+    .logo-text {
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--eggshell);
+      letter-spacing: -0.5px;
+    }
+
+    .header-tagline {
+      font-size: 12px;
+      color: var(--green-light);
+      letter-spacing: 0.5px;
+    }
+
+    /* ─── HERO ───────────────────────────────────────── */
+    .hero {
+      background: var(--sea-green);
+      padding: 40px 48px;
+      color: var(--white);
+    }
+
+    .hero-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--green-light);
+      margin-bottom: 10px;
+    }
+
+    .hero h1 {
+      font-size: 30px;
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 14px;
+      color: var(--white);
+    }
+
+    .hero p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.88);
+      max-width: 580px;
+    }
+
+    /* ─── MAIN CONTENT ───────────────────────────────── */
+    .main {
+      padding: 40px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    /* ─── CARDS ──────────────────────────────────────── */
+    .card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 28px;
+      border-top: 4px solid var(--sea-green);
+    }
+
+    .card.dark {
+      background: var(--dark-green);
+      border-top: 4px solid var(--green-light);
+    }
+
+    .card.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .card h2 {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--sea-green);
+      margin-bottom: 16px;
+    }
+
+    .card.dark h2 {
+      color: var(--green-light);
+    }
+
+    /* ─── PAIN POINTS ────────────────────────────────── */
+    .pain-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .pain-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-dark);
+    }
+
+    .pain-list li::before {
+      content: '\2715';
+      color: #c0392b;
+      font-weight: 600;
+      font-size: 13px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ─── SOLUTIONS ──────────────────────────────────── */
+    .solution-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .solution-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-dark);
+    }
+
+    .solution-list li::before {
+      content: '\2713';
+      color: var(--sea-green);
+      font-weight: 600;
+      font-size: 14px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ─── SOCIAL PROOF ───────────────────────────────── */
+    .quotes {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .quote-block {
+      border-left: 3px solid var(--green-light);
+      padding-left: 14px;
+    }
+
+    .quote-text {
+      font-size: 13px;
+      font-style: italic;
+      line-height: 1.6;
+      color: var(--eggshell);
+      margin-bottom: 6px;
+    }
+
+    .quote-attr {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--green-light);
+      letter-spacing: 0.3px;
+    }
+
+    /* ─── PRICING ────────────────────────────────────── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .pricing-tier {
+      background: var(--eggshell);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .pricing-tier.highlight {
+      background: var(--sea-green);
+      color: var(--white);
+    }
+
+    .tier-name {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .pricing-tier.highlight .tier-name {
+      color: rgba(255,255,255,0.8);
+    }
+
+    .tier-price {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--dark-green);
+      margin-bottom: 4px;
+    }
+
+    .pricing-tier.highlight .tier-price {
+      color: var(--white);
+    }
+
+    .tier-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .pricing-tier.highlight .tier-desc {
+      color: rgba(255,255,255,0.85);
+    }
+
+    /* ─── NEXT STEPS ─────────────────────────────────── */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--sea-green);
+      color: var(--white);
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-text {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-dark);
+      padding-top: 4px;
+    }
+
+    .step-text strong {
+      font-weight: 600;
+      color: var(--dark-green);
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────── */
+    footer {
+      background: var(--dark-green);
+      padding: 20px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 8px;
+    }
+
+    .footer-cta {
+      font-size: 13px;
+      color: var(--eggshell);
+    }
+
+    .footer-cta a {
+      color: var(--green-light);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-contact {
+      font-size: 12px;
+      color: rgba(244,241,222,0.6);
+      text-align: right;
+    }
+
+    /* ─── PRINT ──────────────────────────────────────── */
+    @media print {
+      body { width: 100%; }
+      @page { margin: 0; size: A4; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="16" y1="2"  x2="16" y2="30" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="2"  y1="16" x2="30" y2="16" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="5"  y1="5"  x2="27" y2="27" stroke="#099250" stroke-width="4" stroke-linecap="round"/>
+        <line x1="27" y1="5"  x2="5"  y2="27" stroke="#41C981" stroke-width="4" stroke-linecap="round"/>
+        <path d="M10 19 Q16 14 22 19" stroke="#41C981" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">venn</span>
+    </div>
+    <span class="header-tagline">Finance Meets Simplicity</span>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-label">Prepared for CMB Erectors</div>
+    <h1>How CMB Erectors Can Take Control<br/>of Field Spending with Venn</h1>
+    <p>Replace scattered credit cards and manual receipt chasing with corporate cards that auto-capture receipts on job sites and sync directly to QuickBooks — giving your team real-time visibility across Brantford and Edmonton.</p>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main">
+
+    <!-- PAIN POINTS -->
+    <div class="card">
+      <h2>Current Challenges</h2>
+      <ul class="pain-list">
+        <li>150–200 transactions/month across a mix of TD and Amex cards with no centralized view</li>
+        <li>Field crews hold onto receipts — matching happens weeks later with a seasonal analyst</li>
+        <li>Manual reconciliation in QuickBooks Online eats hours every month</li>
+        <li>No real-time visibility into spending across two provinces and multiple job sites</li>
+      </ul>
+    </div>
+
+    <!-- HOW VENN SOLVES IT -->
+    <div class="card">
+      <h2>How Venn Solves It</h2>
+      <ul class="solution-list">
+        <li>Corporate cards for every field worker — snap a receipt photo on-site, auto-matched instantly</li>
+        <li>One dashboard for all spending across Brantford, Edmonton, and every job site in between</li>
+        <li>Auto-sync to QuickBooks Online — transactions, receipts, and categories flow in automatically</li>
+        <li>Per-card spending controls — set limits by employee, project, or expense category</li>
+      </ul>
+    </div>
+
+    <!-- FREE EFTS -->
+    <div class="card full-width" style="background: var(--dark-green); border-top: 4px solid var(--green-light);">
+      <h2 style="color: var(--green-light);">Stop Sending Cheques — Free EFTs with Venn</h2>
+      <p style="font-size: 14px; line-height: 1.6; color: var(--eggshell); margin-bottom: 12px;">Venn includes unlimited free Interac e-Transfers and EFTs on every plan. Pay subcontractors, suppliers, and vendors electronically — no cheque runs, no postage, no waiting for mail to clear.</p>
+      <ul class="solution-list" style="color: var(--eggshell);">
+        <li style="color: var(--eggshell);">Unlimited free Interac e-Transfers — pay subs and suppliers instantly</li>
+        <li style="color: var(--eggshell);">$0 EFTs for recurring vendor payments — no per-transaction fees</li>
+        <li style="color: var(--eggshell);">Every payment auto-syncs to QuickBooks — no manual entry or matching</li>
+      </ul>
+    </div>
+
+    <!-- SOCIAL PROOF -->
+    <div class="card dark">
+      <h2>What Customers Say</h2>
+      <div class="quotes">
+        <div class="quote-block">
+          <p class="quote-text">"You get a reminder, take a picture, and it's done. We had 736 transactions with no receipts at year-end — that's never happening again."</p>
+          <p class="quote-attr">— Edouard, CEO, Trampoline AI</p>
+        </div>
+        <div class="quote-block">
+          <p class="quote-text">"It was hard to keep a clean view of where money was going across locations. Venn eliminated hundreds in fees and saved us 10+ hours a month."</p>
+          <p class="quote-attr">— Ashley Bly, Founder, The Hut (Multi-Location F&B)</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRICING -->
+    <div class="card">
+      <h2>Simple Pricing</h2>
+      <div class="pricing-grid">
+        <div class="pricing-tier">
+          <div class="tier-name">Free</div>
+          <div class="tier-price">$0</div>
+          <div class="tier-desc">CAD account, e-transfers, virtual card</div>
+        </div>
+        <div class="pricing-tier highlight">
+          <div class="tier-name">Plus</div>
+          <div class="tier-price">$40</div>
+          <div class="tier-desc">Free ACH, lower FX, physical cards</div>
+        </div>
+        <div class="pricing-tier">
+          <div class="tier-name">Business</div>
+          <div class="tier-price">$100</div>
+          <div class="tier-desc">Multi-user, expense mgmt, priority support</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEXT STEPS -->
+    <div class="card full-width">
+      <h2>Next Steps</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Follow-up call — Friday, April 10</strong> — We'll walk through any questions and get you set up on the right plan.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Sign up online</strong> — Takes 5–7 minutes at <a href="https://www.venn.ca" style="color:var(--sea-green); font-weight:600;">venn.ca</a>. You'll need your articles of incorporation and photo ID.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>Get approved</strong> — Most accounts are approved within 1 hour when documentation is complete.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-text"><strong>Issue cards to your crew</strong> — Set up corporate cards for field workers, connect QuickBooks, and start capturing receipts on Day 1.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-cta">
+      Ready to get started? <a href="https://www.venn.ca">venn.ca</a> &middot; <a href="https://www.venn.ca/pricing">See Pricing</a>
+    </div>
+    <div class="footer-contact">
+      Leo Katz &middot; Senior Account Executive<br/>
+      <a href="mailto:leo@tryvault.com" style="color:#41C981; text-decoration:none;">leo@tryvault.com</a> &middot; <a href="https://meetings.hubspot.com/leo-katz/venn-demo" style="color:#41C981; text-decoration:none;">Book a Demo</a>
+    </div>
+  </footer>
+
+</body>
+</html>
